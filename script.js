@@ -1,22 +1,18 @@
-// ------------------------------
-// 네비게이션 활성화 표시
-// ------------------------------
-document.addEventListener("DOMContentLoaded", () => {
-    const currentPage = window.location.pathname.split("/").pop(); // 현재 페이지 파일명
-    const navLinks = document.querySelectorAll("nav a");
+function openTab(tabName) {
+    // 모든 section 숨김
+    const tabs = document.querySelectorAll(".tab");
+    tabs.forEach(tab => tab.style.display = "none");
 
-    navLinks.forEach(link => {
-        const linkPage = link.getAttribute("href");
-        if (linkPage === currentPage) {
-            link.classList.add("active");  // 현재 페이지 버튼 강조
-        }
-    });
-});
+    // 클릭한 탭만 표시
+    document.getElementById(tabName).style.display = "block";
 
-// ------------------------------
-// 해양 페이지 전용 기능 (필요하면 더 확장 가능)
-// ------------------------------
-function oceanFeature() {
-    console.log("해양 페이지 기능 실행됨!");
-    // 여기에 나중에 계산기, 버튼 기능 등 넣을 수 있음
+    // 모든 탭 버튼에서 active 제거
+    const links = document.querySelectorAll("nav a");
+    links.forEach(link => link.classList.remove("active"));
+
+    // 현재 클릭된 탭 버튼에 active 추가
+    document.getElementById("tab-" + tabName).classList.add("active");
 }
+
+// 처음 로드시 홈 탭 선택
+openTab("home");

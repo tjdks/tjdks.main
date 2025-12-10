@@ -3,27 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>홈 페이지</title>
+    <title>띵타이쿤 계산기</title>
+    
+    <!-- Font Awesome 아이콘 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <!-- 공통 스타일 -->
     <link rel="stylesheet" href="style.css">
-
-    <!-- 아이콘 (홈 로고 포함) -->
-    <link rel="stylesheet"
-          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- 공통 header/nav 자동 삽입 -->
-    <script src="load-header.js" defer></script>
 </head>
 
 <body>
 
-    <main>
-        <h2>홈 페이지</h2>
-        <p>이곳은 홈 페이지입니다.</p>
+    <header>
+        <h1>띵타이쿤 계산기</h1>
+    </header>
 
-        <a href="mine.html" class="button">채광 페이지로 이동 →</a>
+    <!-- 탭 메뉴 -->
+    <nav>
+        <a id="tab-home" onclick="openTab('home')" class="home-btn">
+            <i class="fa-solid fa-house"></i>
+        </a>
+        <a id="tab-mine" onclick="openTab('mine')">채광</a>
+        <a id="tab-farm" onclick="openTab('farm')">재배</a>
+        <a id="tab-ocean" onclick="openTab('ocean')">해양</a>
+    </nav>
+
+    <main>
+
+        <!-- 홈 화면 -->
+        <section id="home" class="tab">
+            <h2>홈</h2>
+            <p>원하는 탭을 선택하세요.</p>
+        </section>
+
+        <!-- 채광 -->
+        <section id="mine" class="tab" style="display:none;">
+            <h2>채광</h2>
+            <p>여기에 채광 계산기 작성.</p>
+        </section>
+
+        <!-- 재배 -->
+        <section id="farm" class="tab" style="display:none;">
+            <h2>재배</h2>
+            <p>여기에 재배 계산기 작성.</p>
+        </section>
+
+        <!-- 해양 -->
+        <section id="ocean" class="tab" style="display:none;">
+            <h2>해양</h2>
+            <p>여기에 해양 계산기 작성.</p>
+        </section>
+
     </main>
 
+    <script src="script.js"></script>
 </body>
 </html>

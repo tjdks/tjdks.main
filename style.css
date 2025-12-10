@@ -5,25 +5,38 @@ body {
     background-color: #f8f7f7;
 }
 
-/* nav를 header 밖에 두었으므로 배경 추가 */
+/* nav 바탕 높이 증가 */
 nav {
     background-color: #20232a;
-    padding: 10px 20px;
+    padding: 10px 12px;  /* ↑ 전체 높이를 늘림 */
+    display: flex;
+    align-items: center;
 }
 
+/* nav 기본 버튼 */
 nav a {
     color: white;
     text-decoration: none;
-    margin-right: 15px;
-    padding: 5px 10px;
-    border-radius: 4px;
+    margin-right: 18px;
+    padding: 7px 14px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 15px;
 }
 
+/* 홈 버튼은 조금 더 크게 */
+nav a.home-btn {
+    font-size: 20px;
+    padding: 6px 12px;
+    margin-right: 25px;
+}
+
+/* 선택된 탭 */
 nav a.active {
-    border-bottom: 2px solid white;
     background-color: #2e76ff;
     color: white;
-    border-radius: 5px;
+    font-weight: bold;
+    border-bottom: 2px solid white;
 }
 
 header {
@@ -45,16 +58,7 @@ h2 {
     margin-top: 0;
 }
 
-.button {
-    display: inline-block;
-    margin-top: 15px;
-    padding: 10px 15px;
-    background-color: #007bff;
-    color: white;
-    text-decoration: none;
-    border-radius: 5px;
-}
-
-.button:hover {
-    background-color: #0056b3;
+/* 탭 기본 숨김 */
+.tab {
+    display: none;
 }
