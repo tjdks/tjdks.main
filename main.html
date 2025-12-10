@@ -1,144 +1,26 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>My GitHub Site — 테스트 메인</title>
-  <meta name="description" content="테스트용 깃허브 사이트 메인 페이지" />
-  <style>
-    :root{--bg:#0f1724;--card:#0b1120;--muted:#9aa4b2;--accent:#6ee7b7}
-    *{box-sizing:border-box}
-    body{margin:0;font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background:linear-gradient(180deg,#061026 0%, var(--bg) 100%);color:#e6eef6;line-height:1.5}
-    .container{max-width:1000px;margin:36px auto;padding:24px}
-    header{display:flex;align-items:center;justify-content:space-between}
-    .logo{display:flex;gap:12px;align-items:center}
-    .logo .mark{width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#22c55e,#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700;color:#042027}
-    nav a{color:var(--muted);text-decoration:none;margin-left:16px;font-weight:600}
-    .hero{display:grid;grid-template-columns:1fr 320px;gap:24px;margin-top:28px;align-items:center}
-    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));border:1px solid rgba(255,255,255,0.04);padding:28px;border-radius:12px}
-    h1{margin:0 0 8px 0;font-size:28px}
-    p.lead{margin:0;color:var(--muted)}
-    .btn{display:inline-block;margin-top:16px;padding:10px 16px;border-radius:10px;background:transparent;border:1px solid rgba(255,255,255,0.06);cursor:pointer}
-    .btn.primary{background:linear-gradient(90deg,#10b981,#06b6d4);color:#022; border:0}
-    .card-list{display:flex;flex-direction:column;gap:12px}
-    .card{background:var(--card);padding:14px;border-radius:10px;border:1px solid rgba(255,255,255,0.03)}
-    .kpi{display:flex;gap:12px;align-items:center}
-    .kpi strong{font-size:20px}
-    footer{margin-top:36px;padding:18px 8px;color:var(--muted);text-align:center;font-size:14px}
-    /* responsive */
-    @media (max-width:880px){
-      .hero{grid-template-columns:1fr;}
-      nav a{margin-left:10px}
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>서브 페이지</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="container">
+
     <header>
-      <div class="logo">
-        <div class="mark">GH</div>
-        <div>
-          <div style="font-weight:700">My GitHub Site</div>
-          <div style="font-size:12px;color:var(--muted)">테스트용 메인 페이지</div>
-        </div>
-      </div>
-      <nav>
-        <a href="#">Home</a>
-        <a href="#features">Features</a>
-        <a href="#about">About</a>
-      </nav>
+        <h1>GitHub Pages Example</h1>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="main.html" class="active">Main</a>
+        </nav>
     </header>
 
-    <main class="hero" role="main">
-      <section class="hero-card">
-        <h1>깃허브 페이지용 테스트 메인</h1>
-        <p class="lead">간단한 소개 영역과 몇 가지 예시 컴포넌트가 포함된 테스트 HTML입니다. 그대로 index.html로 사용하거나 필요한 부분만 복사해가세요.</p>
-
-        <div style="margin-top:18px">
-          <button class="btn primary" onclick="showAlert()">알림 표시</button>
-          <button class="btn" onclick="toggleTheme()">테마 토글</button>
-        </div>
-
-        <div style="margin-top:20px" id="dynamicArea">
-          <div class="card-list">
-            <div class="card">
-              <div style="display:flex;justify-content:space-between;align-items:center">
-                <div>
-                  <div style="font-weight:700">최근 배포</div>
-                  <div style="font-size:13px;color:var(--muted)">2025-12-09 — 테스트 컨텐츠 추가</div>
-                </div>
-                <div class="kpi"><strong>v0.1</strong></div>
-              </div>
-            </div>
-            <div class="card">
-              <div style="font-weight:700">다음 작업</div>
-              <div style="font-size:13px;color:var(--muted);margin-top:6px">프로젝트 페이지 연결, 폼 추가, GitHub Actions 설정</div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <aside class="hero-card" aria-label="Quick info">
-        <h3 style="margin-top:0">빠른 정보</h3>
-        <p style="margin:8px 0;color:var(--muted)">여기에 위젯, 소셜 링크, 또는 최근 커밋 요약 같은 것을 넣을 수 있습니다.</p>
-        <div style="display:flex;flex-direction:column;gap:8px;margin-top:10px">
-          <a class="btn" href="#features">기능 보기</a>
-          <a class="btn" href="#about">사이트 소개</a>
-        </div>
-      </aside>
-    </main>
-
-    <section id="features" class="hero-card" style="margin-top:22px">
-      <h2 style="margin-top:0">샘플 섹션 — 기능</h2>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:12px">
-        <div class="card">
-          <div style="font-weight:700">반응형 디자인</div>
-          <div style="font-size:13px;color:var(--muted)">모바일과 데스크톱 모두에 적합합니다.</div>
-        </div>
-        <div class="card">
-          <div style="font-weight:700">간단한 자바스크립트</div>
-          <div style="font-size:13px;color:var(--muted)">테스트용 버튼과 토글 스크립트 포함.</div>
-        </div>
-        <div class="card">
-          <div style="font-weight:700">쉬운 커스터마이즈</div>
-          <div style="font-size:13px;color:var(--muted)">컬러와 텍스트만 바꿔서 바로 사용하세요.</div>
-        </div>
-      </div>
+    <section class="content">
+        <h2>Main 페이지</h2>
+        <p>이곳은 main.html 입니다.</p>
+        <a class="btn" href="index.html">홈으로 이동 →</a>
     </section>
 
-    <section id="about" class="hero-card" style="margin-top:18px">
-      <h2 style="margin-top:0">사이트 정보</h2>
-      <p style="color:var(--muted)">이 페이지는 GitHub Pages에서 테스트용으로 작동합니다. 파일명을 <code>index.html</code>로 저장해 루트에 올리면 자동으로 메인으로 표시됩니다.</p>
-    </section>
-
-    <footer>
-      © <span id="year"></span> My GitHub Site — 테스트 페이지 • 만든이: 당신
-    </footer>
-  </div>
-
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    function showAlert(){
-      alert('테스트 알림: 페이지가 정상적으로 동작합니다.');
-    }
-
-    function toggleTheme(){
-      const root = document.documentElement;
-      if(root.style.getPropertyValue('--bg') === '#0f1724'){
-        root.style.setProperty('--bg','#f7fafc');
-        root.style.setProperty('--card','#ffffff');
-        root.style.setProperty('--muted','#556072');
-        root.style.setProperty('--accent','#06b6d4');
-        document.body.style.color = '#042027';
-      } else {
-        root.style.setProperty('--bg','#0f1724');
-        root.style.setProperty('--card','#0b1120');
-        root.style.setProperty('--muted','#9aa4b2');
-        root.style.setProperty('--accent','#6ee7b7');
-        document.body.style.color = '#e6eef6';
-      }
-    }
-  </script>
 </body>
 </html>
