@@ -1,61 +1,35 @@
-/* 기본 설정 */
 body {
-    font-family: Arial, sans-serif;
     margin: 0;
-    background: #f5f5f5;
-    color: #333;
+    padding: 0;
+    background-color: #000; 
+    color: white;
+    font-family: Arial, sans-serif;
+    text-align: center;
 }
 
-/* 상단 영역 */
-header {
+.container {
+    padding-top: 80px;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 40px;
+}
+
+.menu button {
+    width: 200px;
+    padding: 15px 0;
+    margin: 10px auto;
+    font-size: 18px;
+    display: block;
     background: #222;
-    color: #fff;
-    padding: 20px 30px;
-}
-
-header h1 {
-    margin: 0 0 10px 0;
-}
-
-/* 내비게이션 */
-nav a {
-    margin-right: 15px;
-    color: #ddd;
-    text-decoration: none;
-    font-weight: 600;
-    padding: 5px 10px;
-}
-
-nav a:hover {
-    color: #fff;
-}
-
-nav a.active {
-    color: #fff;
-    border-bottom: 2px solid #fff;
-}
-
-/* 메인 영역 */
-.content {
-    padding: 40px;
-}
-
-h2 {
-    font-size: 24px;
-    margin-top: 0;
-}
-
-/* 버튼 스타일 */
-.btn {
-    display: inline-block;
-    margin-top: 20px;
-    padding: 10px 18px;
-    background: #007bff;
-    color: #fff;
-    text-decoration: none;
+    color: white;
+    border: 1px solid #444;
     border-radius: 6px;
+    cursor: pointer;
+    transition: 0.2s;
 }
 
-.btn:hover {
-    background: #0056b3;
+.menu button:hover {
+    background: #444;
 }

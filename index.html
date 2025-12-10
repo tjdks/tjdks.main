@@ -2,53 +2,24 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Search</title>
-
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #f5f5f5;
-            font-family: "Pretendard", sans-serif;
-        }
-
-        .container {
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 30px;
-            font-weight: 700;
-            color: #333;
-        }
-
-        .search-box {
-            width: 75vw;
-            max-width: 450px;
-            height: 50px;
-            border-radius: 25px;
-            border: none;
-            padding: 0 20px;
-            font-size: 1.1rem;
-            outline: none;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .search-box:focus {
-            box-shadow: 0 4px 18px rgba(0,0,0,0.15);
-        }
-    </style>
+    <title>띵타이쿤 계산기</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <div class="container">
-        <h1>Search</h1>
-        <input type="text" class="search-box" placeholder="검색어를 입력하세요">
+        <h1>띵타이쿤 계산기</h1>
+
+        <div class="menu">
+            <button onclick="location.href='mine.html'">1 : 채광</button>
+            <button onclick="location.href='farm.html'">2 : 재배</button>
+            <button onclick="location.href='ocean.html'">3 : 해양</button>
+        </div>
+
+        <hr>
+
+        <h2>효율 계산기 (추가 예정)</h2>
+        <p>여기에 계산기 기능이 들어갈 예정입니다.</p>
     </div>
 
 </body>
