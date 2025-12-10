@@ -4,31 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>홈 페이지</title>
+
+    <!-- 공통 스타일 -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- 아이콘 (홈 로고 포함) -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- 공통 header/nav 자동 삽입 -->
+    <script src="load-header.js" defer></script>
 </head>
+
 <body>
-
-    <!-- 네비게이션: 이것만 사용 -->
-    <nav>
-        <a href="mine.html">채광</a>
-        <a href="farm.html">재배</a>
-        <a href="ocean.html">해양</a>
-    </nav>
-
-    <header>
-        <h1>띵타이쿤 아일랜드 계산기</h1>
-    </header>
 
     <main>
         <h2>홈 페이지</h2>
         <p>이곳은 홈 페이지입니다.</p>
-        
-        <!-- 홈에서는 채광 페이지로 가야 하니까 링크 수정 -->
+
         <a href="mine.html" class="button">채광 페이지로 이동 →</a>
     </main>
-
-    <!-- JS 연결 -->
-    <script src="script.js"></script>
 
 </body>
 </html>
