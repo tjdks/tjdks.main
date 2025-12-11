@@ -6,6 +6,7 @@
     <title>🍎띵타이쿤 계산기</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="calc.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
     <script src="calc.js" defer></script>
     <script src="script.js" defer></script>
 </head>
@@ -39,57 +40,60 @@
         <p>재배 계산기를 여기에 작성하세요.</p>
     </section>
 
+    <!-- 해양 탭 -->
     <section id="ocean" class="tab">
         <h2>해양</h2>
-        <div class="ocean-container">
-            <div class="ocean-left">
+        <div class="ocean-container-vertical">
+            <!-- 어패류 입력 박스 -->
+            <div class="fish-section-box">
                 <h3 class="title-center">보유한 어패류 수량을 입력하세요</h3>
                 <div id="fishSection">
                     <div class="fish-row">
                         <div class="fish-label">★굴</div>
-                        <div class="input-area"><input id="굴" type="number"></div>
+                        <div class="input-area"><input id="굴" type="number" min="0"></div>
                     </div>
                     <div class="fish-row">
                         <div class="fish-label">★소라</div>
-                        <div class="input-area"><input id="소라" type="number"></div>
+                        <div class="input-area"><input id="소라" type="number" min="0"></div>
                     </div>
                     <div class="fish-row">
                         <div class="fish-label">★문어</div>
-                        <div class="input-area"><input id="문어" type="number"></div>
+                        <div class="input-area"><input id="문어" type="number" min="0"></div>
                     </div>
                     <div class="fish-row">
                         <div class="fish-label">★미역</div>
-                        <div class="input-area"><input id="미역" type="number"></div>
+                        <div class="input-area"><input id="미역" type="number" min="0"></div>
                     </div>
                     <div class="fish-row">
                         <div class="fish-label">★성게</div>
-                        <div class="input-area"><input id="성게" type="number"></div>
+                        <div class="input-area"><input id="성게" type="number" min="0"></div>
                     </div>
                 </div>
                 <div class="calc-button-area">
-                    <button id="calcBtn">계산하기</button>
+                    <button id="calcBtn" class="classic-btn">계산하기</button>
                 </div>
             </div>
 
-            <div class="ocean-right">
-                <button id="toggleExisting" class="toggle-btn">기존 정수·핵 보유량 입력 열기/닫기</button>
-                <div id="existingInputs" style="display:none; margin-top:10px;">
-                    <h3>정수 보유량</h3>
-                    <input id="eG_exist" type="number" placeholder="수호">
-                    <input id="eW_exist" type="number" placeholder="파동">
-                    <input id="eC_exist" type="number" placeholder="혼란">
-                    <input id="eL_exist" type="number" placeholder="생명">
-                    <input id="eCo_exist" type="number" placeholder="부식">
-                    <h3>핵 보유량</h3>
-                    <input id="cWG_exist" type="number" placeholder="물결 수호">
-                    <input id="cWP_exist" type="number" placeholder="파동 오염">
-                    <input id="cOD_exist" type="number" placeholder="질서 파괴">
-                    <input id="cVD_exist" type="number" placeholder="활력 붕괴">
-                    <input id="cED_exist" type="number" placeholder="침식 방어">
-                </div>
+            <!-- 기존 정수/핵 토글 -->
+            <button id="toggleExisting" class="toggle-btn">기존 정수·핵 보유량 입력 열기/닫기</button>
+            <div id="existingInputs" style="margin-top:10px; display:none;">
+                <h3>정수 보유량</h3>
+                <input id="eG_exist" type="number" placeholder="수호">
+                <input id="eW_exist" type="number" placeholder="파동">
+                <input id="eC_exist" type="number" placeholder="혼란">
+                <input id="eL_exist" type="number" placeholder="생명">
+                <input id="eCo_exist" type="number" placeholder="부식">
+                <h3>핵 보유량</h3>
+                <input id="cWG_exist" type="number" placeholder="물결 수호">
+                <input id="cWP_exist" type="number" placeholder="파동 오염">
+                <input id="cOD_exist" type="number" placeholder="질서 파괴">
+                <input id="cVD_exist" type="number" placeholder="활력 붕괴">
+                <input id="cED_exist" type="number" placeholder="침식 방어">
             </div>
+
+            <!-- 결과창 -->
+            <div id="result" class="result-box"></div>
         </div>
-        <div id="result" style="white-space: pre-line; margin-top:20px;"></div>
     </section>
 </main>
 </body>
