@@ -8,34 +8,20 @@ body {
 }
 
 /* =============================
-   header 고정 (블러+반투명)
+   header 고정 (단색, 블러 제거 — 요청대로 고정만)
    ============================= */
 header {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(55, 57, 61, 0.83); /* 반투명 */
-    backdrop-filter: blur(10px);             /* 블러 효과 */
-    -webkit-backdrop-filter: blur(10px);     /* 사파리 지원 */
+    background-color: #37393d; /* 조금 진한 색 */
     padding: 10px 20px;
     color: white;
     z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.12);
 }
 
-/* header 위 선 */
-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background-color: rgba(255,255,255,0.1); /* 블러 위 선 */
-    pointer-events: none;
-}
-
-/* header h1 */
 header h1 {
     margin: 0;
     font-size: 1.8em;
@@ -43,23 +29,22 @@ header h1 {
     user-select: none;
 }
 
-/* =============================
-   nav 바탕 고정 (블러+반투명)
-   ============================= */
+/* nav */
+nav {
+    margin-top: 6px;
+    display: flex;
+    align-items: center;
+}
 
-
-/* 슬라이더 배경 */
+/* 슬라이더 배경 (절대위치일 경우 script.js에서 조절) */
 #slider {
     position: absolute;
-    top: 50%;                  
-    left: 0;
-    height: 40px;              
+    height: 40px;
     width: 0;
     background-color: #2e76ff;
     border-radius: 6px;
-    transition: all 0.3s ease;
+    transition: all 0.25s ease;
     z-index: 0;
-    transform: translateY(-50%); 
 }
 
 /* nav 버튼 */
@@ -77,40 +62,36 @@ nav a {
     display: inline-block;
 }
 
-/* 홈 버튼 조금 더 크게 */
+/* 홈 버튼 */
 nav a.home-btn {
     font-size: 20px;
     padding: 6px 12px;
     margin-right: 25px;
 }
 
-/* 선택된 탭 글씨 강조 */
+/* 선택된 탭 강조 */
 nav a.active {
     color: white;
     font-weight: bold;
 }
 
-/* =============================
-   main 영역 여백 추가 (header+nav 높이 고려)
-   ============================= */
+/* main 마진 (헤더 높이 고려) */
 main {
     padding: 20px;
-    margin-top: 120px; /* header 60px + nav 60px */
+    margin-top: 120px;
 }
 
-/* h2 제목 */
+/* h2 */
 h2 {
     margin-top: 0;
 }
 
-/* 탭 기본 숨김 */
+/* 탭 숨김 기본 */
 .tab {
     display: none;
 }
 
-/* =============================
-   모바일 대응
-   ============================= */
+/* 모바일 대응 */
 @media screen and (max-width: 480px) {
     header h1 {
         font-size: 1.5em;
@@ -130,6 +111,6 @@ h2 {
 
     main {
         padding: 15px;
-        margin-top: 110px; /* 모바일 header+nav 높이 */
+        margin-top: 110px;
     }
 }

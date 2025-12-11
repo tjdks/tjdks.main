@@ -2,26 +2,24 @@
    전체 계산기 스타일
    ============================= */
 .calculator {
-    background-color: rgba(245, 243, 243, 0.9);
-    padding: 25px;
+    background-color: rgba(245, 243, 243, 0.95);
+    padding: 20px;
     margin: 20px auto;
-    border-radius: 20px;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+    border-radius: 14px;
+    box-shadow: 0 8px 18px rgba(0,0,0,0.12);
     width: 95%;
-    max-width: 450px;
+    max-width: 760px;
     text-align: center;
     color: #333;
     font-family: 'Arial', sans-serif;
 }
 
-/* =============================
-   입력 테이블 스타일
-   ============================= */
+/* 입력 테이블 */
 .input-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0 10px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
 }
 
 .input-table th {
@@ -29,138 +27,248 @@
     color: #000;
     padding: 10px;
     border-radius: 10px;
+    text-align:left;
 }
 
 .input-table td {
     background: #e8e8e8;
     border-radius: 10px;
     padding: 8px;
+    text-align:left;
 }
 
 /* 숫자 입력 박스 */
 .input-table input[type=number] {
-    width: 70px;
-    padding: 10px;
-    border-radius: 6px; /* 각진 느낌 */
+    width: 86px;
+    padding: 8px;
+    border-radius: 6px;
     border: 1px solid #999;
     text-align: center;
     font-weight: bold;
-    font-size: 16px;
+    font-size: 15px;
     background-color: #fff;
     color: #000;
     -moz-appearance: textfield;
 }
 
+/* 화살표 제거 */
 .input-table input::-webkit-inner-spin-button,
 .input-table input::-webkit-outer-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
 
+/* 포커스 */
 .input-table input:focus {
     border-color: #f17070;
     background-color: #f0f0f0;
+    outline: none;
 }
 
-/* =============================
-   계산 버튼
-   ============================= */
+/* 계산 버튼 */
 #calculateBtn {
-    padding: 8px 28px;
-    background-color: #ffffff00;
+    padding: 10px 26px;
+    background-color: transparent;
     color: rgb(37, 37, 37);
     font-weight: bold;
     font-size: 16px;
-
     border: 2px solid #afafaf;
     border-radius: 10px;
     cursor: pointer;
-    transition: 0.3s;
+    transition: 0.18s;
 }
 
 #calculateBtn:hover {
     background-color: #2e76ff;
-    color: rgb(255, 255, 255);
-    border: 2px solid #2e76ff;
+    color:#fff;
+    border-color:#2e76ff;
 }
 
-/* =============================
-   기존 보유량 보기 버튼
-   ============================= */
+/* 모드 버튼 */
+.mode-btn {
+    padding: 6px 12px;
+    margin-right: 8px;
+    border-radius: 8px;
+    border: 1px solid #cfcfcf;
+    background: white;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.mode-btn.active {
+    background: #2e76ff;
+    color: white;
+    border-color: #2e76ff;
+}
+
+/* 토글 버튼 (기존 보유량) */
 .toggle-btn {
-    padding: 10px 24px;
-    background-color: #e0e0e000;
+    padding: 10px 14px;
+    background-color: transparent;
     color: rgb(34, 34, 34);
     font-weight: bold;
     font-size: 13px;
-    border: none;
-    border-radius: 16px;
+    border: 1px dashed #cfcfcf;
+    border-radius: 8px;
     cursor: pointer;
-    transition: 0.3s;
-    margin-top: 12px; /* 계산하기 버튼과 간격 */
+    transition: 0.18s;
 }
 
 .toggle-btn:hover {
-    background-color: #e0e0e0;
-}
-
-/* =============================
-   기존 보유량 입력창
-   ============================= */
-#existingInputs {
-    margin-top: 15px;
-    text-align: left;
-    padding: 15px;
     background-color: #f0f0f0;
-    border-radius: 12px;
-    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
 }
 
-#existingInputs input[type=number] {
-    width: 60px;
-    padding: 6px;
-    border-radius: 6px;
-    border: 1px solid #999;
-    text-align: center;
-    font-weight: bold;
-    margin-bottom: 6px;
-    background-color: #fff;
-}
-
-/* =============================
-   결과창
-   ============================= */
-#result {
-    margin-top: 20px;
-    background: rgba(200,200,200,0.2);
-    padding: 15px;
-    border-radius: 12px;
+/* 기존 보유량 박스 */
+#existingInputs {
+    margin-top: 10px;
     text-align: left;
-    font-size: 15px;
+    padding: 12px;
+    background-color: #fafafa;
+    border-radius: 10px;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.04);
 }
 
-/* =============================
-   모바일 대응
-   ============================= */
-@media screen and (max-width: 480px) {
-    .calculator {
-        padding: 15px;
-        width: 95%;
-    }
+/* 결과창 */
+#result {
+    margin-top: 14px;
+    background: rgba(220,220,220,0.18);
+    padding: 14px;
+    border-radius: 10px;
+    text-align: left;
+    font-size: 14px;
+    min-height: 36px;
+}
+/* 해양 탭 전체 배치 */
+.ocean-container {
+    display: flex;
+    gap: 30px;
+    margin-top: 15px;
+}
 
-    .input-table input[type=number] {
-        width: 60px;
-        padding: 8px;
-        font-size: 14px;
-    }
+/* 왼쪽 입력 박스 */
+.ocean-left {
+    flex: 1;
+}
 
-    #calculateBtn, .toggle-btn {
-        padding: 10px 20px;
-        font-size: 14px;
-    }
+.title-center {
+    text-align: center;
+    margin-bottom: 15px;
+}
 
-    #existingInputs input[type=number] {
-        width: 50px;
-        padding: 6px;
-    }
+/* 입력 모드 버튼 */
+.mode-buttons {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.mode-buttons button {
+    padding: 8px 15px;
+    border: 1px solid #ccc;
+    background: white;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.active-mode {
+    background: #2868ff;
+    color: white;
+}
+
+/* 어패류 줄 */
+.fish-row {
+    display: grid;
+    grid-template-columns: 120px 200px auto;
+    align-items: center;
+    background: #eee;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+/* 헤더 */
+.fish-row.header {
+    background: transparent;
+    font-weight: bold;
+}
+
+.fish-label {
+    padding-left: 10px;
+}
+
+/* 입력 영역 */
+.input-area {
+    display: flex;
+    align-items: center;
+}
+
+/* 일반 입력칸 */
+.fish-input {
+    width: 150px;
+    padding: 7px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: center;
+}
+
+/* 세트/낱개 입력칸 */
+.split-input {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.split-input input {
+    width: 65px;
+    padding: 7px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+/* 계산 버튼 */
+.calc-button-area {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+}
+
+#calcBtn {
+    padding: 10px 25px;
+    background: #2868ff;
+    color: white;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+}
+
+/* 오른쪽 박스 */
+.ocean-right {
+    width: 260px;
+    padding: 20px;
+    background: #fafafa;
+    border: 1px solid #e5e5e5;
+    border-radius: 12px;
+}
+
+.ocean-right input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+}
+
+#fishSection {
+    background-color: #fafafa;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: inset 0 0 6px rgba(0,0,0,0.04);
+    margin-bottom: 15px;
+}
+/* 모바일 */
+@media screen and (max-width: 640px) {
+    .calculator { padding: 14px; }
+    .input-sections { flex-direction:column; }
+    .right { width:100% !important; }
+    .input-table input[type=number] { width: 64px; }
 }
