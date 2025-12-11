@@ -60,17 +60,14 @@
                     <button id="setModeBtn">세트 / 낱개 입력</button>
                 </div>
 
-                <!-- 어패류 입력 섹션 시작 -->
+                <!-- 어패류 입력 섹션 -->
                 <div id="fishSection">
-
-                    <!-- 테이블 헤더 -->
                     <div class="fish-row header">
                         <div class="fish-label">어패류</div>
                         <div class="fish-label">수량</div>
                         <div></div>
                     </div>
 
-                    <!-- 어패류 목록 -->
                     <div class="fish-row">
                         <div class="fish-label">★굴</div>
                         <div class="input-area">
@@ -132,7 +129,6 @@
                     </div>
 
                 </div>
-                <!-- 어패류 입력 섹션 끝 -->
 
                 <div class="calc-button-area">
                     <button id="calcBtn">계산하기</button>
@@ -170,7 +166,7 @@
 
 <script>
     // 모드 버튼 전환
-    window.inputMode = 'normal'; // 초기값
+    window.inputMode = 'normal';
     const normalBtn = document.getElementById('normalModeBtn');
     const setBtn = document.getElementById('setModeBtn');
 
@@ -190,6 +186,12 @@
 
         document.querySelectorAll('.normal-input').forEach(i => i.style.display = 'none');
         document.querySelectorAll('.split-input').forEach(i => i.style.display = 'flex');
+    });
+
+    // 기존 입력창 토글
+    document.getElementById('toggleExisting').addEventListener('click', () => {
+        const el = document.getElementById('existingInputs');
+        el.style.display = el.style.display === 'none' ? 'block' : 'none';
     });
 </script>
 
