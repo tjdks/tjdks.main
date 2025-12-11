@@ -1,4 +1,6 @@
-/* 전체 계산기 스타일 */
+/* =============================
+   전체 계산기 스타일
+   ============================= */
 .calculator {
     background-color: rgba(240,240,240,0.9);
     padding: 25px;
@@ -12,7 +14,9 @@
     font-family: 'Arial', sans-serif;
 }
 
-/* 테이블 스타일 */
+/* =============================
+   입력 테이블 스타일
+   ============================= */
 .input-table {
     width: 100%;
     border-collapse: separate;
@@ -37,7 +41,7 @@
 .input-table input[type=number] {
     width: 70px;
     padding: 10px;
-    border-radius: 12px;
+    border-radius: 6px; /* 각진 느낌 */
     border: 1px solid #999;
     text-align: center;
     font-weight: bold;
@@ -58,7 +62,9 @@
     background-color: #f0f0f0;
 }
 
-/* 계산 버튼 */
+/* =============================
+   계산 버튼
+   ============================= */
 #calculateBtn {
     padding: 14px 28px;
     background-color: #91a7d8;
@@ -75,7 +81,52 @@
     background-color: #777;
 }
 
-/* 결과창 */
+/* =============================
+   기존 보유량 보기 버튼
+   ============================= */
+.toggle-btn {
+    padding: 12px 24px;
+    background-color: #20b2aa;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    border: none;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+    margin-top: 12px; /* 계산하기 버튼과 간격 */
+}
+
+.toggle-btn:hover {
+    background-color: #1e8b81;
+}
+
+/* =============================
+   기존 보유량 입력창
+   ============================= */
+#existingInputs {
+    margin-top: 15px;
+    text-align: left;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 12px;
+    box-shadow: inset 0 0 5px rgba(0,0,0,0.1);
+}
+
+#existingInputs input[type=number] {
+    width: 60px;
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #999;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 6px;
+    background-color: #fff;
+}
+
+/* =============================
+   결과창
+   ============================= */
 #result {
     margin-top: 20px;
     background: rgba(200,200,200,0.2);
@@ -85,7 +136,9 @@
     font-size: 15px;
 }
 
-/* 모바일 대응 */
+/* =============================
+   모바일 대응
+   ============================= */
 @media screen and (max-width: 480px) {
     .calculator {
         padding: 15px;
@@ -98,8 +151,13 @@
         font-size: 14px;
     }
 
-    #calculateBtn {
+    #calculateBtn, .toggle-btn {
         padding: 10px 20px;
         font-size: 14px;
+    }
+
+    #existingInputs input[type=number] {
+        width: 50px;
+        padding: 6px;
     }
 }
