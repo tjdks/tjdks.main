@@ -332,7 +332,7 @@ function calculate3Star(input) {
         seaSquirt: potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt, // 불우렁쉥이 (각 영약마다 1개씩)
         bottle: 3 * (potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt), // 유리병 (각 영약마다 3개씩)
         glowInk: potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt,
-        glowBerry: potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt
+        glowBerry: 2 * (potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt)
     };
 
     // 블록 수량 (각 엘릭서마다 요구되는 블록 수량)
