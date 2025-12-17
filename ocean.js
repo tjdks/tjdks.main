@@ -319,6 +319,13 @@ function run3StarOptimization() {
         `수레국화 ${r.flowerNeed.cornflower}, 민들레 ${r.flowerNeed.dandelion}, 데이지 ${r.flowerNeed.daisy}, 양귀비 ${r.flowerNeed.poppy}, 선애기별꽃 ${r.flowerNeed.azure}`;
 }
 
+// ===== 프리미엄 입력값 자동 반영 =====
+document.getElementById("info-expert-premium-price").addEventListener("input", () => {
+    run1StarOptimization();
+    run2StarOptimization();
+    run3StarOptimization();
+});
+
 /*************************************************
  * 4️⃣ 스태미나 계산기 (정보탭 전문가 반영)
  *************************************************/
