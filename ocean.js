@@ -139,7 +139,7 @@ function calculate2Star(input) {
                     regen: CORE + POTION,     // 해구의 파동 코어 + 침묵의 심해 비약
                     poison: POTION + WING     // 침묵의 심해 비약 + 청해룡의 날개
                 };
-                
+
                 let ess = {
                     guard: crystal.vital + crystal.defense,       // 수호 에센스
                     wave: crystal.erosion + crystal.regen,       // 파동 에센스
@@ -176,20 +176,29 @@ function calculate2Star(input) {
         decay: crystalNeed.erosion + crystalNeed.poison   // 부식 에센스
     };
 
-    // 필요한 재료 계산
-    let materialNeed = {
-        seaweed: 2 * (essNeed.guard + essNeed.wave + essNeed.chaos + essNeed.life + essNeed.decay), // 해초의 수량
-        ink: crystalNeed.vital + crystalNeed.erosion + crystalNeed.defense + crystalNeed.regen + crystalNeed.poison, // 먹물 수량
-        coralBlock: best.CORE + best.POTION + best.WING // 산호 블럭 수량 (각각의 블럭을 하나씩 사용하는 조합)
+    // 각 에센스에 필요한 산호 블럭 계산
+    let coralBlockNeed = {
+        guard: essNeed.guard,  // 수호 에센스: 관 산호 블럭
+        wave: essNeed.wave,    // 파동 에센스: 사방 산호 블럭
+        chaos: essNeed.chaos,  // 혼란 에센스: 거품 산호 블럭
+        life: essNeed.life,    // 생명 에센스: 불 산호 블럭
+        decay: essNeed.decay   // 부식 에센스: 뇌 산호 블럭
     };
 
-    // 필요한 광물 계산
+    // 필요한 재료 계산 (각 에센스마다 1개씩 산호 블럭 사용)
+    let materialNeed = {
+        seaweed: 2 * (essNeed.guard + essNeed.wave + essNeed.chaos + essNeed.life + essNeed.decay), // 해초의 수량 (각 영약마다 2개씩)
+        ink: crystalNeed.vital + crystalNeed.erosion + crystalNeed.defense + crystalNeed.regen + crystalNeed.poison, // 먹물 수량
+        coralBlock: coralBlockNeed.guard + coralBlockNeed.wave + coralBlockNeed.chaos + coralBlockNeed.life + coralBlockNeed.decay // 산호 블럭 수량 (각 에센스마다 1개씩)
+    };
+
+    // 필요한 광물 계산 (각 영약에 필요한 광물 수량)
     let mineralNeed = {
-        lapis: crystalNeed.vital * 2,    // 청금석 블록
-        redstone: crystalNeed.erosion * 2, // 레드스톤 블록
-        iron: crystalNeed.defense * 2,    // 철
-        gold: crystalNeed.regen * 2,      // 금
-        diamond: crystalNeed.poison * 2   // 다이아몬드
+        lapis: crystalNeed.vital * 1,    // 청금석 블록 (활기 보존의 결정)
+        redstone: crystalNeed.erosion * 1, // 레드스톤 블록 (파도 침식의 결정)
+        iron: crystalNeed.defense * 1,    // 철 (방어 오염의 결정)
+        gold: crystalNeed.regen * 1,      // 금 (격류 재생의 결정)
+        diamond: crystalNeed.poison * 1   // 다이아몬드 (맹독 혼란의 결정)
     };
 
     return { best, essNeed, crystalNeed, materialNeed, mineralNeed };
@@ -221,18 +230,31 @@ function run2StarOptimization() {
     document.getElementById("result-frenzy-2").textContent = r.best.POTION;
     document.getElementById("result-feather-2").textContent = r.best.WING;
 
+    // 에센스 수량 표시
     document.getElementById("result-essence-2").textContent =
         `수호 ${r.essNeed.guard}, 파동 ${r.essNeed.wave}, 혼란 ${r.essNeed.chaos}, 생명 ${r.essNeed.life}, 부식 ${r.essNeed.decay}`;
+    
+    // 결정 수량 표시
     document.getElementById("result-core-2").textContent =
         `활기 보존 ${r.crystalNeed.vital}, 파도 침식 ${r.crystalNeed.erosion}, 방어 오염 ${r.crystalNeed.defense}, 격류 재생 ${r.crystalNeed.regen}, 맹독 혼란 ${r.crystalNeed.poison}`;
 
+    // 해초 및 먹물 수량 표시
     document.getElementById("result-material-2").textContent =
         `해초 ${r.materialNeed.seaweed}, 먹물 ${r.materialNeed.ink}`;
 
-    // 추가 산호 블럭 표시
+    // 산호 블럭 수량 수정: 각 에센스별로 1개씩 산호 블럭 사용
+    // 각 에센스별로 산호 블럭 수를 따로 반영
+    let coralNeed = {
+        관: r.essNeed.guard,
+        사방: r.essNeed.wave,
+        거품: r.essNeed.chaos,
+        불: r.essNeed.life,
+        뇌: r.essNeed.decay
+    };
     document.getElementById("result-coral-2").textContent =
-        `관 ${r.materialNeed.coralBlock}, 사방 ${r.materialNeed.coralBlock}, 거품 ${r.materialNeed.coralBlock}, 불 ${r.materialNeed.coralBlock}, 뇌 ${r.materialNeed.coralBlock}`;
+        `관 ${coralNeed.관}, 사방 ${coralNeed.사방}, 거품 ${coralNeed.거품}, 불 ${coralNeed.불}, 뇌 ${coralNeed.뇌}`;
 
+    // 광물 수량 표시
     document.getElementById("result-extra-2").textContent =
         `청금석 블록 ${r.mineralNeed.lapis}, 레드스톤 블록 ${r.mineralNeed.redstone}, 철 ${r.mineralNeed.iron}, 금 ${r.mineralNeed.gold}, 다이아 ${r.mineralNeed.diamond}`;
 }
