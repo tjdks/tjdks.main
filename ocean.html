@@ -248,6 +248,7 @@
 
         
         <!-- ================= 2성 계산기 ================= -->
+        <!-- 2성 계산기 -->
         <div class="star-level" id="star-2" style="display:none;">
           <h3>2성 계산기</h3>
 
@@ -261,7 +262,8 @@
 
           <button id="btn-run-2" onclick="run2StarOptimization()">2성 최대 골드 계산</button>
 
-          <!-- 결과 카드 -->
+          <!-- 결과 카드 추가 (result-card로 감싸기) -->
+          <div class="result-card" id="result-card-2">
             <div class="result-header">
               <h3>📊 최적 조합 결과</h3>
               <div class="result-gold">
@@ -269,37 +271,49 @@
                 <small id="result-premium-bonus-2" style="margin-left: 8px; color: #aaaaaa;">+0%</small>
               </div>
             </div>
+
             <!-- 제작 결과 -->
             <div class="result-products">
-              <div>해구의 파동 코어<span id="result-acutis-2">0</span></div>
-              <div>침묵의 심해 비약<span id="result-frenzy-2">0</span></div>
-              <div>청해룡의 날개<span id="result-feather-2">0</span></div>
+              <div>해구의 파동 코어 <span id="result-acutis-2">0</span></div>
+              <div>침묵의 심해 비약 <span id="result-frenzy-2">0</span></div>
+              <div>청해룡의 날개 <span id="result-feather-2">0</span></div>
             </div>
 
+            <!-- 필요 에센스 -->
             <div class="result-section">
               <h4>🔹 필요 에센스 제작</h4>
               <p id="result-essence-2"></p>
             </div>
 
+            <!-- 필요 결정 -->
             <div class="result-section">
               <h4>🔹 필요 결정 제작</h4>
               <p id="result-core-2"></p>
             </div>
 
+            <!-- 필요 재료 -->
             <div class="result-section">
               <h4>🔹 필요 재료</h4>
               <p id="result-material-2"></p>
             </div>
 
+            <!-- 추가 산호 -->
             <div class="result-section">
-              <h4>🔹 추가 재료 / 광물</h4>
+              <h4>🔹 추가 산호</h4>
+              <p id="result-coral-2"></p>
+            </div>
+
+            <!-- 추가 광물 -->
+            <div class="result-section">
+              <h4>🔹 추가 광물</h4>
               <p id="result-extra-2"></p>
             </div>
-          </div>
-        </div>
+          </div> <!-- .result-card 끝 -->
+        </div> <!-- .star-level 끝 -->
 
 
         <!-- ================= 3성 계산기 ================= -->
+        <!-- 3성 계산기 -->
         <div class="star-level" id="star-3" style="display:none;">
           <h3>3성 계산기</h3>
 
@@ -313,7 +327,8 @@
 
           <button id="btn-run-3" onclick="run3StarOptimization()">3성 최대 골드 계산</button>
 
-          <!-- 결과 -->
+          <!-- 결과 카드 추가 (result-card로 감싸기) -->
+          <div class="result-card" id="result-card-3">
             <div class="result-header">
               <h3>📊 최적 조합 결과</h3>
               <div class="result-gold">
@@ -321,7 +336,8 @@
                 <small id="result-premium-bonus-3" style="margin-left: 8px; color: #aaaaaa;">+0%</small>
               </div>
             </div>
-            <!-- 생산 결과 -->
+
+            <!-- 제작 결과 -->
             <div class="result-products">
               <div>아쿠아 펄스 파편 <span id="result-aqua-3">0</span></div>
               <div>나우틸러스의 손 <span id="result-nautilus-3">0</span></div>
@@ -357,8 +373,8 @@
               <h4>🔹 필요 꽃</h4>
               <p id="result-flower-3"></p>
             </div>
-          </div>
-        </div>
+          </div> <!-- .result-card 끝 -->
+        </div> <!-- .star-level 끝 -->
 
 
         <script>

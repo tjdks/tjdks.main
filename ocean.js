@@ -133,21 +133,25 @@ function calculate2Star(input) {
         for (let POTION = 0; POTION <= limit; POTION++) {
             for (let WING = 0; WING <= limit; WING++) {
                 let crystal = {
-                    vital: CORE + WING,
-                    erosion: CORE + POTION,
-                    defense: WING,
-                    regen: CORE + POTION,
-                    poison: POTION + WING
+                    vital: CORE + WING,       // 해구의 파동 코어 + 청해룡의 날개
+                    erosion: CORE + POTION,   // 해구의 파동 코어 + 침묵의 심해 비약
+                    defense: WING,            // 청해룡의 날개
+                    regen: CORE + POTION,     // 해구의 파동 코어 + 침묵의 심해 비약
+                    poison: POTION + WING     // 침묵의 심해 비약 + 청해룡의 날개
                 };
+                
                 let ess = {
-                    guard: crystal.vital + crystal.defense,
-                    wave: crystal.erosion + crystal.regen,
-                    chaos: crystal.defense + crystal.poison,
-                    life: crystal.vital + crystal.regen,
-                    decay: crystal.erosion + crystal.poison
+                    guard: crystal.vital + crystal.defense,       // 수호 에센스
+                    wave: crystal.erosion + crystal.regen,       // 파동 에센스
+                    chaos: crystal.defense + crystal.poison,     // 혼란 에센스
+                    life: crystal.vital + crystal.regen,         // 생명 에센스
+                    decay: crystal.erosion + crystal.poison      // 부식 에센스
                 };
+
+                // 에센스 요구량을 초과하면 건너뜀
                 if (ess.guard > input.guard || ess.wave > input.wave || ess.chaos > input.chaos || ess.life > input.life || ess.decay > input.decay)
                     continue;
+
                 let gold = CORE * GOLD_2STAR.CORE + POTION * GOLD_2STAR.POTION + WING * GOLD_2STAR.WING;
                 if (gold > best.gold) best = { gold, CORE, POTION, WING };
             }
@@ -155,31 +159,39 @@ function calculate2Star(input) {
     }
     if (best.gold < 0) return null;
 
+    // 크리스탈 및 에센스 계산
     let crystalNeed = {
-        vital: best.CORE + best.WING,
-        erosion: best.CORE + best.POTION,
-        defense: best.WING,
-        regen: best.CORE + best.POTION,
-        poison: best.POTION + best.WING
+        vital: best.CORE + best.WING,        // 해구의 파동 코어 + 청해룡의 날개
+        erosion: best.CORE + best.POTION,    // 해구의 파동 코어 + 침묵의 심해 비약
+        defense: best.WING,                  // 청해룡의 날개
+        regen: best.CORE + best.POTION,      // 해구의 파동 코어 + 침묵의 심해 비약
+        poison: best.POTION + best.WING      // 침묵의 심해 비약 + 청해룡의 날개
     };
+
     let essNeed = {
-        guard: crystalNeed.vital + crystalNeed.defense,
-        wave: crystalNeed.erosion + crystalNeed.regen,
-        chaos: crystalNeed.defense + crystalNeed.poison,
-        life: crystalNeed.vital + crystalNeed.regen,
-        decay: crystalNeed.erosion + crystalNeed.poison
+        guard: crystalNeed.vital + crystalNeed.defense,  // 수호 에센스
+        wave: crystalNeed.erosion + crystalNeed.regen,   // 파동 에센스
+        chaos: crystalNeed.defense + crystalNeed.poison, // 혼란 에센스
+        life: crystalNeed.vital + crystalNeed.regen,     // 생명 에센스
+        decay: crystalNeed.erosion + crystalNeed.poison   // 부식 에센스
     };
+
+    // 필요한 재료 계산
     let materialNeed = {
-        seaweed: 2 * (essNeed.guard + essNeed.wave + essNeed.chaos + essNeed.life + essNeed.decay),
-        ink: crystalNeed.vital + crystalNeed.erosion + crystalNeed.defense + crystalNeed.regen + crystalNeed.poison
+        seaweed: 2 * (essNeed.guard + essNeed.wave + essNeed.chaos + essNeed.life + essNeed.decay), // 해초의 수량
+        ink: crystalNeed.vital + crystalNeed.erosion + crystalNeed.defense + crystalNeed.regen + crystalNeed.poison, // 먹물 수량
+        coralBlock: best.CORE + best.POTION + best.WING // 산호 블럭 수량 (각각의 블럭을 하나씩 사용하는 조합)
     };
+
+    // 필요한 광물 계산
     let mineralNeed = {
-        lapis: crystalNeed.vital * 2,
-        redstone: crystalNeed.erosion * 2,
-        iron: crystalNeed.defense * 2,
-        gold: crystalNeed.regen * 2,
-        diamond: crystalNeed.poison * 2
+        lapis: crystalNeed.vital * 2,    // 청금석 블록
+        redstone: crystalNeed.erosion * 2, // 레드스톤 블록
+        iron: crystalNeed.defense * 2,    // 철
+        gold: crystalNeed.regen * 2,      // 금
+        diamond: crystalNeed.poison * 2   // 다이아몬드
     };
+
     return { best, essNeed, crystalNeed, materialNeed, mineralNeed };
 }
 
@@ -213,8 +225,14 @@ function run2StarOptimization() {
         `수호 ${r.essNeed.guard}, 파동 ${r.essNeed.wave}, 혼란 ${r.essNeed.chaos}, 생명 ${r.essNeed.life}, 부식 ${r.essNeed.decay}`;
     document.getElementById("result-core-2").textContent =
         `활기 보존 ${r.crystalNeed.vital}, 파도 침식 ${r.crystalNeed.erosion}, 방어 오염 ${r.crystalNeed.defense}, 격류 재생 ${r.crystalNeed.regen}, 맹독 혼란 ${r.crystalNeed.poison}`;
+
     document.getElementById("result-material-2").textContent =
         `해초 ${r.materialNeed.seaweed}, 먹물 ${r.materialNeed.ink}`;
+
+    // 추가 산호 블럭 표시
+    document.getElementById("result-coral-2").textContent =
+        `관 ${r.materialNeed.coralBlock}, 사방 ${r.materialNeed.coralBlock}, 거품 ${r.materialNeed.coralBlock}, 불 ${r.materialNeed.coralBlock}, 뇌 ${r.materialNeed.coralBlock}`;
+
     document.getElementById("result-extra-2").textContent =
         `청금석 블록 ${r.mineralNeed.lapis}, 레드스톤 블록 ${r.mineralNeed.redstone}, 철 ${r.mineralNeed.iron}, 금 ${r.mineralNeed.gold}, 다이아 ${r.mineralNeed.diamond}`;
 }
