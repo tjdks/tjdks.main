@@ -22,7 +22,7 @@ const ESSENCE_TO_BLOCK = {
     guard: { clay: 1 },
     wave: { sand: 3 },
     chaos: { dirt: 4 },
-    life: { gravel: 3 },
+    life: { gravel: 2 },
     decay: { granite: 1 }
 };
 const CORE_TO_FISH = {
