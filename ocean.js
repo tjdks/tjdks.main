@@ -242,17 +242,18 @@ function run2StarOptimization() {
  *************************************************/
 const GOLD_3STAR = { AQUA: 10699, NAUTILUS: 10824, SPINE: 10892 }; // 가격 업데이트
 const ELIXER_MATERIALS = {
-    "불멸 재생의 영약 ★★★": ["수호의 엘릭서 ★★★","생명의 엘릭서 ★★★","발광 먹물 주머니","발광 열매","수레국화"],
-    "파동 장벽의 영약 ★★★": ["파동의 엘릭서 ★★★","수호의 엘릭서 ★★★","발광 먹물 주머니","발광 열매","민들레"],
-    "타락 침식의 영약 ★★★": ["혼란의 엘릭서 ★★★","부식의 엘릭서 ★★★","발광 먹물 주머니","발광 열매","데이지"],
-    "생명 광란의 영약 ★★★": ["생명의 엘릭서 ★★★","혼란의 엘릭서 ★★★","발광 먹물 주머니","발광 열매","양귀비"],
-    "맹독 파동의 영약 ★★★": ["부식의 엘릭서 ★★★","파동의 엘릭서 ★★★","발광 먹물 주머니","발광 열매","선애기별꽃"]
+    "불멸 재생의 영약 ★★★": ["수호의 엘릭서 ★★★", "생명의 엘릭서 ★★★", "발광 먹물 주머니", "발광 열매", "수레국화"],
+    "파동 장벽의 영약 ★★★": ["파동의 엘릭서 ★★★", "수호의 엘릭서 ★★★", "발광 먹물 주머니", "발광 열매", "민들레"],
+    "타락 침식의 영약 ★★★": ["혼란의 엘릭서 ★★★", "부식의 엘릭서 ★★★", "발광 먹물 주머니", "발광 열매", "데이지"],
+    "생명 광란의 영약 ★★★": ["생명의 엘릭서 ★★★", "혼란의 엘릭서 ★★★", "발광 먹물 주머니", "발광 열매", "양귀비"],
+    "맹독 파동의 영약 ★★★": ["부식의 엘릭서 ★★★", "파동의 엘릭서 ★★★", "발광 먹물 주머니", "발광 열매", "선애기별꽃"]
 };
 
 function calculate3Star(input) {
     let best = { gold: -1, AQUA: 0, NAUTILUS: 0, SPINE: 0 };
     let limit = Math.max(10, input.guard + input.wave + input.chaos + input.life + input.decay);
 
+    // 3성 조합을 찾아서 최적의 결과 계산
     for (let AQUA = 0; AQUA <= limit; AQUA++) {
         for (let NAUTILUS = 0; NAUTILUS <= limit; NAUTILUS++) {
             for (let SPINE = 0; SPINE <= limit; SPINE++) {
@@ -277,14 +278,25 @@ function calculate3Star(input) {
                     elixir.life > input.life ||
                     elixir.decay > input.decay
                 ) continue;
+
                 let gold = AQUA * GOLD_3STAR.AQUA + NAUTILUS * GOLD_3STAR.NAUTILUS + SPINE * GOLD_3STAR.SPINE;
                 if (gold > best.gold) best = { gold, AQUA, NAUTILUS, SPINE };
             }
         }
     }
+
     if (best.gold < 0) return null;
 
-    let potionNeed = { immortal: best.AQUA + best.NAUTILUS, barrier: best.AQUA + best.NAUTILUS, poison: best.AQUA + best.SPINE, frenzy: best.NAUTILUS + best.SPINE, corrupt: best.SPINE };
+    // 최적의 영약 수량 계산
+    let potionNeed = { 
+        immortal: best.AQUA + best.NAUTILUS, 
+        barrier: best.AQUA + best.NAUTILUS, 
+        poison: best.AQUA + best.SPINE, 
+        frenzy: best.NAUTILUS + best.SPINE, 
+        corrupt: best.SPINE 
+    };
+
+    // 각 영약에 필요한 수치 계산
     let elixirNeed = {
         guard: potionNeed.immortal + potionNeed.barrier,
         wave: potionNeed.barrier + potionNeed.poison,
@@ -292,27 +304,43 @@ function calculate3Star(input) {
         life: potionNeed.immortal + potionNeed.frenzy,
         decay: potionNeed.corrupt + potionNeed.poison
     };
+
+    // 필요한 재료 수량 (조합법에 맞춰서 수정)
     let materialNeed = {
-        seaSquirt: 3 * (elixirNeed.guard + elixirNeed.wave + elixirNeed.chaos + elixirNeed.life + elixirNeed.decay),
-        bottle: 5 * (elixirNeed.guard + elixirNeed.wave + elixirNeed.chaos + elixirNeed.life + elixirNeed.decay),
+        seaSquirt: potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt, // 불우렁쉥이 (각 영약마다 1개씩)
+        bottle: 3 * (potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt), // 유리병 (각 영약마다 3개씩)
         glowInk: potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt,
         glowBerry: potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt
     };
+
+    // 블록 수량 (각 엘릭서마다 요구되는 블록 수량)
     let blockNeed = {
-        netherrack: elixirNeed.guard * 32,
-        magma: elixirNeed.wave * 16,
-        soulSand: elixirNeed.chaos * 16,
-        crimson: elixirNeed.life * 8,
-        warped: elixirNeed.decay * 8
+        netherrack: elixirNeed.guard * 16, // 수호의 엘릭서: 네더렉 16개
+        magma: elixirNeed.wave * 8, // 파동의 엘릭서: 마그마블록 8개
+        soulSand: elixirNeed.chaos * 8, // 혼란의 엘릭서: 영혼모래 8개
+        crimson: elixirNeed.life * 4, // 생명의 엘릭서: 진홍빛자루 4개
+        warped: elixirNeed.decay * 4 // 부식의 엘릭서: 뒤틀린자루 4개
     };
+
+    // 꽃 수량 (각 영약에 필요한 꽃 수량)
     let flowerNeed = {
-        cornflower: potionNeed.immortal * 2,
-        dandelion: potionNeed.barrier * 2,
-        daisy: potionNeed.corrupt * 2,
-        poppy: potionNeed.frenzy * 2,
-        azure: potionNeed.poison * 2
+        cornflower: potionNeed.immortal * 1, // 불멸 재생의 영약: 수레국화 1개
+        dandelion: potionNeed.barrier * 1, // 파동 장벽의 영약: 민들레 1개
+        daisy: potionNeed.corrupt * 1, // 타락 침식의 영약: 데이지 1개
+        poppy: potionNeed.frenzy * 1, // 생명 광란의 영약: 양귀비 1개
+        azure: potionNeed.poison * 1 // 맹독 파동의 영약: 선애기별꽃 1개
     };
-    return { best, elixirNeed, potionNeed, materialNeed, blockNeed, flowerNeed };
+
+    // 엘릭서 조합법에 맞는 재료들
+    let elixirCombos = {
+        "불멸 재생의 영약 ★★★": ELIXER_MATERIALS["불멸 재생의 영약 ★★★"],
+        "파동 장벽의 영약 ★★★": ELIXER_MATERIALS["파동 장벽의 영약 ★★★"],
+        "타락 침식의 영약 ★★★": ELIXER_MATERIALS["타락 침식의 영약 ★★★"],
+        "생명 광란의 영약 ★★★": ELIXER_MATERIALS["생명 광란의 영약 ★★★"],
+        "맹독 파동의 영약 ★★★": ELIXER_MATERIALS["맹독 파동의 영약 ★★★"]
+    };
+
+    return { best, elixirNeed, potionNeed, materialNeed, blockNeed, flowerNeed, elixirCombos };
 }
 
 function run3StarOptimization() {
@@ -331,26 +359,38 @@ function run3StarOptimization() {
 
     const finalGold = Math.floor(r.best.gold * (1 + rate));
 
+    // 골드와 프리미엄 보너스 출력
     document.getElementById("result-gold-3").textContent = finalGold;
-
-    // 프리미엄 보너스 퍼센트 표시
     const bonusText = premiumLV ? `+${Math.floor(rate * 100)}%` : '+0%';
     document.getElementById("result-premium-bonus-3").textContent = bonusText;
 
+    // 아쿠아 펄스, 나우틸러스의 손, 무저의 척추 출력
     document.getElementById("result-aqua-3").textContent = r.best.AQUA;
     document.getElementById("result-nautilus-3").textContent = r.best.NAUTILUS;
     document.getElementById("result-spine-3").textContent = r.best.SPINE;
 
+    // 필요 엘릭서 출력
     document.getElementById("result-essence-3").textContent =
         `수호 ${r.elixirNeed.guard}, 파동 ${r.elixirNeed.wave}, 혼란 ${r.elixirNeed.chaos}, 생명 ${r.elixirNeed.life}, 부식 ${r.elixirNeed.decay}`;
+
+    // 필요 영약 출력
     document.getElementById("result-core-3").textContent =
         `불멸 재생 ${r.potionNeed.immortal}, 파동 장벽 ${r.potionNeed.barrier}, 타락 침식 ${r.potionNeed.poison}, 생명 광란 ${r.potionNeed.frenzy}, 맹독 파동 ${r.potionNeed.corrupt}`;
+
+    // 필요 재료 출력
     document.getElementById("result-material-3").textContent =
         `불우렁쉥이 ${r.materialNeed.seaSquirt}, 유리병 ${r.materialNeed.bottle}, 발광 먹물 ${r.materialNeed.glowInk}, 발광 열매 ${r.materialNeed.glowBerry}`;
+
+    // 필요 블록 출력
     document.getElementById("result-block-3").textContent =
         `네더렉 ${r.blockNeed.netherrack}, 마그마 ${r.blockNeed.magma}, 소울샌드 ${r.blockNeed.soulSand}, 진흥빛자루 ${r.blockNeed.crimson}, 뒤틀린자루 ${r.blockNeed.warped}`;
+
+    // 필요 꽃 출력
     document.getElementById("result-flower-3").textContent =
         `수레국화 ${r.flowerNeed.cornflower}, 민들레 ${r.flowerNeed.dandelion}, 데이지 ${r.flowerNeed.daisy}, 양귀비 ${r.flowerNeed.poppy}, 선애기별꽃 ${r.flowerNeed.azure}`;
+
+    // 결과 카드 보이기
+    document.getElementById("result-card-3").style.display = "block";
 }
 
 // ===== 프리미엄 입력값 자동 반영 =====
