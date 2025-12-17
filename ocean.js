@@ -19,7 +19,7 @@ const CORE_TO_ESSENCE = {
     ED: { decay: 1, guard: 1 }
 };
 const ESSENCE_TO_BLOCK = {
-    guard: { clay: 2 },
+    guard: { clay: 1 },
     wave: { sand: 3 },
     chaos: { dirt: 4 },
     life: { gravel: 3 },
