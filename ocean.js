@@ -313,6 +313,35 @@ function run3StarOptimization() {
 }
 
 /*************************************************
+ * 4️⃣ 스태미나 계산기
+ *************************************************/
+function runStaminaSimulation() {
+    // input 값 가져오기
+    const stamina = +document.getElementById("input-stamina").value;
+    const item = document.getElementById("stamina-item-select").value;
+
+    if (!stamina) return alert("스태미나를 입력해주세요.");
+
+    // 여기서 기존 로직으로 1,2,3성 확률/아이템 계산
+    // 예시: 1성만 계산
+    const result = {
+        "1성": Math.floor(stamina * 0.5),
+        "2성": Math.floor(stamina * 0.3),
+        "3성": Math.floor(stamina * 0.2),
+        "조개": Math.floor(stamina * 0.1)
+    };
+
+    let html = `<ul>
+        <li>1성 ${item}: ${result["1성"]}</li>
+        <li>2성 ${item}: ${result["2성"]}</li>
+        <li>3성 ${item}: ${result["3성"]}</li>
+        <li>조개: ${result["조개"]}</li>
+    </ul>`;
+
+    document.getElementById("stamina-item-list").innerHTML = html;
+}
+
+/*************************************************
  * 이벤트 등록
  *************************************************/
 document.addEventListener("DOMContentLoaded", () => {
@@ -329,10 +358,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // 계산기 버튼 이벤트 연결
+    // 기존 계산기 버튼 이벤트 연결
     document.getElementById("btn-run-1")?.addEventListener("click", run1StarOptimization);
     document.getElementById("btn-run-2")?.addEventListener("click", run2StarOptimization);
     document.getElementById("btn-run-3")?.addEventListener("click", run3StarOptimization);
+
+    // 🔹 스태미나 계산기 버튼 이벤트 추가
+    document.getElementById("stamina-calc-btn")?.addEventListener("click", runStaminaSimulation);
 });
 
 // i 버튼 클릭 시 설명 토글

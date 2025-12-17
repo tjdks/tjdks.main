@@ -26,6 +26,7 @@
     <div class="sub-header-inner">
       <a href="#" class="active" data-target="tab-info">정보</a>
       <a href="#" data-target="tab-gold">골드 수익 최적화</a>
+      <a href="#" data-target="tab-stamina">스태미나</a>
       <a href="#" data-target="tab-craft">공예품</a>
     </div>
   </div>
@@ -43,7 +44,7 @@
             <!-- 낚싯대 스펙 블록 -->
             <div id="info-expert-rod-row">
                 <div class="fish-label">낚싯대 스펙</div>
-                <input id="info-expert-rod" type="number" placeholder="예: 10">
+                <input id="info-expert-rod" type="number" placeholder="예) 10">
             </div>
 
             <div class="fish-row">
@@ -369,14 +370,58 @@
             document.getElementById('star-' + level).style.display = 'block';
           }
         </script>
-
       </div>
 
-      <!-- 공예품 탭 -->
-      <div id="tab-craft" class="tab-content" style="display:none;">
-        <h2>해양 - 공예품</h2>
-        <p>공예품 제작 및 판매 효율</p>
+
+      
+      <!-- 스태미나 탭 -->
+      <!-- 스태미나 탭 -->
+      <div id="tab-stamina" class="tab-content" style="display:none;">
+        <div class="stamina-card">
+
+          <!-- 제목 + 전문가 정보 -->
+          <div class="stamina-header">
+            <h3 class="stamina-header-title">🧪 스태미나 계산기</h3>
+            <span id="stamina-expert-summary" class="stamina-header-expert">
+              (비 오는 날 어패류 +3%, 3성 어패류 +2%, 조개 등장 확률 +1.5%)
+            </span>
+          </div>
+
+          <!-- 입력 영역: 가로 배치 -->
+          <div class="stamina-inputs-horizontal">
+            <label class="stamina-input-label">
+              스태미나
+              <input type="number" id="input-stamina" value="" min="0" placeholder="예) 3000">
+            </label>
+
+            <label class="stamina-input-label">
+              채집할 아이템
+              <select id="stamina-item-select">
+                <option value="굴">굴</option>
+                <option value="소라">소라</option>
+                <option value="문어">문어</option>
+                <option value="미역">미역</option>
+                <option value="성게">성게</option>
+              </select>
+            </label>
+          </div>
+
+          <!-- 계산 버튼 -->
+          <div class="stamina-button-wrapper">
+            <button id="stamina-calc-btn">계산하기</button>
+          </div>
+
+          <!-- 결과 영역 -->
+          <div class="stamina-result-card">
+            <h4>📊 예상 아이템</h4>
+            <div id="stamina-item-list">아직 계산되지 않았습니다.</div>
+          </div>
+
+        </div>
       </div>
+
+
+      
 
     </section>
   </main>
