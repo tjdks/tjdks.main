@@ -25,37 +25,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===== 계산 함수 =====
-    function calculate3Star(input) {
-        const ELIXER_MATERIALS = {
-            "불멸 재생의 영약 ★★★": ["수호의 엘릭서 ★★★", "생명의 엘릭서 ★★★", "발광 먹물 주머니", "발광 열매", "수레국화"],
-            "파동 장벽의 영약 ★★★": ["파동의 엘릭서 ★★★", "수호의 엘릭서 ★★★", "발광 먹물 주머니", "발광 열매", "민들레"],
-            "타락 침식의 영약 ★★★": ["혼란의 엘릭서 ★★★", "부식의 엘릭서 ★★★", "발광 먹물 주머니", "발광 열매", "데이지"],
-            "생명 광란의 영약 ★★★": ["생명의 엘릭서 ★★★", "혼란의 엘릭서 ★★★", "발광 먹물 주머니", "발광 열매", "양귀비"],
-            "맹독 파동의 영약 ★★★": ["부식의 엘릭서 ★★★", "파동의 엘릭서 ★★★", "발광 먹물 주머니", "발광 열매", "선애기별꽃"]
-        };
-
+    window.calculate3Star = function(input) {
         let best = { gold: -1, AQUA: 0, NAUTILUS: 0, SPINE: 0 };
         let limit = Math.max(10, input.guard + input.wave + input.chaos + input.life + input.decay);
 
         for (let AQUA = 0; AQUA <= limit; AQUA++) {
             for (let NAUTILUS = 0; NAUTILUS <= limit; NAUTILUS++) {
                 for (let SPINE = 0; SPINE <= limit; SPINE++) {
+                    // 영약 계산 (2성의 결정과 동일한 구조)
                     let potion = {
-                        immortal: AQUA + NAUTILUS,
-                        barrier: AQUA + NAUTILUS,
-                        poison: AQUA + SPINE,
-                        frenzy: NAUTILUS + SPINE,
-                        corrupt: SPINE
+                        immortal: AQUA + NAUTILUS,      // 불멸 재생 = 아쿠아 + 나우틸러스
+                        barrier: AQUA + NAUTILUS,       // 파동 장벽 = 아쿠아 + 나우틸러스
+                        corrupt: SPINE + NAUTILUS,      // 타락 침식 = 척추 + 나우틸러스
+                        frenzy: SPINE + NAUTILUS,       // 생명 광란 = 척추 + 나우틸러스
+                        venom: AQUA + SPINE             // 맹독 파동 = 아쿠아 + 척추
                     };
+                    
+                    // 엘릭서 계산 (2성의 에센스와 동일한 구조)
                     let elixir = {
-                        guard: potion.immortal + potion.barrier,
-                        wave: potion.barrier + potion.poison,
-                        chaos: potion.corrupt + potion.frenzy,
-                        life: potion.immortal + potion.frenzy,
-                        decay: potion.corrupt + potion.poison
+                        guard: potion.immortal + potion.barrier,    // 수호 = 불멸재생 + 파동장벽
+                        wave: potion.barrier + potion.venom,        // 파동 = 파동장벽 + 맹독파동
+                        chaos: potion.corrupt + potion.frenzy,      // 혼란 = 타락침식 + 생명광란
+                        life: potion.immortal + potion.frenzy,      // 생명 = 불멸재생 + 생명광란
+                        decay: potion.corrupt + potion.venom        // 부식 = 타락침식 + 맹독파동
                     };
+
                     if (elixir.guard > input.guard || elixir.wave > input.wave || elixir.chaos > input.chaos ||
-                        elixir.life > input.life || elixir.decay > input.decay) continue;
+                        elixir.life > input.life || elixir.decay > input.decay)
+                        continue;
 
                     let gold = AQUA * GOLD_3STAR.AQUA + NAUTILUS * GOLD_3STAR.NAUTILUS + SPINE * GOLD_3STAR.SPINE;
                     if (gold > best.gold) best = { gold, AQUA, NAUTILUS, SPINE };
@@ -68,32 +65,40 @@ document.addEventListener('DOMContentLoaded', () => {
         let potionNeed = {
             immortal: best.AQUA + best.NAUTILUS,
             barrier: best.AQUA + best.NAUTILUS,
-            poison: best.AQUA + best.SPINE,
-            frenzy: best.NAUTILUS + best.SPINE,
-            corrupt: best.SPINE
+            corrupt: best.SPINE + best.NAUTILUS,
+            frenzy: best.SPINE + best.NAUTILUS,
+            venom: best.AQUA + best.SPINE
         };
 
         let elixirNeed = {
             guard: potionNeed.immortal + potionNeed.barrier,
-            wave: potionNeed.barrier + potionNeed.poison,
+            wave: potionNeed.barrier + potionNeed.venom,
             chaos: potionNeed.corrupt + potionNeed.frenzy,
             life: potionNeed.immortal + potionNeed.frenzy,
-            decay: potionNeed.corrupt + potionNeed.poison
+            decay: potionNeed.corrupt + potionNeed.venom
+        };
+
+        let seaSquirtNeed = {
+            guard: elixirNeed.guard,
+            wave: elixirNeed.wave,
+            chaos: elixirNeed.chaos,
+            life: elixirNeed.life,
+            decay: elixirNeed.decay
         };
 
         let materialNeed = {
-            seaSquirt: potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt,
-            bottle: 3 * (potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt),
-            glowInk: potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt,
-            glowBerry: 2 * (potionNeed.immortal + potionNeed.barrier + potionNeed.poison + potionNeed.frenzy + potionNeed.corrupt)
+            glassBottle: 3 * (elixirNeed.guard + elixirNeed.wave + elixirNeed.chaos + elixirNeed.life + elixirNeed.decay),
+            seaSquirt: seaSquirtNeed.guard + seaSquirtNeed.wave + seaSquirtNeed.chaos + seaSquirtNeed.life + seaSquirtNeed.decay,
+            glowInkSac: potionNeed.immortal + potionNeed.barrier + potionNeed.corrupt + potionNeed.frenzy + potionNeed.venom,
+            glowBerry: 2 * (potionNeed.immortal + potionNeed.barrier + potionNeed.corrupt + potionNeed.frenzy + potionNeed.venom)
         };
 
-        let blockNeed = {
-            netherrack: elixirNeed.guard * 16,
-            magma: elixirNeed.wave * 8,
-            soulSand: elixirNeed.chaos * 8,
-            crimson: elixirNeed.life * 4,
-            warped: elixirNeed.decay * 4
+        let netherNeed = {
+            netherrack: 16 * elixirNeed.guard,
+            magmaBlock: 8 * elixirNeed.wave,
+            soulSoil: 8 * elixirNeed.chaos,
+            crimsonStem: 4 * elixirNeed.life,
+            warpedStem: 4 * elixirNeed.decay
         };
 
         let flowerNeed = {
@@ -101,11 +106,11 @@ document.addEventListener('DOMContentLoaded', () => {
             dandelion: potionNeed.barrier,
             daisy: potionNeed.corrupt,
             poppy: potionNeed.frenzy,
-            azure: potionNeed.poison
+            blueOrchid: potionNeed.venom
         };
 
-        return { best, elixirNeed, potionNeed, materialNeed, blockNeed, flowerNeed, elixirCombos: ELIXER_MATERIALS };
-    }
+        return { best, elixirNeed, potionNeed, materialNeed, netherNeed, flowerNeed, seaSquirtNeed };
+    };
 
     // ===== 결과 업데이트 =====
     function update3StarResult(r) {
@@ -113,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const PREMIUM_PRICE_RATE = {1:0.05,2:0.07,3:0.10,4:0.15,5:0.20,6:0.30,7:0.40,8:0.50};
         const rate = PREMIUM_PRICE_RATE[premiumLV] || 0;
 
-        document.getElementById("result-gold-3").textContent = Math.floor(r.best.gold * (1 + rate)).toLocaleString();;
+        document.getElementById("result-gold-3").textContent = Math.floor(r.best.gold * (1 + rate)).toLocaleString();
         document.getElementById("result-premium-bonus-3").textContent = premiumLV ? `+${Math.floor(rate*100)}%` : '+0%';
 
         document.getElementById("result-aqua-3").textContent = setSwitcher.checked ? formatSet(r.best.AQUA) : r.best.AQUA;
@@ -130,29 +135,29 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("result-core-3").textContent =
             `불멸 재생 ${setSwitcher.checked ? formatSet(r.potionNeed.immortal) : r.potionNeed.immortal}, ` +
             `파동 장벽 ${setSwitcher.checked ? formatSet(r.potionNeed.barrier) : r.potionNeed.barrier}, ` +
-            `타락 침식 ${setSwitcher.checked ? formatSet(r.potionNeed.poison) : r.potionNeed.poison}, ` +
+            `타락 침식 ${setSwitcher.checked ? formatSet(r.potionNeed.corrupt) : r.potionNeed.corrupt}, ` +
             `생명 광란 ${setSwitcher.checked ? formatSet(r.potionNeed.frenzy) : r.potionNeed.frenzy}, ` +
-            `맹독 파동 ${setSwitcher.checked ? formatSet(r.potionNeed.corrupt) : r.potionNeed.corrupt}`;
+            `맹독 파동 ${setSwitcher.checked ? formatSet(r.potionNeed.venom) : r.potionNeed.venom}`;
 
         document.getElementById("result-material-3").textContent =
             `불우렁쉥이 ${setSwitcher.checked ? formatSet(r.materialNeed.seaSquirt) : r.materialNeed.seaSquirt}, ` +
-            `유리병 ${setSwitcher.checked ? formatSet(r.materialNeed.bottle) : r.materialNeed.bottle}, ` +
-            `발광 먹물 ${setSwitcher.checked ? formatSet(r.materialNeed.glowInk) : r.materialNeed.glowInk}, ` +
+            `유리병 ${setSwitcher.checked ? formatSet(r.materialNeed.glassBottle) : r.materialNeed.glassBottle}, ` +
+            `발광 먹물 ${setSwitcher.checked ? formatSet(r.materialNeed.glowInkSac) : r.materialNeed.glowInkSac}, ` +
             `발광 열매 ${setSwitcher.checked ? formatSet(r.materialNeed.glowBerry) : r.materialNeed.glowBerry}`;
 
         document.getElementById("result-block-3").textContent =
-            `네더렉 ${setSwitcher.checked ? formatSet(r.blockNeed.netherrack) : r.blockNeed.netherrack}, ` +
-            `마그마 ${setSwitcher.checked ? formatSet(r.blockNeed.magma) : r.blockNeed.magma}, ` +
-            `영혼흙 ${setSwitcher.checked ? formatSet(r.blockNeed.soulSand) : r.blockNeed.soulSand}, ` +
-            `진홍 ${setSwitcher.checked ? formatSet(r.blockNeed.crimson) : r.blockNeed.crimson}, ` +
-            `뒤틀린 ${setSwitcher.checked ? formatSet(r.blockNeed.warped) : r.blockNeed.warped}`;
+            `네더렉 ${setSwitcher.checked ? formatSet(r.netherNeed.netherrack) : r.netherNeed.netherrack}, ` +
+            `마그마 ${setSwitcher.checked ? formatSet(r.netherNeed.magmaBlock) : r.netherNeed.magmaBlock}, ` +
+            `영혼흙 ${setSwitcher.checked ? formatSet(r.netherNeed.soulSoil) : r.netherNeed.soulSoil}, ` +
+            `진홍빛자루 ${setSwitcher.checked ? formatSet(r.netherNeed.crimsonStem) : r.netherNeed.crimsonStem}, ` +
+            `뒤틀린자루 ${setSwitcher.checked ? formatSet(r.netherNeed.warpedStem) : r.netherNeed.warpedStem}`;
 
         document.getElementById("result-flower-3").textContent =
             `수레국화 ${setSwitcher.checked ? formatSet(r.flowerNeed.cornflower) : r.flowerNeed.cornflower}, ` +
             `민들레 ${setSwitcher.checked ? formatSet(r.flowerNeed.dandelion) : r.flowerNeed.dandelion}, ` +
             `데이지 ${setSwitcher.checked ? formatSet(r.flowerNeed.daisy) : r.flowerNeed.daisy}, ` +
             `양귀비 ${setSwitcher.checked ? formatSet(r.flowerNeed.poppy) : r.flowerNeed.poppy}, ` +
-            `선애기별꽃 ${setSwitcher.checked ? formatSet(r.flowerNeed.azure) : r.flowerNeed.azure}`;
+            `선애기별꽃 ${setSwitcher.checked ? formatSet(r.flowerNeed.blueOrchid) : r.flowerNeed.blueOrchid}`;
 
         window.last3StarResult = r;
     }
@@ -178,7 +183,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ===== 입력칸 세트 표시 =====
-    // ===== 입력칸 세트 표시 =====
     inputs.forEach(input => {
         const span = document.createElement('span');
         span.className = 'set-display';
@@ -195,5 +199,4 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
-
 });
