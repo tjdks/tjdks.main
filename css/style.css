@@ -39,15 +39,39 @@ body {
 }
 
 .main-nav a {
+  position: relative;
   text-decoration: none;
   color: #555;
   font-weight: 600;
-  padding-bottom: 4px;
+  padding-bottom: 8px;
+  transition: color 0.25s ease;
 }
 
-.main-nav a.active {
+.main-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 100%;
+  height: 2px;
+  background-color: #2563eb;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s ease;
+}
+
+.main-nav a:hover {
   color: #2563eb;
-  border-bottom: 2px solid #2563eb;
+}
+
+.main-nav a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* active 상태는 항상 보이게 */
+.main-nav a.active::after {
+  transform: scaleX(1);
 }
 
 /* ===== 2차 탭 ===== */
@@ -65,16 +89,44 @@ body {
 }
 
 .sub-header-inner a {
+  position: relative;
   padding: 14px 0;
   text-decoration: none;
   color: #8d8d8d;
   font-weight: 600;
+  transition: color 0.25s ease;
+}
+
+.sub-header-inner a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 2px;
+  background-color: #2563eb;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.25s ease;
+}
+
+.sub-header-inner a:hover {
+  color: #2563eb;
+}
+
+.sub-header-inner a:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
 }
 
 .sub-header-inner a.active {
   color: #2563eb;
-  border-bottom: 2px solid #2563eb;
 }
+
+.sub-header-inner a.active::after {
+  transform: scaleX(1);
+}
+
 
 /* ===== 메인 콘텐츠 ===== */
 .page {
