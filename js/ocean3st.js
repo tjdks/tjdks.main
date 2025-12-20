@@ -1,12 +1,20 @@
 /*************************************************
- * 3️⃣ 3성 계산기 (ocean3rd.js)
+ * 3️⃣ 3성 계산기 (ocean3rd.js) - 고급 입력 모드 추가
  *************************************************/
 
 document.addEventListener('DOMContentLoaded', () => {
 
     const GOLD_3STAR = { AQUA: 10699, NAUTILUS: 10824, SPINE: 10892 };
+    const POTION_TO_ELIXIR = {
+        immortal: { guard: 1, life: 1 },
+        barrier: { guard: 1, wave: 1 },
+        corrupt: { chaos: 1, decay: 1 },
+        frenzy: { chaos: 1, life: 1 },
+        venom: { wave: 1, decay: 1 }
+    };
     const SET_COUNT = 64;
     const setSwitcher = document.getElementById('switcher-set');
+    const advancedSwitcher = document.getElementById('switcher-advanced');
 
     const inputs = [
         document.getElementById("input-oyster-3"),
@@ -15,6 +23,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("input-seaweed-3"),
         document.getElementById("input-urchin-3")
     ];
+
+    // ===== 고급 입력 모드 토글 =====
+    advancedSwitcher?.addEventListener('change', function() {
+        const advancedInputs = document.getElementById('advanced-inputs-3');
+        if (advancedInputs) {
+            if (this.checked) {
+                advancedInputs.classList.add('active');
+            } else {
+                advancedInputs.classList.remove('active');
+            }
+        }
+    });
 
     function formatSet(num) {
         const sets = Math.floor(num / SET_COUNT);
@@ -26,39 +46,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== 계산 함수 =====
     window.calculate3Star = function(input) {
+        const isAdvanced = Number.isFinite(input.potionImmortal) && input.potionImmortal >= 0;
+
         let best = { gold: -1, AQUA: 0, NAUTILUS: 0, SPINE: 0 };
-        // 최적화: 각 아이템이 최소 2개 엘릭서 필요 → 입력값의 1/2이 상한
+
+        // 보유 영약을 엘릭서로 환산
+        let elixFromPotion = { guard: 0, wave: 0, chaos: 0, life: 0, decay: 0 };
+        if (isAdvanced) {
+            elixFromPotion.guard = input.potionImmortal * POTION_TO_ELIXIR.immortal.guard + 
+                                    input.potionBarrier * POTION_TO_ELIXIR.barrier.guard;
+            elixFromPotion.wave = input.potionBarrier * POTION_TO_ELIXIR.barrier.wave + 
+                                   input.potionVenom * POTION_TO_ELIXIR.venom.wave;
+            elixFromPotion.chaos = input.potionCorrupt * POTION_TO_ELIXIR.corrupt.chaos + 
+                                    input.potionFrenzy * POTION_TO_ELIXIR.frenzy.chaos;
+            elixFromPotion.life = input.potionImmortal * POTION_TO_ELIXIR.immortal.life + 
+                                   input.potionFrenzy * POTION_TO_ELIXIR.frenzy.life;
+            elixFromPotion.decay = input.potionCorrupt * POTION_TO_ELIXIR.corrupt.decay + 
+                                    input.potionVenom * POTION_TO_ELIXIR.venom.decay;
+        }
+
+        // 총 보유 엘릭서
+        const totalElix = {
+            guard: input.guard + (input.elixGuard || 0) + elixFromPotion.guard,
+            wave: input.wave + (input.elixWave || 0) + elixFromPotion.wave,
+            chaos: input.chaos + (input.elixChaos || 0) + elixFromPotion.chaos,
+            life: input.life + (input.elixLife || 0) + elixFromPotion.life,
+            decay: input.decay + (input.elixDecay || 0) + elixFromPotion.decay
+        };
+
+        // 최적화: limit 설정
         let limit = Math.ceil(Math.max(
-            input.guard / 2,
-            input.wave / 2,
-            input.chaos / 2,
-            input.life / 2,
-            input.decay / 2
+            totalElix.guard / 2,
+            totalElix.wave / 2,
+            totalElix.chaos / 2,
+            totalElix.life / 2,
+            totalElix.decay / 2
         )) + 5;
 
         for (let AQUA = 0; AQUA <= limit; AQUA++) {
             for (let NAUTILUS = 0; NAUTILUS <= limit; NAUTILUS++) {
                 for (let SPINE = 0; SPINE <= limit; SPINE++) {
-                    // 영약 계산
                     let potion = {
-                        immortal: AQUA + NAUTILUS,      // 불멸 재생 = 아쿠아 + 나우틸러스
-                        barrier: AQUA + NAUTILUS,       // 파동 장벽 = 아쿠아 + 나우틸러스
-                        corrupt: SPINE,                 // 타락 침식 = 척추만
-                        frenzy: NAUTILUS + SPINE,       // 생명 광란 = 나우틸러스 + 척추
-                        venom: AQUA + SPINE             // 맹독 파동 = 아쿠아 + 척추
+                        immortal: AQUA + NAUTILUS,
+                        barrier: AQUA + NAUTILUS,
+                        corrupt: SPINE,
+                        frenzy: NAUTILUS + SPINE,
+                        venom: AQUA + SPINE
                     };
                     
-                    // 엘릭서 계산 (2성의 에센스와 동일한 구조)
                     let elixir = {
-                        guard: potion.immortal + potion.barrier,    // 수호 = 불멸재생 + 파동장벽
-                        wave: potion.barrier + potion.venom,        // 파동 = 파동장벽 + 맹독파동
-                        chaos: potion.corrupt + potion.frenzy,      // 혼란 = 타락침식 + 생명광란
-                        life: potion.immortal + potion.frenzy,      // 생명 = 불멸재생 + 생명광란
-                        decay: potion.corrupt + potion.venom        // 부식 = 타락침식 + 맹독파동
+                        guard: potion.immortal + potion.barrier,
+                        wave: potion.barrier + potion.venom,
+                        chaos: potion.corrupt + potion.frenzy,
+                        life: potion.immortal + potion.frenzy,
+                        decay: potion.corrupt + potion.venom
                     };
 
-                    if (elixir.guard > input.guard || elixir.wave > input.wave || elixir.chaos > input.chaos ||
-                        elixir.life > input.life || elixir.decay > input.decay)
+                    if (elixir.guard > totalElix.guard || elixir.wave > totalElix.wave || elixir.chaos > totalElix.chaos ||
+                        elixir.life > totalElix.life || elixir.decay > totalElix.decay)
                         continue;
 
                     let gold = AQUA * GOLD_3STAR.AQUA + NAUTILUS * GOLD_3STAR.NAUTILUS + SPINE * GOLD_3STAR.SPINE;
@@ -116,12 +161,48 @@ document.addEventListener('DOMContentLoaded', () => {
             blueOrchid: potionNeed.venom
         };
 
-        return { best, elixirNeed, potionNeed, materialNeed, netherNeed, flowerNeed, seaSquirtNeed };
+        // 고급 모드일 경우 보유량 차감
+        let potionToMake = { immortal: 0, barrier: 0, corrupt: 0, frenzy: 0, venom: 0 };
+        let elixToMake = { guard: 0, wave: 0, chaos: 0, life: 0, decay: 0 };
+        let finalElixNeed = { guard: 0, wave: 0, chaos: 0, life: 0, decay: 0 };
+
+        if (isAdvanced) {
+            potionToMake = {
+                immortal: Math.max(0, potionNeed.immortal - input.potionImmortal),
+                barrier: Math.max(0, potionNeed.barrier - input.potionBarrier),
+                corrupt: Math.max(0, potionNeed.corrupt - input.potionCorrupt),
+                frenzy: Math.max(0, potionNeed.frenzy - input.potionFrenzy),
+                venom: Math.max(0, potionNeed.venom - input.potionVenom)
+            };
+
+            // 제작할 영약에 필요한 엘릭서
+            elixToMake.guard = potionToMake.immortal * POTION_TO_ELIXIR.immortal.guard + 
+                                potionToMake.barrier * POTION_TO_ELIXIR.barrier.guard;
+            elixToMake.wave = potionToMake.barrier * POTION_TO_ELIXIR.barrier.wave + 
+                               potionToMake.venom * POTION_TO_ELIXIR.venom.wave;
+            elixToMake.chaos = potionToMake.corrupt * POTION_TO_ELIXIR.corrupt.chaos + 
+                                potionToMake.frenzy * POTION_TO_ELIXIR.frenzy.chaos;
+            elixToMake.life = potionToMake.immortal * POTION_TO_ELIXIR.immortal.life + 
+                               potionToMake.frenzy * POTION_TO_ELIXIR.frenzy.life;
+            elixToMake.decay = potionToMake.corrupt * POTION_TO_ELIXIR.corrupt.decay + 
+                                potionToMake.venom * POTION_TO_ELIXIR.venom.decay;
+
+            // 제작해야 할 엘릭서
+            finalElixNeed = {
+                guard: Math.max(0, elixToMake.guard - input.elixGuard),
+                wave: Math.max(0, elixToMake.wave - input.elixWave),
+                chaos: Math.max(0, elixToMake.chaos - input.elixChaos),
+                life: Math.max(0, elixToMake.life - input.elixLife),
+                decay: Math.max(0, elixToMake.decay - input.elixDecay)
+            };
+        }
+
+        return { best, elixirNeed, potionNeed, potionToMake, elixToMake, finalElixNeed, materialNeed, netherNeed, flowerNeed, seaSquirtNeed };
     };
 
     // ===== 결과 업데이트 =====
     function update3StarResult(r) {
-        const premiumLV = +document.getElementById("info-expert-premium-price").value;
+        const premiumLV = +document.getElementById("info-expert-premium-price").value || 0;
         const PREMIUM_PRICE_RATE = {1:0.05,2:0.07,3:0.10,4:0.15,5:0.20,6:0.30,7:0.40,8:0.50};
         const rate = PREMIUM_PRICE_RATE[premiumLV] || 0;
 
@@ -132,19 +213,23 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("result-nautilus-3").textContent = setSwitcher.checked ? formatSet(r.best.NAUTILUS) : r.best.NAUTILUS;
         document.getElementById("result-spine-3").textContent = setSwitcher.checked ? formatSet(r.best.SPINE) : r.best.SPINE;
 
+        const isAdvanced = advancedSwitcher && advancedSwitcher.checked;
+        const elixData = isAdvanced ? r.finalElixNeed : r.elixirNeed;
+        const potionData = isAdvanced ? r.potionToMake : r.potionNeed;
+
         document.getElementById("result-essence-3").textContent =
-            `수호 ${setSwitcher.checked ? formatSet(r.elixirNeed.guard) : r.elixirNeed.guard}, ` +
-            `파동 ${setSwitcher.checked ? formatSet(r.elixirNeed.wave) : r.elixirNeed.wave}, ` +
-            `혼란 ${setSwitcher.checked ? formatSet(r.elixirNeed.chaos) : r.elixirNeed.chaos}, ` +
-            `생명 ${setSwitcher.checked ? formatSet(r.elixirNeed.life) : r.elixirNeed.life}, ` +
-            `부식 ${setSwitcher.checked ? formatSet(r.elixirNeed.decay) : r.elixirNeed.decay}`;
+            `수호 ${setSwitcher.checked ? formatSet(elixData.guard || 0) : (elixData.guard || 0)}, ` +
+            `파동 ${setSwitcher.checked ? formatSet(elixData.wave || 0) : (elixData.wave || 0)}, ` +
+            `혼란 ${setSwitcher.checked ? formatSet(elixData.chaos || 0) : (elixData.chaos || 0)}, ` +
+            `생명 ${setSwitcher.checked ? formatSet(elixData.life || 0) : (elixData.life || 0)}, ` +
+            `부식 ${setSwitcher.checked ? formatSet(elixData.decay || 0) : (elixData.decay || 0)}`;
 
         document.getElementById("result-core-3").textContent =
-            `불멸 재생 ${setSwitcher.checked ? formatSet(r.potionNeed.immortal) : r.potionNeed.immortal}, ` +
-            `파동 장벽 ${setSwitcher.checked ? formatSet(r.potionNeed.barrier) : r.potionNeed.barrier}, ` +
-            `타락 침식 ${setSwitcher.checked ? formatSet(r.potionNeed.corrupt) : r.potionNeed.corrupt}, ` +
-            `생명 광란 ${setSwitcher.checked ? formatSet(r.potionNeed.frenzy) : r.potionNeed.frenzy}, ` +
-            `맹독 파동 ${setSwitcher.checked ? formatSet(r.potionNeed.venom) : r.potionNeed.venom}`;
+            `불멸 재생 ${setSwitcher.checked ? formatSet(potionData.immortal || 0) : (potionData.immortal || 0)}, ` +
+            `파동 장벽 ${setSwitcher.checked ? formatSet(potionData.barrier || 0) : (potionData.barrier || 0)}, ` +
+            `타락 침식 ${setSwitcher.checked ? formatSet(potionData.corrupt || 0) : (potionData.corrupt || 0)}, ` +
+            `생명 광란 ${setSwitcher.checked ? formatSet(potionData.frenzy || 0) : (potionData.frenzy || 0)}, ` +
+            `맹독 파동 ${setSwitcher.checked ? formatSet(potionData.venom || 0) : (potionData.venom || 0)}`;
 
         document.getElementById("result-material-3").textContent =
             `불우렁쉥이 ${setSwitcher.checked ? formatSet(r.materialNeed.seaSquirt) : r.materialNeed.seaSquirt}, ` +
@@ -171,13 +256,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // ===== 버튼 클릭 함수 =====
     window.run3StarOptimization = function() {
-        const r = calculate3Star({
-            guard: +document.getElementById("input-oyster-3").value,
-            wave: +document.getElementById("input-conch-3").value,
-            chaos: +document.getElementById("input-octopus-3").value,
-            life: +document.getElementById("input-seaweed-3").value,
-            decay: +document.getElementById("input-urchin-3").value
-        });
+        const isAdvanced = advancedSwitcher && advancedSwitcher.checked;
+
+        const input = {
+            guard: +document.getElementById("input-oyster-3").value || 0,
+            wave: +document.getElementById("input-conch-3").value || 0,
+            chaos: +document.getElementById("input-octopus-3").value || 0,
+            life: +document.getElementById("input-seaweed-3").value || 0,
+            decay: +document.getElementById("input-urchin-3").value || 0
+        };
+
+        if (isAdvanced) {
+            input.elixGuard = +document.getElementById("input-elixir-guard-3")?.value || 0;
+            input.elixWave = +document.getElementById("input-elixir-wave-3")?.value || 0;
+            input.elixChaos = +document.getElementById("input-elixir-chaos-3")?.value || 0;
+            input.elixLife = +document.getElementById("input-elixir-life-3")?.value || 0;
+            input.elixDecay = +document.getElementById("input-elixir-decay-3")?.value || 0;
+
+            input.potionImmortal = +document.getElementById("input-potion-immortal-3")?.value || 0;
+            input.potionBarrier = +document.getElementById("input-potion-barrier-3")?.value || 0;
+            input.potionCorrupt = +document.getElementById("input-potion-corrupt-3")?.value || 0;
+            input.potionFrenzy = +document.getElementById("input-potion-frenzy-3")?.value || 0;
+            input.potionVenom = +document.getElementById("input-potion-venom-3")?.value || 0;
+        } else {
+            input.elixGuard = input.elixWave = input.elixChaos = input.elixLife = input.elixDecay = 0;
+            input.potionImmortal = input.potionBarrier = input.potionCorrupt = input.potionFrenzy = input.potionVenom = 0;
+        }
+
+        const r = calculate3Star(input);
         if (!r) return alert("재료 부족");
 
         update3StarResult(r);
@@ -185,19 +291,28 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ===== 스위치 토글 시 기존 결과 재포맷 =====
-    setSwitcher.addEventListener('change', () => {
-        if (window.last3StarResult) update3StarResult(window.last3StarResult);
-    });
+    if (setSwitcher) {
+        setSwitcher.addEventListener('change', () => {
+            if (window.last3StarResult) update3StarResult(window.last3StarResult);
+        });
+    }
+
+    if (advancedSwitcher) {
+        advancedSwitcher.addEventListener('change', () => {
+            if (window.last3StarResult) update3StarResult(window.last3StarResult);
+        });
+    }
 
     // ===== 입력칸 세트 표시 =====
     inputs.forEach(input => {
+        if (!input) return;
         const span = document.createElement('span');
         span.className = 'set-display';
         input.parentNode.appendChild(span);
 
         input.addEventListener('input', () => {
             const value = parseInt(input.value) || 0;
-            if (setSwitcher.checked) {
+            if (setSwitcher && setSwitcher.checked) {
                 const sets = Math.floor(value / SET_COUNT);
                 const remainder = value % SET_COUNT;
                 span.textContent = ` ${sets} / ${remainder}`;
