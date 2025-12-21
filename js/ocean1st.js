@@ -1,5 +1,5 @@
 /*************************************************
- * 1️⃣ 1성 계산기 (ocean1st.js) - 고급 입력 모드 수정
+ * 1️⃣ 1성 계산기 (ocean1st.js) - 성능 최적화 버전
  *************************************************/
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -47,56 +47,69 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ===== 유틸 함수 =====
-    function add(target, src, mul = 1) {
-        for (let k in src) {
-            target[k] = (target[k] || 0) + src[k] * mul;
-        }
-    }
-
     function formatSet(num) {
         const sets = Math.floor(num / SET_COUNT);
         const remainder = num % SET_COUNT;
         return `${sets} / ${remainder}`;
     }
 
-    // ===== 계산 함수 (고급 입력 지원) =====
+    // ===== 계산 함수 (최적화 버전) =====
     window.calculate1Star = function(input) {
         const isAdvanced = Number.isFinite(input.coreWG) && input.coreWG >= 0;
 
-        let best = { gold: -1, A: 0, K: 0, L: 0 };
-
-        // 보유 핵을 정수로 환산
-        let essFromCore = { guard: 0, wave: 0, chaos: 0, life: 0, decay: 0 };
-        if (isAdvanced) {
-            essFromCore.guard += input.coreWG * 1;
-            essFromCore.wave += input.coreWG * 1;
-            essFromCore.wave += input.coreWP * 1;
-            essFromCore.chaos += input.coreWP * 1;
-            essFromCore.chaos += input.coreOD * 1;
-            essFromCore.life += input.coreOD * 1;
-            essFromCore.life += input.coreVD * 1;
-            essFromCore.decay += input.coreVD * 1;
-            essFromCore.decay += input.coreED * 1;
-            essFromCore.guard += input.coreED * 1;
-        }
-
-        // 총 보유 정수 (어패류 + 직접 보유 정수 + 핵에서 환산된 정수)
-        const totalEss = {
-            guard: input.guard + (input.essGuard || 0) + essFromCore.guard,
-            wave: input.wave + (input.essWave || 0) + essFromCore.wave,
-            chaos: input.chaos + (input.essChaos || 0) + essFromCore.chaos,
-            life: input.life + (input.essLife || 0) + essFromCore.life,
-            decay: input.decay + (input.essDecay || 0) + essFromCore.decay
+        // 총 가용 자원
+        const totalFish = {
+            guard: input.guard,
+            wave: input.wave,
+            chaos: input.chaos,
+            life: input.life,
+            decay: input.decay
         };
 
-        const maxA = totalEss.guard + totalEss.decay;
-        const maxK = totalEss.wave + totalEss.chaos;
-        const maxL = totalEss.decay;
+        const totalEss = {
+            guard: (input.essGuard || 0),
+            wave: (input.essWave || 0),
+            chaos: (input.essChaos || 0),
+            life: (input.essLife || 0),
+            decay: (input.essDecay || 0)
+        };
 
+        const totalCore = isAdvanced ? {
+            WG: input.coreWG || 0,
+            WP: input.coreWP || 0,
+            OD: input.coreOD || 0,
+            VD: input.coreVD || 0,
+            ED: input.coreED || 0
+        } : { WG: 0, WP: 0, OD: 0, VD: 0, ED: 0 };
+
+        // ===== 최대 제작 가능 개수 계산 (성능 최적화) =====
+        
+        // 영생의 아쿠티스(A): WG(guard+wave) + OD(chaos+life) + VD(life+decay)
+        const maxA_WG = totalCore.WG + Math.floor((totalFish.guard + totalEss.guard + totalFish.wave + totalEss.wave) / 2);
+        const maxA_OD = totalCore.OD + Math.floor((totalFish.chaos + totalEss.chaos + totalFish.life + totalEss.life) / 2);
+        const maxA_VD = totalCore.VD + Math.floor((totalFish.life + totalEss.life + totalFish.decay + totalEss.decay) / 2);
+        const maxA = Math.min(maxA_WG, maxA_OD, maxA_VD);
+
+        // 크라켄 광란체(K): WP(wave+chaos) + OD(chaos+life) + VD(life+decay)
+        const maxK_WP = totalCore.WP + Math.floor((totalFish.wave + totalEss.wave + totalFish.chaos + totalEss.chaos) / 2);
+        const maxK_OD = totalCore.OD + Math.floor((totalFish.chaos + totalEss.chaos + totalFish.life + totalEss.life) / 2);
+        const maxK_VD = totalCore.VD + Math.floor((totalFish.life + totalEss.life + totalFish.decay + totalEss.decay) / 2);
+        const maxK = Math.min(maxK_WP, maxK_OD, maxK_VD);
+
+        // 리바이던 깃털(L): WG(guard+wave) + WP(wave+chaos) + ED(decay+guard)
+        const maxL_WG = totalCore.WG + Math.floor((totalFish.guard + totalEss.guard + totalFish.wave + totalEss.wave) / 2);
+        const maxL_WP = totalCore.WP + Math.floor((totalFish.wave + totalEss.wave + totalFish.chaos + totalEss.chaos) / 2);
+        const maxL_ED = totalCore.ED + Math.floor((totalFish.decay + totalEss.decay + totalFish.guard + totalEss.guard) / 2);
+        const maxL = Math.min(maxL_WG, maxL_WP, maxL_ED);
+
+        let best = { gold: -1, A: 0, K: 0, L: 0 };
+
+        // ===== 최적화된 루프 (실제 가능 범위만 탐색) =====
         for (let A = 0; A <= maxA; A++) {
             for (let K = 0; K <= maxK; K++) {
                 for (let L = 0; L <= maxL; L++) {
-                    const coreUsed = {
+                    // 필요 핵
+                    const needCore = {
                         WG: A + L,
                         WP: K + L,
                         OD: A + K,
@@ -104,30 +117,53 @@ document.addEventListener('DOMContentLoaded', () => {
                         ED: L
                     };
 
-                    const ess = {
-                        guard: CORE_TO_ESSENCE.WG.guard * coreUsed.WG + CORE_TO_ESSENCE.ED.guard * coreUsed.ED,
-                        wave: CORE_TO_ESSENCE.WG.wave * coreUsed.WG + CORE_TO_ESSENCE.WP.wave * coreUsed.WP,
-                        chaos: CORE_TO_ESSENCE.WP.chaos * coreUsed.WP + CORE_TO_ESSENCE.OD.chaos * coreUsed.OD,
-                        life: CORE_TO_ESSENCE.OD.life * coreUsed.OD + CORE_TO_ESSENCE.VD.life * coreUsed.VD,
-                        decay: CORE_TO_ESSENCE.VD.decay * coreUsed.VD + CORE_TO_ESSENCE.ED.decay * coreUsed.ED
+                    // 제작할 핵
+                    const makeCore = {
+                        WG: Math.max(0, needCore.WG - totalCore.WG),
+                        WP: Math.max(0, needCore.WP - totalCore.WP),
+                        OD: Math.max(0, needCore.OD - totalCore.OD),
+                        VD: Math.max(0, needCore.VD - totalCore.VD),
+                        ED: Math.max(0, needCore.ED - totalCore.ED)
                     };
 
+                    // 제작할 핵에 필요한 정수
+                    const needEss = {
+                        guard: makeCore.WG + makeCore.ED,
+                        wave: makeCore.WG + makeCore.WP,
+                        chaos: makeCore.WP + makeCore.OD,
+                        life: makeCore.OD + makeCore.VD,
+                        decay: makeCore.VD + makeCore.ED
+                    };
+
+                    // 제작할 정수 (보유 정수 차감)
+                    const makeFish = {
+                        guard: Math.max(0, needEss.guard - totalEss.guard),
+                        wave: Math.max(0, needEss.wave - totalEss.wave),
+                        chaos: Math.max(0, needEss.chaos - totalEss.chaos),
+                        life: Math.max(0, needEss.life - totalEss.life),
+                        decay: Math.max(0, needEss.decay - totalEss.decay)
+                    };
+
+                    // 어패류 부족 체크
                     if (
-                        ess.guard > totalEss.guard ||
-                        ess.wave > totalEss.wave ||
-                        ess.chaos > totalEss.chaos ||
-                        ess.life > totalEss.life ||
-                        ess.decay > totalEss.decay
+                        makeFish.guard > totalFish.guard ||
+                        makeFish.wave > totalFish.wave ||
+                        makeFish.chaos > totalFish.chaos ||
+                        makeFish.life > totalFish.life ||
+                        makeFish.decay > totalFish.decay
                     ) continue;
 
                     const gold = A * GOLD_1STAR.A + K * GOLD_1STAR.K + L * GOLD_1STAR.L;
-                    if (gold > best.gold) best = { gold, A, K, L };
+                    if (gold > best.gold) {
+                        best = { gold, A, K, L };
+                    }
                 }
             }
         }
 
         if (best.gold < 0) return null;
 
+        // ===== 결과 계산 =====
         const coreNeed = {
             WG: best.A + best.L,
             WP: best.K + best.L,
@@ -136,52 +172,81 @@ document.addEventListener('DOMContentLoaded', () => {
             ED: best.L
         };
 
-        const essNeed = {}, blockNeed = {}, fishNeed = {};
-        for (let c in coreNeed) {
-            add(essNeed, CORE_TO_ESSENCE[c], coreNeed[c]);
-            add(fishNeed, CORE_TO_FISH[c], coreNeed[c]);
-        }
-        for (let e in essNeed) add(blockNeed, ESSENCE_TO_BLOCK[e], essNeed[e]);
+        const coreToMake = {
+            WG: Math.max(0, coreNeed.WG - totalCore.WG),
+            WP: Math.max(0, coreNeed.WP - totalCore.WP),
+            OD: Math.max(0, coreNeed.OD - totalCore.OD),
+            VD: Math.max(0, coreNeed.VD - totalCore.VD),
+            ED: Math.max(0, coreNeed.ED - totalCore.ED)
+        };
 
-        // 고급 모드일 경우 보유량 차감
-        let coreToMake = { WG: 0, WP: 0, OD: 0, VD: 0, ED: 0 };
-        let essToMake = { guard: 0, wave: 0, chaos: 0, life: 0, decay: 0 };
-        let finalEssNeed = { guard: 0, wave: 0, chaos: 0, life: 0, decay: 0 };
+        const essNeedForCore = {
+            guard: coreToMake.WG + coreToMake.ED,
+            wave: coreToMake.WG + coreToMake.WP,
+            chaos: coreToMake.WP + coreToMake.OD,
+            life: coreToMake.OD + coreToMake.VD,
+            decay: coreToMake.VD + coreToMake.ED
+        };
 
-        if (isAdvanced) {
-            // 제작할 핵 = 필요 핵 - 보유 핵
-            coreToMake = {
-                WG: Math.max(0, coreNeed.WG - input.coreWG),
-                WP: Math.max(0, coreNeed.WP - input.coreWP),
-                OD: Math.max(0, coreNeed.OD - input.coreOD),
-                VD: Math.max(0, coreNeed.VD - input.coreVD),
-                ED: Math.max(0, coreNeed.ED - input.coreED)
-            };
+        const essToMake = {
+            guard: Math.max(0, essNeedForCore.guard - totalEss.guard),
+            wave: Math.max(0, essNeedForCore.wave - totalEss.wave),
+            chaos: Math.max(0, essNeedForCore.chaos - totalEss.chaos),
+            life: Math.max(0, essNeedForCore.life - totalEss.life),
+            decay: Math.max(0, essNeedForCore.decay - totalEss.decay)
+        };
 
-            // 제작할 핵에 필요한 정수
-            for (let c in coreToMake) {
-                add(essToMake, CORE_TO_ESSENCE[c], coreToMake[c]);
-            }
+        const blockNeed = {
+            clay: essToMake.guard * 1,
+            sand: essToMake.wave * 3,
+            dirt: essToMake.chaos * 4,
+            gravel: essToMake.life * 2,
+            granite: essToMake.decay * 1
+        };
 
-            // 제작할 정수 = 필요 정수 - 직접 보유 정수 (핵에서 환산된 정수는 이미 사용됨)
-            finalEssNeed = {
-                guard: Math.max(0, essToMake.guard - input.essGuard),
-                wave: Math.max(0, essToMake.wave - input.essWave),
-                chaos: Math.max(0, essToMake.chaos - input.essChaos),
-                life: Math.max(0, essToMake.life - input.essLife),
-                decay: Math.max(0, essToMake.decay - input.essDecay)
-            };
-        }
+        const fishNeed = {
+            shrimp: coreToMake.WG,
+            domi: coreToMake.WP,
+            herring: coreToMake.OD,
+            goldfish: coreToMake.VD,
+            bass: coreToMake.ED
+        };
+
+        // 일반 모드 표시용 (전체 필요량)
+        const essNeedTotal = {
+            guard: coreNeed.WG + coreNeed.ED,
+            wave: coreNeed.WG + coreNeed.WP,
+            chaos: coreNeed.WP + coreNeed.OD,
+            life: coreNeed.OD + coreNeed.VD,
+            decay: coreNeed.VD + coreNeed.ED
+        };
+
+        const blockNeedTotal = {
+            clay: essNeedTotal.guard * 1,
+            sand: essNeedTotal.wave * 3,
+            dirt: essNeedTotal.chaos * 4,
+            gravel: essNeedTotal.life * 2,
+            granite: essNeedTotal.decay * 1
+        };
+
+        const fishNeedTotal = {
+            shrimp: coreNeed.WG,
+            domi: coreNeed.WP,
+            herring: coreNeed.OD,
+            goldfish: coreNeed.VD,
+            bass: coreNeed.ED
+        };
 
         return { 
             best, 
             coreNeed,
             coreToMake,
-            essNeed,
+            essNeedTotal,
             essToMake,
-            finalEssNeed,
-            blockNeed, 
-            fishNeed 
+            blockNeed,
+            blockNeedTotal,
+            fishNeed,
+            fishNeedTotal
         };
     };
 
@@ -199,8 +264,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("result-feather-1").textContent = setSwitcher.checked ? formatSet(r.best.L) : r.best.L;
 
         const isAdvanced = advancedSwitcher && advancedSwitcher.checked;
-        const essData = isAdvanced ? r.finalEssNeed : r.essNeed;
+        const essData = isAdvanced ? r.essToMake : r.essNeedTotal;
         const coreData = isAdvanced ? r.coreToMake : r.coreNeed;
+        const blockData = isAdvanced ? r.blockNeed : r.blockNeedTotal;
+        const fishData = isAdvanced ? r.fishNeed : r.fishNeedTotal;
 
         document.getElementById("result-essence-1").textContent =
             `수호 ${setSwitcher.checked ? formatSet(essData.guard || 0) : (essData.guard || 0)}, ` +
@@ -216,39 +283,19 @@ document.addEventListener('DOMContentLoaded', () => {
             `활력 붕괴 ${setSwitcher.checked ? formatSet(coreData.VD || 0) : (coreData.VD || 0)}, ` +
             `침식 방어 ${setSwitcher.checked ? formatSet(coreData.ED || 0) : (coreData.ED || 0)}`;
 
-        // 블록: 제작할 정수에 필요한 블록만
-        const blockNeedCalc = isAdvanced ? r.finalEssNeed : r.essNeed;
-        const finalBlockNeed = {
-            clay: (blockNeedCalc.guard || 0) * 1,
-            sand: (blockNeedCalc.wave || 0) * 3,
-            dirt: (blockNeedCalc.chaos || 0) * 4,
-            gravel: (blockNeedCalc.life || 0) * 2,
-            granite: (blockNeedCalc.decay || 0) * 1
-        };
-
         document.getElementById("result-block-1").textContent =
-            `점토 ${setSwitcher.checked ? formatSet(finalBlockNeed.clay) : finalBlockNeed.clay}, ` +
-            `모래 ${setSwitcher.checked ? formatSet(finalBlockNeed.sand) : finalBlockNeed.sand}, ` +
-            `흙 ${setSwitcher.checked ? formatSet(finalBlockNeed.dirt) : finalBlockNeed.dirt}, ` +
-            `자갈 ${setSwitcher.checked ? formatSet(finalBlockNeed.gravel) : finalBlockNeed.gravel}, ` +
-            `화강암 ${setSwitcher.checked ? formatSet(finalBlockNeed.granite) : finalBlockNeed.granite}`;
-
-        // 물고기: 제작할 핵에 필요한 물고기만
-        const fishNeedCalc = isAdvanced ? coreData : r.coreNeed;
-        const finalFishNeed = {
-            shrimp: fishNeedCalc.WG || 0,
-            domi: fishNeedCalc.WP || 0,
-            herring: fishNeedCalc.OD || 0,
-            goldfish: fishNeedCalc.VD || 0,
-            bass: fishNeedCalc.ED || 0
-        };
+            `점토 ${setSwitcher.checked ? formatSet(blockData.clay) : blockData.clay}, ` +
+            `모래 ${setSwitcher.checked ? formatSet(blockData.sand) : blockData.sand}, ` +
+            `흙 ${setSwitcher.checked ? formatSet(blockData.dirt) : blockData.dirt}, ` +
+            `자갈 ${setSwitcher.checked ? formatSet(blockData.gravel) : blockData.gravel}, ` +
+            `화강암 ${setSwitcher.checked ? formatSet(blockData.granite) : blockData.granite}`;
 
         document.getElementById("result-fish-1").textContent =
-            `새우 ${setSwitcher.checked ? formatSet(finalFishNeed.shrimp) : finalFishNeed.shrimp}, ` +
-            `도미 ${setSwitcher.checked ? formatSet(finalFishNeed.domi) : finalFishNeed.domi}, ` +
-            `청어 ${setSwitcher.checked ? formatSet(finalFishNeed.herring) : finalFishNeed.herring}, ` +
-            `금붕어 ${setSwitcher.checked ? formatSet(finalFishNeed.goldfish) : finalFishNeed.goldfish}, ` +
-            `농어 ${setSwitcher.checked ? formatSet(finalFishNeed.bass) : finalFishNeed.bass}`;
+            `새우 ${setSwitcher.checked ? formatSet(fishData.shrimp) : fishData.shrimp}, ` +
+            `도미 ${setSwitcher.checked ? formatSet(fishData.domi) : fishData.domi}, ` +
+            `청어 ${setSwitcher.checked ? formatSet(fishData.herring) : fishData.herring}, ` +
+            `금붕어 ${setSwitcher.checked ? formatSet(fishData.goldfish) : fishData.goldfish}, ` +
+            `농어 ${setSwitcher.checked ? formatSet(fishData.bass) : fishData.bass}`;
 
         window.last1StarResult = r;
     };
