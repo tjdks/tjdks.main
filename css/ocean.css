@@ -310,11 +310,11 @@ button:hover {
 ========================= */
 .result-card {
     margin: 24px auto;
-    padding: 22px;
+    padding: 20px;
     background: #ffffff;
-    border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    max-width: 900px;
+    border-radius: 14px;
+    box-shadow: 0 7px 22px rgba(0,0,0,0.08);
+    max-width: 810px;
 }
 
 .result-header {
@@ -322,17 +322,17 @@ button:hover {
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #eee;
-    padding-bottom: 12px;
-    margin-bottom: 16px;
+    padding-bottom: 11px;
+    margin-bottom: 14px;
 }
 
 .result-header h3 {
     margin: 0;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 .result-gold {
-    font-size: 1.3rem;
+    font-size: 1.17rem;
     font-weight: 700;
     color: #d62828;
 }
@@ -343,22 +343,28 @@ button:hover {
 .result-products {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 12px;
-    margin-bottom: 20px;
+    gap: 11px;
+    margin-bottom: 18px;
 }
 
 .result-products div {
     background: #f8f9fb;
-    border-radius: 12px;
-    padding: 14px 10px;
+    border-radius: 11px;
+    padding: 13px 9px;
     text-align: center;
-    font-size: 0.85rem;
+    font-size: 0.77rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 72px;
+    line-height: 1.4;
 }
 
 .result-products span {
     display: block;
-    margin-top: 6px;
-    font-size: 1.2rem;
+    margin-top: 7px;
+    font-size: 1.17rem;
     font-weight: 700;
     color: #1e6fd9;
 }
@@ -624,92 +630,79 @@ input[type=number] {
 
 /* 재료 섹션 전체 레이아웃 */
 .result-section {
-  margin-bottom: 20px;
+  margin-bottom: 18px;
   text-align: left;
 }
 
 .result-section h4 {
-  margin-bottom: 12px;
-  font-size: 0.95rem;
+  margin-bottom: 11px;
+  font-size: 0.86rem;
   color: #333;
   font-weight: 600;
+  text-align: left;
 }
 
-/* 재료 그리드 - 자동으로 맞춰지는 카드형 */
+/* 재료 그리드 - 자동으로 채워지는 레이아웃 */
 .result-materials-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-  gap: 8px;
-  margin-bottom: 16px;
-  max-width: 500px;
+  grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+  gap: 9px;
+  margin-bottom: 14px;
+  width: 100%;
 }
 
 /* 개별 재료 카드 */
 .material-card {
-  background: linear-gradient(135deg, #f8f9fb 0%, #ffffff 100%);
-  border-radius: 10px;
-  padding: 10px 6px;
+  background: #f8f9fb;
+  border-radius: 9px;
+  padding: 11px 7px;
   text-align: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  border: 1px solid rgba(30, 111, 217, 0.1);
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 1;
+  box-shadow: 0 2px 7px rgba(0,0,0,0.04);
+  border: 1px solid rgba(0,0,0,0.04);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-}
-
-.material-card::before {
-  display: none;
+  justify-content: center;
+  min-height: 81px;
+  width: 100%;
 }
 
 /* 재료 카드 아이콘 */
 .material-card .icon {
-  width: 28px;
-  height: 28px;
-  margin: 0 auto 4px;
+  width: 29px;
+  height: 29px;
+  margin: 0 auto 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  background: transparent;
-  border-radius: 6px;
 }
 
 .material-card .icon img {
-  width: 22px;
-  height: 22px;
+  width: 25px;
+  height: 25px;
   object-fit: contain;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
-  background: transparent;
-  mix-blend-mode: multiply;
   user-select: none;
   -webkit-user-drag: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
   pointer-events: none;
 }
 
 /* 재료 이름 */
 .material-card .name {
-  font-size: 0.7rem;
-  color: #555;
-  margin-bottom: 3px;
+  font-size: 0.68rem;
+  color: #666;
+  margin-bottom: 4px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  font-weight: 500;
-  letter-spacing: -0.3px;
   width: 100%;
+  font-weight: 500;
 }
 
 /* 재료 수량 */
 .material-card .value {
   font-size: 1rem;
-  font-weight: 500;
-  color: #555;
+  font-weight: 600;
+  color: #666;
 }
 
 /* =========================
@@ -742,17 +735,18 @@ input[type=number] {
     }
 
     .result-materials-grid {
-        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        grid-template-columns: repeat(3, 1fr);
         gap: 8px;
     }
     
     .material-card {
-        padding: 12px 8px;
+        padding: 10px 6px;
+        min-height: 80px;
     }
     
     .material-card .icon {
-        width: 32px;
-        height: 32px;
+        width: 28px;
+        height: 28px;
     }
     
     .material-card .icon img {
@@ -772,22 +766,23 @@ input[type=number] {
 /* 반응형 - 모바일 */
 @media (max-width: 480px) {
     .result-materials-grid {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
         gap: 6px;
     }
     
     .material-card {
-        padding: 10px 6px;
+        padding: 8px 4px;
+        min-height: 70px;
     }
     
     .material-card .icon {
-        width: 28px;
-        height: 28px;
+        width: 24px;
+        height: 24px;
     }
     
     .material-card .icon img {
-        width: 22px;
-        height: 22px;
+        width: 20px;
+        height: 20px;
     }
     
     .material-card .name {
