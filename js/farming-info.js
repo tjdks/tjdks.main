@@ -21,7 +21,7 @@ function toggleExpertInfo(type) {
  */
 function getAllExpertSettings() {
   return {
-    hoeLevel: parseInt(document.getElementById('hoe-level')?.value || 8),
+    hoeLevel: parseInt(document.getElementById('hoe-level')?.value || 0),
     gift: parseInt(document.getElementById('expert-gift')?.value || 0),
     harvest: parseInt(document.getElementById('expert-harvest')?.value || 0),
     pot: parseInt(document.getElementById('expert-pot')?.value || 0),
@@ -36,7 +36,7 @@ function getAllExpertSettings() {
  * 재배 관련 설정값만 가져오기 (스태미나 탭용)
  */
 function getFarmingSettings() {
-  const hoeLevel = parseInt(document.getElementById('hoe-level')?.value || 8);
+  const hoeLevel = parseInt(document.getElementById('hoe-level')?.value || 0);
   const expertGift = parseInt(document.getElementById('expert-gift')?.value || 0);
   const expertFire = parseInt(document.getElementById('expert-fire')?.value || 0);
   

@@ -444,40 +444,89 @@
         </div>
       </div>
       
-      <!-- 스태미나 탭 -->
+      <!-- 스태미나 탭 - 간결한 버전 -->
       <div id="tab-stamina" class="tab-content" style="display:none;">
-        <div class="stamina-card">
-          <div class="stamina-header">
-            <h3 class="stamina-header-title">스태미나 계산기</h3>
-            <span id="stamina-expert-summary" class="stamina-header-expert">
-              (전문가 적용 예상치)
-            </span>
+        <h2 class="content-title">스태미나 계산</h2>
+        
+        <div class="stamina-container">
+          <!-- 입력 영역 -->
+          <div class="card">
+            <div class="card-body">
+              <div class="stamina-input-group">
+                <label class="stamina-label">
+                  소모할 스태미나
+                  <input type="number" id="input-stamina" class="stamina-input" placeholder="예) 3300" min="0" step="15">
+                </label>
+                
+                <label class="stamina-label">
+                  채집할 어패류
+                  <select id="stamina-item-select" class="stamina-select">
+                    <option value="굴">굴</option>
+                    <option value="소라">소라</option>
+                    <option value="문어">문어</option>
+                    <option value="미역">미역</option>
+                    <option value="성게">성게</option>
+                  </select>
+                </label>
+              </div>
+              
+              <button class="btn-calculate" id="stamina-calc-btn">계산하기</button>
+            </div>
           </div>
 
-          <div class="stamina-inputs-horizontal">
-            <label class="stamina-input-label">
-              스태미나
-              <input type="number" id="input-stamina" value="" min="0" placeholder="예) 3000">
-            </label>
+          <!-- 결과 영역 -->
+          <div class="card" id="ocean-stamina-result-card" style="display:none;">
+            <div class="card-body">
+              
+              <!-- 획득 수량 -->
+              <div class="result-section">
+                <h4 class="result-section-title">⭐ 획득 수량</h4>
+                <div class="result-grid">
+                  <div class="result-box">
+                    <div class="result-box-label">1성</div>
+                    <div class="result-box-value" id="ocean-star1-drops">0</div>
+                  </div>
+                  <div class="result-box">
+                    <div class="result-box-label">2성</div>
+                    <div class="result-box-value" id="ocean-star2-drops">0</div>
+                  </div>
+                  <div class="result-box">
+                    <div class="result-box-label">3성</div>
+                    <div class="result-box-value" id="ocean-star3-drops">0</div>
+                  </div>
+                  <div class="result-box">
+                    <div class="result-box-label">조개</div>
+                    <div class="result-box-value" id="ocean-clam-drops">0</div>
+                  </div>
+                </div>
+              </div>
 
-            <label class="stamina-input-label">
-              채집할 아이템
-              <select id="stamina-item-select">
-                <option value="굴">굴</option>
-                <option value="소라">소라</option>
-                <option value="문어">문어</option>
-                <option value="미역">미역</option>
-                <option value="성게">성게</option>
-              </select>
-            </label>
-          </div>
+              <div class="result-divider"></div>
 
-          <div class="stamina-button-wrapper">
-              <button id="stamina-calc-btn">계산하기</button>
-          </div>
+              <!-- 전문가 정보 -->
+              <div class="result-section">
+                <h4 class="result-section-title">🎓 적용된 전문가</h4>
+                <div class="expert-info-grid">
+                  <div class="expert-info-item">
+                    <span class="expert-info-icon">🎣</span>
+                    <span class="expert-info-text" id="ocean-rod-info">낚싯대 1강</span>
+                  </div>
+                  <div class="expert-info-item">
+                    <span class="expert-info-icon">🌊</span>
+                    <span class="expert-info-text" id="ocean-storm-info">폭풍 LV0</span>
+                  </div>
+                  <div class="expert-info-item">
+                    <span class="expert-info-icon">⭐</span>
+                    <span class="expert-info-text" id="ocean-star-info">별별별 LV0</span>
+                  </div>
+                  <div class="expert-info-item">
+                    <span class="expert-info-icon">🦪</span>
+                    <span class="expert-info-text" id="ocean-clam-info">조개무한리필 LV0</span>
+                  </div>
+                </div>
+              </div>
 
-          <div class="stamina-result-card">
-              <div id="stamina-item-list">아직 계산되지 않았습니다.</div>
+            </div>
           </div>
         </div>
       </div>

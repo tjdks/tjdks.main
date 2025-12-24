@@ -127,7 +127,6 @@
   font-size: 11px;
   color: var(--color-text-secondary, #666);
   line-height: 1.6;
-  animation: slideDown 0.2s ease-out;
 }
 
 .expert-desc strong {

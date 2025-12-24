@@ -271,9 +271,7 @@
   transition: background-color 0.15s;
 }
 
-.recipe-table-compact tbody tr:hover {
-  background-color: var(--color-bg-hover, #f8f9fa);
-}
+
 
 .recipe-table-compact tbody tr:last-child {
   border-bottom: none;

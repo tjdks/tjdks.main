@@ -1,13 +1,13 @@
 /* =========================
-   해양 페이지 전용 스타일
+   í•´ì–‘ íŽ˜ì´ì§€ ì „ìš© ìŠ¤íƒ€ì¼
 ========================= */
 
-/* ===== 페이지 기본 ===== */
+/* ===== íŽ˜ì´ì§€ ê¸°ë³¸ ===== */
 .page {
   max-width: 1100px;
 }
 
-/* ===== 성급 토글 ===== */
+/* ===== ì„±ê¸‰ í† ê¸€ ===== */
 .star-toggle {
   display: flex;
   align-items: center;
@@ -44,7 +44,7 @@
   background: var(--color-bg-hover);
 }
 
-/* ===== 스위치 컨테이너 ===== */
+/* ===== ìŠ¤ìœ„ì¹˜ ì»¨í…Œì´ë„ˆ ===== */
 .switch-container {
   margin-left: auto;
   display: flex;
@@ -79,7 +79,7 @@
   color: var(--color-primary);
 }
 
-/* 스위처 스타일 (components.css의 .switch 재사용) */
+/* ìŠ¤ìœ„ì²˜ ìŠ¤íƒ€ì¼ (components.cssì˜ .switch ìž¬ì‚¬ìš©) */
 .switcher-set,
 .switcher-advanced {
   position: relative;
@@ -148,7 +148,7 @@
   transform: translateX(24px);
 }
 
-/* ===== 고급 입력 섹션 ===== */
+/* ===== ê³ ê¸‰ ìž…ë ¥ ì„¹ì…˜ ===== */
 .advanced-inputs {
   display: none;
   margin-top: 20px;
@@ -187,11 +187,11 @@
 }
 
 .advanced-section h4::before {
-  content: "▸";
+  content: "â–¸";
   color: var(--color-primary);
 }
 
-/* ===== 입력 그리드 ===== */
+/* ===== ìž…ë ¥ ê·¸ë¦¬ë“œ ===== */
 .input-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
@@ -221,7 +221,7 @@
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
 }
 
-/* ===== 계산 버튼 ===== */
+/* ===== ê³„ì‚° ë²„íŠ¼ ===== */
 button {
   margin-top: 6px;
   padding: 8px 16px;
@@ -240,7 +240,7 @@ button:hover {
   box-shadow: var(--shadow-sm);
 }
 
-/* ===== 결과 카드 ===== */
+/* ===== ê²°ê³¼ ì¹´ë“œ ===== */
 .result-card {
   margin: var(--spacing-xl) auto;
   padding: 20px;
@@ -272,7 +272,7 @@ button:hover {
   color: var(--color-danger);
 }
 
-/* ===== 제작 결과 카드 ===== */
+/* ===== ì œìž‘ ê²°ê³¼ ì¹´ë“œ ===== */
 .result-products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -302,7 +302,7 @@ button:hover {
   color: var(--color-primary);
 }
 
-/* ===== 결과 섹션 ===== */
+/* ===== ê²°ê³¼ ì„¹ì…˜ ===== */
 .result-section {
   margin-bottom: 18px;
   text-align: left;
@@ -316,7 +316,7 @@ button:hover {
   text-align: left;
 }
 
-/* ===== 재료 카드 그리드 ===== */
+/* ===== ìž¬ë£Œ ì¹´ë“œ ê·¸ë¦¬ë“œ ===== */
 .result-materials-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
@@ -375,7 +375,7 @@ button:hover {
   color: #666;
 }
 
-/* ===== 정보탭 전문가 입력 ===== */
+/* ===== ì •ë³´íƒ­ ì „ë¬¸ê°€ ìž…ë ¥ ===== */
 #tab-info #info-expert {
   background-color: #f7f9fc;
   border: 1px solid #d1d9e6;
@@ -428,7 +428,7 @@ button:hover {
   outline: none;
 }
 
-/* 낚싯대 스펙 블록 */
+/* ë‚šì‹¯ëŒ€ ìŠ¤íŽ™ ë¸”ë¡ */
 #tab-info #info-expert-rod-row {
   display: flex;
   align-items: center;
@@ -476,7 +476,7 @@ button:hover {
   box-shadow: 0 0 4px rgba(74, 144, 226, 0.3);
 }
 
-/* ===== 정보 토글 ===== */
+/* ===== ì •ë³´ í† ê¸€ ===== */
 .info-btn {
   margin-left: 6px;
   font-size: 13px;
@@ -498,7 +498,7 @@ button:hover {
   line-height: 1.5;
 }
 
-/* ===== 스태미나 카드 ===== */
+/* ===== ìŠ¤íƒœë¯¸ë‚˜ ì¹´ë“œ ===== */
 .stamina-card {
   display: flex;
   flex-direction: column;
@@ -617,7 +617,7 @@ button:hover {
   color: var(--color-primary);
 }
 
-/* ===== 반응형 ===== */
+/* ===== ë°˜ì‘í˜• ===== */
 @media (max-width: 768px) {
   .result-products {
     grid-template-columns: 1fr;
@@ -715,5 +715,333 @@ button:hover {
 
   .material-card .value {
     font-size: 0.95rem;
+  }
+}
+/* ===== 스태미나 계산 상세 스타일 (재배와 동일) ===== */
+.stamina-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 500px; /* 800px에서 500px로 축소 */
+  margin: 0 auto;
+}
+
+.stamina-input-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.stamina-label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--color-text-primary, #333);
+}
+
+.stamina-input,
+.stamina-select {
+  padding: 10px 12px;
+  border: 1px solid var(--color-border, #e0e0e0);
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s;
+}
+
+.stamina-input:focus,
+.stamina-select:focus {
+  outline: none;
+  border-color: var(--color-primary, #4a90e2);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+.stamina-select {
+  cursor: pointer;
+  background-color: white;
+}
+
+.btn-calculate {
+  width: 100%;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, var(--color-primary, #4a90e2) 0%, #357abd 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 4px 6px rgba(74, 144, 226, 0.2);
+}
+
+.btn-calculate:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(74, 144, 226, 0.3);
+  background: linear-gradient(135deg, #357abd 0%, #2a5f99 100%);
+}
+
+.btn-calculate:active {
+  transform: translateY(0);
+}
+
+#ocean-stamina-result-card {
+  animation: fadeInOcean 0.3s ease-in;
+}
+
+@keyframes fadeInOcean {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.result-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  background-color: var(--color-bg-secondary, #f8f9fa);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.result-label {
+  font-size: 13px;
+  color: var(--color-text-secondary, #666);
+  font-weight: 500;
+}
+
+.result-value {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--color-primary, #4a90e2);
+}
+
+.result-divider {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-border, #e0e0e0),
+    transparent
+  );
+  margin: 16px 0;
+}
+
+.result-section-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary, #333);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.result-details {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background-color: var(--color-bg-secondary, #f8f9fa);
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.result-row:hover {
+  background-color: var(--color-bg-hover, #f0f2f5);
+}
+
+.bonus-row {
+  background-color: rgba(49, 165, 82, 0.08);
+  border-left: 3px solid var(--color-success, #31a552);
+}
+
+.bonus-row:hover {
+  background-color: rgba(49, 165, 82, 0.12);
+}
+
+.total-row {
+  background-color: rgba(74, 144, 226, 0.08);
+  border-left: 3px solid var(--color-primary, #4a90e2);
+  margin-top: 4px;
+}
+
+.total-row:hover {
+  background-color: rgba(74, 144, 226, 0.12);
+}
+
+.result-detail-label {
+  font-size: 14px;
+  color: var(--color-text-secondary, #666);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.result-detail-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text-primary, #333);
+}
+
+.result-detail-value.highlight {
+  font-size: 18px;
+  color: var(--color-primary, #4a90e2);
+}
+
+.bonus-info {
+  display: inline-block;
+  padding: 2px 8px;
+  background-color: rgba(49, 165, 82, 0.15);
+  color: var(--color-success, #31a552);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.expert-notice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background-color: rgba(237, 188, 64, 0.1);
+  border-left: 3px solid var(--color-warning, #edbc40);
+  border-radius: 6px;
+  margin-top: 16px;
+}
+
+.notice-icon {
+  font-size: 18px;
+}
+
+.notice-text {
+  font-size: 13px;
+  color: #9a7d20;
+  line-height: 1.5;
+}
+
+/* 반응형 - 스태미나 추가 */
+@media (max-width: 768px) {
+  .stamina-container {
+    max-width: 100%;
+  }
+
+  .stamina-input-group {
+    grid-template-columns: 1fr;
+  }
+
+  .result-summary {
+    grid-template-columns: 1fr;
+  }
+
+  .result-value {
+    font-size: 20px;
+  }
+
+  .result-detail-value.highlight {
+    font-size: 16px;
+  }
+}
+
+/* ===== 간결한 결과 박스 스타일 ===== */
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.result-box {
+  background-color: var(--color-bg-secondary, #f8f9fa);
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  transition: all 0.2s;
+}
+
+.result-box:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.result-box-label {
+  font-size: 12px;
+  color: var(--color-text-secondary, #666);
+  margin-bottom: 6px;
+}
+
+.result-box-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-primary, #4a90e2);
+}
+
+/* ===== 전문가 정보 그리드 ===== */
+.expert-info-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.expert-info-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 12px;
+  background-color: var(--color-bg-secondary, #f8f9fa);
+  border-radius: 6px;
+  font-size: 13px;
+}
+
+.expert-info-icon {
+  font-size: 16px;
+}
+
+.expert-info-text {
+  color: var(--color-text-secondary, #666);
+  font-weight: 500;
+}
+
+/* 반응형 - 간결한 버전 */
+@media (max-width: 768px) {
+  .result-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+  
+  .expert-info-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .result-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+  .result-box-value {
+    font-size: 18px;
   }
 }

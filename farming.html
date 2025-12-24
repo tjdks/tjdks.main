@@ -48,7 +48,7 @@
 
       <!-- 정보 탭 -->
       <div id="tab-info" class="tab-content" style="display:block;">
-        <h2 class="content-title">📋 재배 정보</h2>
+        <h2 class="content-title">정보</h2>
         
         <!-- 2단 레이아웃 -->
         <div class="info-grid">
@@ -59,7 +59,7 @@
             <!-- 현재 전문가 세팅 -->
             <div class="card compact-card">
               <div class="card-header">
-                <h3 class="card-title">⛏️ 현재 전문가 세팅</h3>
+                <h3 class="card-title">현재 전문가 세팅</h3>
               </div>
               <div class="card-body">
                 
@@ -73,7 +73,7 @@
                 <div class="setting-row">
                   <label class="setting-label">
                     <span class="skill-name gift">자연이 주는 선물</span>
-                    <button class="info-btn-inline" onclick="toggleExpertInfo('gift')">ⓘ</button>
+                    <button class="info-btn-inline" tabindex="-1" onclick="toggleExpertInfo('gift')">ⓘ</button>
                   </label>
                   <input type="number" id="expert-gift" class="setting-input" placeholder="LV" min="0" max="10">
                 </div>
@@ -94,7 +94,7 @@
                 <div class="setting-row">
                   <label class="setting-label">
                     <span class="skill-name harvest">오늘도 풍년이다!</span>
-                    <button class="info-btn-inline" onclick="toggleExpertInfo('harvest')">ⓘ</button>
+                    <button class="info-btn-inline" tabindex="-1" onclick="toggleExpertInfo('harvest')">ⓘ</button>
                   </label>
                   <input type="number" id="expert-harvest" class="setting-input" placeholder="LV" min="0" max="7" >
                 </div>
@@ -112,7 +112,7 @@
                 <div class="setting-row">
                   <label class="setting-label">
                     <span class="skill-name pot">한 솥 가득</span>
-                    <button class="info-btn-inline" onclick="toggleExpertInfo('pot')">ⓘ</button>
+                    <button class="info-btn-inline" tabindex="-1" onclick="toggleExpertInfo('pot')">ⓘ</button>
                   </label>
                   <input type="number" id="expert-pot" class="setting-input" placeholder="LV" min="0" max="5" >
                 </div>
@@ -128,7 +128,7 @@
                 <div class="setting-row">
                   <label class="setting-label">
                     <span class="skill-name money">돈 좀 벌어볼까?</span>
-                    <button class="info-btn-inline" onclick="toggleExpertInfo('money')">ⓘ</button>
+                    <button class="info-btn-inline" tabindex="-1" onclick="toggleExpertInfo('money')">ⓘ</button>
                   </label>
                   <input type="number" id="expert-money" class="setting-input" placeholder="LV" min="0" max="10" >
                 </div>
@@ -149,7 +149,7 @@
                 <div class="setting-row">
                   <label class="setting-label">
                     <span class="skill-name king">왕 크니까 왕 좋아</span>
-                    <button class="info-btn-inline" onclick="toggleExpertInfo('king')">ⓘ</button>
+                    <button class="info-btn-inline" tabindex="-1" onclick="toggleExpertInfo('king')">ⓘ</button>
                   </label>
                   <input type="number" id="expert-king" class="setting-input" placeholder="LV" min="0" max="4" >
                 </div>
@@ -164,7 +164,7 @@
                 <div class="setting-row">
                   <label class="setting-label">
                     <span class="skill-name seed-bonus">씨앗은 덤이야</span>
-                    <button class="info-btn-inline" onclick="toggleExpertInfo('seed-bonus')">ⓘ</button>
+                    <button class="info-btn-inline" tabindex="-1" onclick="toggleExpertInfo('seed-bonus')">ⓘ</button>
                   </label>
                   <input type="number" id="expert-seed-bonus" class="setting-input" placeholder="LV" min="0" max="10" >
                 </div>
@@ -185,7 +185,7 @@
                 <div class="setting-row">
                   <label class="setting-label">
                     <span class="skill-name fire">불붙은 괭이</span>
-                    <button class="info-btn-inline" onclick="toggleExpertInfo('fire')">ⓘ</button>
+                    <button class="info-btn-inline" tabindex="-1" onclick="toggleExpertInfo('fire')">ⓘ</button>
                   </label>
                   <input type="number" id="expert-fire" class="setting-input" placeholder="LV" min="0" max="10" >
                 </div>
@@ -296,137 +296,56 @@
 
       <!-- 스태미나 탭 -->
       <div id="tab-stamina" class="tab-content" style="display:none;">
-        <h2 class="content-title">⚡ 스태미나 계산</h2>
+        <h2 class="content-title">스태미나 계산</h2>
         
         <div class="stamina-container">
-          <!-- 입력 영역 -->
           <div class="card">
-            <div class="card-header">
-              <h3 class="card-title">입력</h3>
-            </div>
             <div class="card-body">
-              <div class="stamina-input-group">
-                <label class="stamina-label">
-                  소모할 스태미나
-                  <input type="number" id="stamina-input" class="stamina-input" placeholder="예) 3300" min="0" step="7">
-                </label>
-                
-                <label class="stamina-label">
-                  채집물 종류
-                  <select id="crop-select" class="stamina-select">
-                    <option value="tomato">토마토</option>
-                    <option value="onion">양파</option>
-                    <option value="garlic">마늘</option>
-                  </select>
-                </label>
+              
+              <!-- 입력 영역 -->
+              <div id="stamina-inputs-container" class="stamina-inputs-container">
+                <div class="stamina-input-row" id="input-row-1">
+                  <div class="stamina-input-group">
+                    <label class="stamina-label">
+                      스태미나
+                      <input type="number" id="stamina-input-1" class="stamina-input" placeholder="3300" min="0" step="7">
+                    </label>
+                    
+                    <label class="stamina-label">
+                      작물
+                      <select id="crop-select-1" class="stamina-select">
+                        <option value="tomato">토마토</option>
+                        <option value="onion">양파</option>
+                        <option value="garlic">마늘</option>
+                      </select>
+                    </label>
+                  </div>
+                </div>
               </div>
               
-              <button class="btn-calculate" onclick="calculateStamina()">계산하기</button>
-            </div>
-          </div>
-
-          <!-- 결과 영역 -->
-          <div class="card" id="stamina-result-card" style="display:none;">
-            <div class="card-header">
-              <h3 class="card-title">📊 예상 수확</h3>
-            </div>
-            <div class="card-body">
-              <!-- 기본 정보 -->
-              <div class="result-summary">
-                <div class="result-item">
-                  <span class="result-label">채집 횟수</span>
-                  <span class="result-value" id="harvest-count">0</span>
-                </div>
-                <div class="result-item">
-                  <span class="result-label">소모 스태미나</span>
-                  <span class="result-value" id="used-stamina">0</span>
+              <!-- 전문가 정보 -->
+              <div class="expert-info-text">
+                <span id="farming-expert-info">괭이 0강, 자연이 주는 선물 LV0, 불붙은 괭이 LV0</span>
+              </div>
+              
+              <!-- 버튼 -->
+              <div class="btn-actions">
+                <button class="btn-add" onclick="addStaminaInput()">+ 추가</button>
+                <button class="btn-calculate" onclick="calculateStamina()">계산하기</button>
+              </div>
+              
+              <!-- 결과 영역 -->
+              <div id="stamina-result-card" style="display:none;">
+                <h4 class="result-section-title">🌱 획득 정보</h4>
+                <div id="result-body">
+                  <!-- 결과가 여기 표시됨 -->
                 </div>
               </div>
-
-              <div class="result-divider"></div>
-
-              <!-- 씨앗 수확 -->
-              <div class="result-section">
-                <h4 class="result-section-title">🌱 씨앗 수확</h4>
-                <div class="result-details">
-                  <div class="result-row">
-                    <span class="result-detail-label">기본 씨앗</span>
-                    <span class="result-detail-value" id="basic-seeds">0개</span>
-                  </div>
-                  <div class="result-row bonus-row">
-                    <span class="result-detail-label">
-                      추가 씨앗 (자연이 주는 선물)
-                      <span class="bonus-info" id="gift-bonus-info">0%</span>
-                    </span>
-                    <span class="result-detail-value" id="bonus-seeds">+0개</span>
-                  </div>
-                  <div class="result-row total-row">
-                    <span class="result-detail-label">예상 총 씨앗</span>
-                    <span class="result-detail-value highlight" id="total-seeds">0개</span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="result-divider"></div>
-
-              <!-- 베이스 드롭 -->
-              <div class="result-section">
-                <h4 class="result-section-title">🔥 베이스 드롭</h4>
-                <div class="result-details">
-                  <div class="result-row bonus-row">
-                    <span class="result-detail-label">
-                      베이스 드롭 (불붙은 괭이)
-                      <span class="bonus-info" id="fire-bonus-info">0%</span>
-                    </span>
-                    <span class="result-detail-value" id="base-drops">0개</span>
-                  </div>
-                </div>
-              </div>
-
-              <!-- 전문가 미적용 안내 -->
-              <div class="expert-notice" id="expert-notice">
-                <span class="notice-icon">ℹ️</span>
-                <span class="notice-text">정보 탭에서 전문가 스킬을 설정하면 더 정확한 계산이 가능합니다.</span>
-              </div>
+              
             </div>
           </div>
         </div>
       </div>
-
-      <!-- 재배 탭 -->
-      <div id="tab-farm" class="tab-content" style="display:none;">
-        <h2 class="content-title">🌱 재배 효율</h2>
-        
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">작물별 수익 계산</h3>
-          </div>
-          <div class="card-body">
-            <p>작물별 수익, 재배 효율 계산 영역입니다.</p>
-            <p style="margin-top: 12px; color: var(--color-text-muted);">
-              🚧 이 기능은 현재 개발 중입니다.
-            </p>
-          </div>
-        </div>
-      </div>
-
-      <!-- 요리 탭 -->
-      <div id="tab-cook" class="tab-content" style="display:none;">
-        <h2 class="content-title">🍳 요리 제작</h2>
-        
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">요리 효율 계산</h3>
-          </div>
-          <div class="card-body">
-            <p>요리 제작 수익 및 재료 효율 계산 영역입니다.</p>
-            <p style="margin-top: 12px; color: var(--color-text-muted);">
-              🚧 이 기능은 현재 개발 중입니다.
-            </p>
-          </div>
-        </div>
-      </div>
-
     </section>
   </main>
 
@@ -442,48 +361,7 @@
   <!-- 스태미나 계산 스크립트 -->
   <script src="js/farming-stamina.js"></script>
   
-  <!-- 임시 디버깅 스크립트 -->
-  <script>
-    console.log('=== 디버깅 시작 ===');
-    console.log('DOM 로드 전');
-    
-    document.addEventListener('DOMContentLoaded', () => {
-      console.log('DOM 로드 완료');
-      
-      const tabs = document.querySelectorAll('.sub-header-inner a');
-      console.log('탭 개수:', tabs.length);
-      
-      const contents = document.querySelectorAll('.tab-content');
-      console.log('콘텐츠 개수:', contents.length);
-      
-      tabs.forEach((tab, index) => {
-        console.log(`탭 ${index}:`, tab.dataset.target);
-        
-        tab.addEventListener('click', (e) => {
-          e.preventDefault();
-          console.log('클릭된 탭:', tab.dataset.target);
-          
-          // 모든 탭 비활성화
-          tabs.forEach(t => t.classList.remove('active'));
-          contents.forEach(c => c.style.display = 'none');
-          
-          // 선택된 탭 활성화
-          tab.classList.add('active');
-          const targetId = tab.dataset.target;
-          const target = document.getElementById(targetId);
-          
-          console.log('대상 요소:', target);
-          
-          if (target) {
-            target.style.display = 'block';
-            console.log('표시 완료:', targetId);
-          } else {
-            console.error('대상 요소를 찾을 수 없음:', targetId);
-          }
-        });
-      });
-    });
-  </script>
+
 
 </body>
 </html>

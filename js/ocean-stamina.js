@@ -86,19 +86,42 @@ function distributeByRarity(totalDrops, starLV) {
 }
 
 /**
+ * 숫자 포맷팅 (천 단위 구분)
+ */
+function formatNumber(num) {
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+/**
  * 결과 표시
  */
 function displayResult(item, count1, count2, count3, clamCount) {
-    const html = `
-        <div class="stamina-result-products">
-            <div>${item}★ <span>${count1}</span></div>
-            <div>${item}★★ <span>${count2}</span></div>
-            <div>${item}★★★ <span>${count3}</span></div>
-            <div>조개 <span>${clamCount}</span></div>
-        </div>
-    `;
-    const resultElem = getElement("stamina-item-list");
-    if (resultElem) resultElem.innerHTML = html;
+    const resultCard = getElement("ocean-stamina-result-card");
+    
+    // 결과 카드 표시
+    if (resultCard) resultCard.style.display = 'block';
+    
+    // 등급별 수량
+    getElement("ocean-star1-drops").textContent = formatNumber(count1);
+    getElement("ocean-star2-drops").textContent = formatNumber(count2);
+    getElement("ocean-star3-drops").textContent = formatNumber(count3);
+    getElement("ocean-clam-drops").textContent = formatNumber(clamCount);
+    
+    // 전문가 정보
+    const rodLV = getInputNumber("info-expert-rod", 1);
+    const stormLV = getInputNumber("expert-storm");
+    const starLV = getInputNumber("expert-star");
+    const clamLV = getInputNumber("expert-clam-refill");
+    
+    getElement("ocean-rod-info").textContent = `낚싯대 ${rodLV}강`;
+    getElement("ocean-storm-info").textContent = `폭풍 LV${stormLV}`;
+    getElement("ocean-star-info").textContent = `별별별 LV${starLV}`;
+    getElement("ocean-clam-info").textContent = `조개무한리필 LV${clamLV}`;
+    
+    // 결과 카드로 스크롤
+    setTimeout(() => {
+        resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
 }
 
 /**
@@ -113,7 +136,7 @@ export function updateExpertSummary() {
     const summaryElem = getElement("stamina-expert-summary");
     if (summaryElem) {
         summaryElem.textContent = 
-            `(폭풍 ${stormLV}LV, 별별별 ${starLV}LV, 조개 무한리필 ${clamLV}LV, 낚싯대 ${rodLV}강 적용)`;
+            `(낚싯대 ${rodLV}강, 폭풍 LV${stormLV}, 별별별 LV${starLV}, 조개무한리필 LV${clamLV} 적용)`;
     }
 }
 
@@ -127,7 +150,17 @@ export function init() {
         calcBtn.addEventListener("click", runSimulation);
     }
 
-    // 전문가 입력 변경 시 요약 업데이트
+    // 스태미나 입력 필드에서 Enter 키 처리
+    const staminaInput = getElement("input-stamina");
+    if (staminaInput) {
+        staminaInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                runSimulation();
+            }
+        });
+    }
+
+    // 전문가 입력 변경 시 요약 업데이트 + 자동 재계산
     const expertInputIds = [
         "info-expert-rod",
         "expert-storm",
@@ -138,7 +171,14 @@ export function init() {
     expertInputIds.forEach(id => {
         const input = getElement(id);
         if (input) {
-            input.addEventListener("input", updateExpertSummary);
+            input.addEventListener("input", () => {
+                updateExpertSummary();
+                // 결과 카드가 표시되어 있으면 자동 재계산
+                const resultCard = getElement("ocean-stamina-result-card");
+                if (resultCard && resultCard.style.display === 'block') {
+                    runSimulation();
+                }
+            });
         }
     });
 
