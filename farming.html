@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/farming-recipes.css" />
 </head>
 <body>
 
@@ -44,30 +45,131 @@
     <section class="content-area">
 
       <!-- 정보 탭 -->
-      <div id="tab-info" class="tab-content">
-        <h2 class="content-title">📋 재배 정보</h2>
+      <div id="tab-info" class="tab-content" style="display:block;">
+        <h2 class="content-title">정보</h2>
         
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">재배 시스템 설명</h3>
-          </div>
-          <div class="card-body">
-            <p>재배 시스템 설명, 작물 정보, 기본 효율 정보가 들어갈 영역입니다.</p>
-            <p style="margin-top: 12px; color: var(--color-text-muted);">
-              🚧 이 페이지는 현재 개발 중입니다.
-            </p>
-          </div>
-        </div>
+        <!-- 2단 레이아웃 -->
+        <div class="info-grid">
+          
+          <!-- 왼쪽: 입력 영역 -->
+          <div class="info-left">
+            
+            <!-- 세이지 괭이 스탯 (예정) -->
+            <div class="card compact-card">
+              <div class="card-header">
+                <h3 class="card-title">세이지 괭이 스탯</h3>
+              </div>
+              <div class="card-body">
+                <p style="color: var(--color-text-muted); font-size: 14px;">
+                  -
+                </p>
+              </div>
+            </div>
 
-        <div class="alert alert-info" style="margin-top: 20px;">
-          <strong>💡 개발 예정</strong><br>
-          재배 계산기 기능이 곧 추가될 예정입니다.
+            <!-- 전문가 스킬 (예정) -->
+            <div class="card compact-card">
+              <div class="card-header">
+                <h3 class="card-title">전문가</h3>
+              </div>
+              <div class="card-body">
+                <p style="color: var(--color-text-muted); font-size: 14px;">
+                  -
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- 오른쪽: 조합법 영역 -->
+          <div class="info-right">
+            
+            <!-- 조합법 탭 -->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">조합법</h3>
+                <button class="toggle-materials-btn" onclick="toggleBasicMaterials()">
+                  기본 재료 가격
+                  <span class="toggle-icon">▼</span>
+                </button>
+              </div>
+              
+              <!-- 기본 재료 가격 (접힌 상태) -->
+              <div class="basic-materials-toggle" id="basic-materials-section" style="display:none;">
+                <div class="basic-materials-inline">
+                  <span class="material-inline">소금 <strong>2G</strong></span>
+                  <span class="material-inline">요리용 달걀 <strong>3G</strong></span>
+                  <span class="material-inline">요리용 우유 <strong>3G</strong></span>
+                  <span class="material-inline">오일 <strong>4G</strong></span>
+                </div>
+              </div>
+              
+              <div class="card-body" style="padding: 0;">
+                
+                <!-- 조합법 내부 탭 -->
+                <div class="recipe-tabs">
+                  <button class="recipe-tab active" data-recipe-tab="cooking">요리</button>
+                  <button class="recipe-tab" data-recipe-tab="processing">가공</button>
+                </div>
+
+                <!-- 요리 조합법 -->
+                <div id="cooking-recipes" class="recipe-content active">
+                  <div class="recipe-content-inner">
+                    <div class="table-controls-compact">
+                      <input type="text" id="recipe-search" class="search-input-compact" placeholder="검색">
+                      <select id="sort-select" class="sort-select-compact">
+                        <option value="name">이름순</option>
+                        <option value="price-low">최저가</option>
+                        <option value="price-high">최고가</option>
+                      </select>
+                    </div>
+                    <div class="table-wrapper-compact">
+                      <table class="recipe-table-compact">
+                        <thead>
+                          <tr>
+                            <th>요리</th>
+                            <th>재료</th>
+                            <th>최저가</th>
+                            <th>최고가</th>
+                          </tr>
+                        </thead>
+                        <tbody id="recipe-tbody">
+                          <!-- JS로 동적 생성 -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 가공 조합법 -->
+                <div id="processing-recipes" class="recipe-content">
+                  <div class="recipe-content-inner">
+                    <div class="table-wrapper-compact">
+                      <table class="processing-table-compact">
+                        <thead>
+                          <tr>
+                            <th>항목</th>
+                            <th>재료</th>
+                          </tr>
+                        </thead>
+                        <tbody id="processing-tbody">
+                          <!-- JS로 동적 생성 -->
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+          </div>
+
         </div>
       </div>
 
       <!-- 스태미나 탭 -->
       <div id="tab-stamina" class="tab-content" style="display:none;">
-        <h2 class="content-title">⚡ 스태미나 계산</h2>
+        <h2 class="content-title">스태미나</h2>
         
         <div class="card">
           <div class="card-header">
@@ -84,7 +186,7 @@
 
       <!-- 재배 탭 -->
       <div id="tab-farm" class="tab-content" style="display:none;">
-        <h2 class="content-title">🌱 재배 효율</h2>
+        <h2 class="content-title">재배 효율</h2>
         
         <div class="card">
           <div class="card-header">
@@ -101,7 +203,7 @@
 
       <!-- 요리 탭 -->
       <div id="tab-cook" class="tab-content" style="display:none;">
-        <h2 class="content-title">🍳 요리 제작</h2>
+        <h2 class="content-title">요리 제작</h2>
         
         <div class="card">
           <div class="card-header">
@@ -121,8 +223,54 @@
 
   <!-- ===== 푸터 ===== -->
   <footer class="footer">© 1x0x7</footer>
+  
   <!-- 공통 스크립트 -->
   <script src="js/script.js"></script>
+  <!-- 요리 조합법 스크립트 -->
+  <script src="js/farming-recipes.js"></script>
+  
+  <!-- 임시 디버깅 스크립트 -->
+  <script>
+    console.log('=== 디버깅 시작 ===');
+    console.log('DOM 로드 전');
+    
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('DOM 로드 완료');
+      
+      const tabs = document.querySelectorAll('.sub-header-inner a');
+      console.log('탭 개수:', tabs.length);
+      
+      const contents = document.querySelectorAll('.tab-content');
+      console.log('콘텐츠 개수:', contents.length);
+      
+      tabs.forEach((tab, index) => {
+        console.log(`탭 ${index}:`, tab.dataset.target);
+        
+        tab.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('클릭된 탭:', tab.dataset.target);
+          
+          // 모든 탭 비활성화
+          tabs.forEach(t => t.classList.remove('active'));
+          contents.forEach(c => c.style.display = 'none');
+          
+          // 선택된 탭 활성화
+          tab.classList.add('active');
+          const targetId = tab.dataset.target;
+          const target = document.getElementById(targetId);
+          
+          console.log('대상 요소:', target);
+          
+          if (target) {
+            target.style.display = 'block';
+            console.log('표시 완료:', targetId);
+          } else {
+            console.error('대상 요소를 찾을 수 없음:', targetId);
+          }
+        });
+      });
+    });
+  </script>
 
 </body>
 </html>
