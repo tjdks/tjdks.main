@@ -1,320 +1,358 @@
 /* =========================
    공통 스태미나 계산 스타일 (재배/해양 공용)
+   - 깔끔하고 컴팩트한 디자인
 ========================= */
-
-/* 콘텐츠 영역 너비 - 반응형 */
-#tab-stamina .content-area {
-  max-width: 1160px;
-  width: 100%;
-  margin: 0 auto;
-  box-sizing: border-box;
-}
 
 /* 스태미나 컨테이너 */
 .stamina-container {
-  max-width: 800px;
+  max-width: 600px;
   width: 100%;
   margin: 0 auto;
 }
 
-/* 스태미나 입력 컨테이너 */
+.stamina-container .card {
+  border: 1px solid var(--color-border, #e0e0e0);
+  border-radius: 8px;
+}
+
+.stamina-container .card-body {
+  padding: 20px;
+}
+
+/* ===== 입력 영역 ===== */
 .stamina-inputs-container {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: 8px;
+  margin-bottom: 14px;
 }
 
-/* 스태미나 입력 행 */
 .stamina-input-row {
   display: flex;
   align-items: center;
   gap: 12px;
-  flex-wrap: wrap;
+  padding: 12px 14px;
+  background: var(--color-bg-secondary, #f8f9fa);
+  border-radius: 6px;
+  border: 1px solid var(--color-border-light, #f0f0f0);
 }
 
-/* 스태미나 입력 그룹 */
 .stamina-input-group {
   display: flex;
+  align-items: center;
+  gap: 16px;
   flex: 1;
-  gap: 12px;
-  min-width: 0;
 }
 
-/* 스태미나 레이블 */
 .stamina-label {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  flex: 1;
-  font-size: clamp(12px, 3vw, 13px);
-  font-weight: 600;
-  color: var(--color-text-primary, #333);
-  min-width: 100px;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-text-secondary, #666);
 }
 
-/* 스태미나 입력 필드 */
 .stamina-input {
-  width: 100%;
-  padding: 10px 12px;
+  width: 90px;
+  padding: 8px 10px;
   border: 1px solid var(--color-border, #e0e0e0);
   border-radius: 4px;
-  font-size: clamp(13px, 3vw, 14px);
-  transition: all 0.2s;
+  font-size: 14px;
+  text-align: right;
+  transition: border-color 0.15s;
 }
 
 .stamina-input:focus {
   outline: none;
   border-color: var(--color-primary, #4a90e2);
-  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
 }
 
-/* 스태미나 셀렉트 */
 .stamina-select {
-  width: 100%;
-  padding: 10px 12px;
+  width: 90px;
+  padding: 8px 10px;
   border: 1px solid var(--color-border, #e0e0e0);
   border-radius: 4px;
-  font-size: clamp(13px, 3vw, 14px);
+  font-size: 14px;
   background-color: white;
   cursor: pointer;
-  transition: all 0.2s;
+  transition: border-color 0.15s;
 }
 
 .stamina-select:focus {
   outline: none;
   border-color: var(--color-primary, #4a90e2);
-  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.1);
-}
-
-/* 전문가 정보 텍스트 */
-.expert-info-text {
-  padding: 12px 16px;
-  background-color: var(--color-bg-secondary, #f8f9fa);
-  border-radius: 4px;
-  font-size: clamp(10px, 2.5vw, 12px);
-  color: var(--color-text-secondary, #666);
-  text-align: center;
-  margin-bottom: 16px;
-  word-break: keep-all;
-}
-
-/* 버튼 액션 영역 */
-.btn-actions {
-  display: flex;
-  gap: 12px;
-  margin-bottom: 24px;
-  flex-wrap: wrap;
-}
-
-/* 추가 버튼 */
-.btn-add {
-  flex: 1;
-  min-width: 100px;
-  padding: 12px 20px;
-  background-color: var(--color-bg-secondary, #f8f9fa);
-  border: 1px solid var(--color-border, #e0e0e0);
-  border-radius: 4px;
-  font-size: clamp(12px, 3vw, 14px);
-  font-weight: 600;
-  color: var(--color-text-primary, #333);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-add:hover {
-  background-color: var(--color-bg-hover, #f0f2f5);
-  border-color: var(--color-primary, #4a90e2);
-  color: var(--color-primary, #4a90e2);
-}
-
-/* 계산 버튼 */
-.btn-calculate {
-  flex: 2;
-  min-width: 150px;
-  padding: 12px 20px;
-  background-color: var(--color-primary, #4a90e2);
-  border: none;
-  border-radius: 4px;
-  font-size: clamp(12px, 3vw, 14px);
-  font-weight: 600;
-  color: white;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-calculate:hover {
-  background-color: var(--color-primary-hover, #3a7bc8);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
-}
-
-/* 결과 카드 */
-#stamina-result-card {
-  margin-top: 24px;
-  padding: 20px;
-  background-color: var(--color-bg-secondary, #f8f9fa);
-  border-radius: 6px;
-  border: 1px solid var(--color-border, #e0e0e0);
-}
-
-/* 결과 섹션 타이틀 */
-.result-section-title {
-  font-size: clamp(14px, 3.5vw, 16px);
-  font-weight: 600;
-  color: var(--color-text-primary, #333);
-  margin-bottom: 16px;
-  padding-bottom: 12px;
-  border-bottom: 2px solid var(--color-border, #e0e0e0);
-}
-
-/* 결과 본문 */
-#result-body {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-}
-
-/* 작물/어패류 결과 섹션 */
-.crop-result-section,
-.fish-result-section {
-  padding: 16px;
-  background-color: white;
-  border-radius: 8px;
-  border: 1px solid var(--color-border-light, #f0f0f0);
-}
-
-.crop-result-title,
-.fish-result-title {
-  font-size: clamp(13px, 3vw, 15px);
-  font-weight: 600;
-  color: var(--color-text-primary, #333);
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 1px solid var(--color-border-light, #f0f0f0);
-}
-
-.crop-result-row,
-.fish-result-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 6px 0;
-  font-size: clamp(12px, 3vw, 13px);
-}
-
-.result-label {
-  color: var(--color-text-secondary, #666);
-}
-
-.result-value {
-  font-weight: 600;
-  color: var(--color-text-primary, #333);
-}
-
-.result-value.highlight {
-  color: var(--color-primary, #4a90e2);
-  font-size: clamp(13px, 3.5vw, 15px);
-}
-
-/* 결과 행 */
-.result-row {
-  padding: 12px 16px;
-  background-color: white;
-  border-radius: 4px;
-  border: 1px solid var(--color-border-light, #f0f0f0);
-}
-
-.result-row-header {
-  font-size: clamp(12px, 3vw, 14px);
-  font-weight: 600;
-  color: var(--color-text-primary, #333);
-  margin-bottom: 8px;
-}
-
-.result-row-content {
-  font-size: clamp(11px, 2.5vw, 13px);
-  color: var(--color-text-secondary, #666);
-  line-height: 1.6;
 }
 
 /* 삭제 버튼 */
 .btn-remove {
-  padding: 10px 16px;
-  background-color: var(--color-danger, #dc3545);
-  border: none;
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--color-border, #e0e0e0);
+  background: white;
+  color: var(--color-text-muted, #999);
   border-radius: 4px;
-  color: white;
-  font-size: clamp(11px, 2.5vw, 13px);
-  font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
+  font-size: 14px;
+  line-height: 1;
+  transition: all 0.15s;
   flex-shrink: 0;
+  margin-left: auto;
 }
 
 .btn-remove:hover {
-  background-color: #c82333;
-  transform: translateY(-1px);
+  border-color: var(--color-danger, #dc3545);
+  color: var(--color-danger, #dc3545);
 }
 
-/* 반응형 */
-@media (max-width: 768px) {
-  .stamina-container {
-    padding: 0;
-  }
-
-  #stamina-result-card {
-    padding: 16px;
-  }
-
-  .crop-result-section,
-  .fish-result-section {
-    padding: 12px;
-  }
+/* ===== 전문가 정보 ===== */
+.expert-info-text {
+  padding: 8px 12px;
+  background: var(--color-bg-secondary, #f8f9fa);
+  border-radius: 4px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: var(--color-text-muted, #999);
+  text-align: center;
 }
 
+/* ===== 버튼 ===== */
+.btn-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-add {
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid var(--color-border, #e0e0e0);
+  border-radius: 4px;
+  font-size: 13px;
+  color: var(--color-text-secondary, #666);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+
+.btn-add:hover {
+  border-color: var(--color-primary, #4a90e2);
+  color: var(--color-primary, #4a90e2);
+}
+
+.btn-calculate {
+  padding: 8px 20px;
+  background: var(--color-primary, #4a90e2);
+  border: none;
+  border-radius: 4px;
+  color: white;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn-calculate:hover {
+  background: var(--color-primary-hover, #357abd);
+}
+
+/* ===== 결과 카드 ===== */
+#stamina-result-card {
+  margin-top: 16px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid var(--color-border, #e0e0e0);
+  overflow: hidden;
+}
+
+.result-section-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  margin: 0;
+  background: var(--color-primary, #4a90e2);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+  border-bottom: none;
+}
+
+#result-body {
+  padding: 16px;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 12px;
+}
+
+/* ===== 결과 박스 (해양) ===== */
+.fish-result-section {
+  padding: 14px;
+  background: var(--color-bg-secondary, #f8f9fa);
+  border-radius: 6px;
+  border: 1px solid var(--color-border-light, #f0f0f0);
+}
+
+.fish-result-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border-light, #f0f0f0);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary, #333);
+}
+
+.fish-result-title img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.fish-result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+/* ===== 결과 박스 (재배) ===== */
+.crop-result-section {
+  padding: 14px;
+  background: var(--color-bg-secondary, #f8f9fa);
+  border-radius: 6px;
+  border: 1px solid var(--color-border-light, #f0f0f0);
+}
+
+.crop-result-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border-light, #f0f0f0);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary, #333);
+}
+
+.crop-result-title img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.crop-result-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.crop-result-row.total {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border-light, #f0f0f0);
+}
+
+.result-label {
+  color: var(--color-text-muted, #999);
+}
+
+.result-value {
+  font-weight: 500;
+  color: var(--color-text-primary, #333);
+  font-variant-numeric: tabular-nums;
+}
+
+.result-value.primary {
+  color: var(--color-primary, #4a90e2);
+  font-weight: 600;
+}
+
+.result-detail {
+  font-size: 10px;
+  color: var(--color-text-muted, #999);
+  margin-left: 3px;
+}
+
+.fish-result-row.total {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--color-border-light, #f0f0f0);
+}
+
+/* ===== 보너스 요약 ===== */
+.bonus-summary {
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: var(--color-bg-secondary, #f8f9fa);
+  border-left: 2px solid var(--color-primary, #4a90e2);
+  border-radius: 0 4px 4px 0;
+  font-size: 12px;
+  color: var(--color-text-secondary, #666);
+  line-height: 1.7;
+}
+
+.bonus-summary-title {
+  font-weight: 600;
+  color: var(--color-text-primary, #333);
+  margin-bottom: 4px;
+  font-size: 13px;
+}
+
+.bonus-summary strong {
+  color: var(--color-primary, #4a90e2);
+}
+
+/* ===== 총합 표시 ===== */
+.result-total-row {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--color-text-muted, #999);
+}
+
+.result-total-value {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-primary, #4a90e2);
+}
+
+/* ===== 반응형 ===== */
 @media (max-width: 480px) {
-  .stamina-input-group {
-    flex-direction: column;
+  .stamina-container .card-body {
+    padding: 14px;
   }
-
+  
   .stamina-input-row {
-    flex-direction: column;
-    align-items: stretch;
+    flex-wrap: wrap;
+    padding: 10px 12px;
   }
-
-  .btn-remove {
-    width: 100%;
+  
+  .stamina-input-group {
+    flex-wrap: wrap;
+    gap: 10px;
   }
-
-  .btn-actions {
-    flex-direction: column;
+  
+  .stamina-input {
+    width: 80px;
   }
-
-  .btn-add,
-  .btn-calculate {
-    width: 100%;
-    flex: none;
-  }
-
-  .stamina-input,
+  
   .stamina-select {
+    width: 85px;
+  }
+  
+  .result-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  #result-body {
     padding: 12px;
-  }
-
-  #stamina-result-card {
-    padding: 12px;
-    margin-top: 16px;
-  }
-
-  .crop-result-section,
-  .fish-result-section {
-    padding: 10px;
-  }
-
-  .crop-result-row,
-  .fish-result-row {
-    padding: 4px 0;
   }
 }

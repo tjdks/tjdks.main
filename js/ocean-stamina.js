@@ -1,8 +1,7 @@
 // 해양 스태미나 계산
 
-// 전역 설정
 const STAMINA_CONFIG = {
-  perGather: 15, // 해양은 15 스태미나
+  perGather: 15,
   rodLevel: 0,
   expertStorm: 0,
   expertStar: 0,
@@ -11,70 +10,54 @@ const STAMINA_CONFIG = {
 
 // 낚싯대 레벨별 드롭 수
 const ROD_STATS = {
-  1: 1, 2: 2, 3: 2, 4: 2, 5: 3,
+  0: 1, 1: 1, 2: 2, 3: 2, 4: 2, 5: 3,
   6: 3, 7: 3, 8: 4, 9: 4, 10: 4,
   11: 5, 12: 5, 13: 6, 14: 6, 15: 10
 };
 
 // 낚싯대 레벨별 조개 기본 확률
 const ROD_CLAM_RATE = {
-  1: 0.01, 2: 0.02, 3: 0.03, 4: 0.04, 5: 0.05,
+  0: 0.01, 1: 0.01, 2: 0.02, 3: 0.03, 4: 0.04, 5: 0.05,
   6: 0.06, 7: 0.07, 8: 0.08, 9: 0.09, 10: 0.10,
   11: 0.11, 12: 0.12, 13: 0.13, 14: 0.14, 15: 0.20
 };
 
-// 전문가 스킬: 폭풍의 물질꾼 (비 오는 날 추가 확률)
-const EXPERT_STORM = {
-  0: 0, 1: 0.01, 2: 0.03, 3: 0.05, 4: 0.07, 5: 0.10
+// 전문가 스킬
+const EXPERT_STORM = { 0: 0, 1: 0.01, 2: 0.03, 3: 0.05, 4: 0.07, 5: 0.10 };
+const EXPERT_STAR = { 0: 0, 1: 0.01, 2: 0.02, 3: 0.03, 4: 0.04, 5: 0.05, 6: 0.07 };
+const EXPERT_CLAM_REFILL = { 
+  0: 0, 1: 0.01, 2: 0.015, 3: 0.02, 4: 0.025, 5: 0.03, 
+  6: 0.035, 7: 0.04, 8: 0.045, 9: 0.05, 10: 0.07 
 };
 
-// 전문가 스킬: 별별별! (3성 확률 증가)
-const EXPERT_STAR = {
-  0: 0, 1: 0.01, 2: 0.02, 3: 0.03, 4: 0.04, 5: 0.05, 6: 0.07
+// 어패류 정보
+const FISH_DATA = {
+  oyster: { name: '굴', img: 'img/oyster.png' },
+  conch: { name: '소라', img: 'img/conch.png' },
+  octopus: { name: '문어', img: 'img/octopus.png' },
+  seaweed: { name: '미역', img: 'img/seaweed.png' },
+  urchin: { name: '성게', img: 'img/urchin.png' }
 };
 
-// 전문가 스킬: 조개 무한리필 (조개 확률 증가)
-const EXPERT_CLAM_REFILL = {
-  0: 0, 1: 0.01, 2: 0.015, 3: 0.02, 4: 0.025, 5: 0.03,
-  6: 0.035, 7: 0.04, 8: 0.045, 9: 0.05, 10: 0.07
-};
-
-// 어패류 이름
-const FISH_NAMES = {
-  oyster: '굴',
-  conch: '소라',
-  octopus: '문어',
-  seaweed: '미역',
-  urchin: '성게'
-};
-
-// 입력 카운터
 let inputCount = 1;
 
-/**
- * 숫자 포맷팅
- */
 function formatNumber(num) {
   return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
-/**
- * 입력창 추가
- */
 function addStaminaInput() {
   inputCount++;
   const container = document.getElementById('stamina-inputs-container');
   
-  const newInputRow = document.createElement('div');
-  newInputRow.className = 'stamina-input-row';
-  newInputRow.id = `input-row-${inputCount}`;
-  newInputRow.innerHTML = `
+  const row = document.createElement('div');
+  row.className = 'stamina-input-row';
+  row.id = `input-row-${inputCount}`;
+  row.innerHTML = `
     <div class="stamina-input-group">
       <label class="stamina-label">
         스태미나
-        <input type="number" id="stamina-input-${inputCount}" class="stamina-input" placeholder="3300" min="0" step="15">
+        <input type="number" id="stamina-input-${inputCount}" class="stamina-input" placeholder="3000" min="0" step="15">
       </label>
-      
       <label class="stamina-label">
         어패류
         <select id="fish-select-${inputCount}" class="stamina-select">
@@ -86,64 +69,53 @@ function addStaminaInput() {
         </select>
       </label>
     </div>
-    <button class="btn-remove" onclick="removeStaminaInput(${inputCount})">삭제</button>
+    <button class="btn-remove" onclick="removeStaminaInput(${inputCount})">×</button>
   `;
-  
-  container.appendChild(newInputRow);
+  container.appendChild(row);
+  document.getElementById(`stamina-input-${inputCount}`).focus();
 }
 
-/**
- * 입력창 삭제
- */
 function removeStaminaInput(id) {
   const row = document.getElementById(`input-row-${id}`);
-  if (row) {
-    row.remove();
-  }
+  if (row) row.remove();
 }
 
-/**
- * 등급별 분배 (정수 기반)
- */
 function distributeByRarity(totalDrops, starLevel) {
-  const rate3 = 0.10 + (EXPERT_STAR[starLevel] || 0); // 3성 (기본 10%)
-  const rate2 = 0.30;                                  // 2성 (고정 30%)
-  const rate1 = 1 - rate2 - rate3;                     // 1성 (나머지)
+  const starBonus = EXPERT_STAR[starLevel] || 0;
+  const rate3 = 0.10 + starBonus;
+  const rate2 = 0.30;
+  const rate1 = 1 - rate2 - rate3;
   
-  // 소수 기반 계산
-  let raw1 = totalDrops * rate1;
-  let raw2 = totalDrops * rate2;
-  let raw3 = totalDrops * rate3;
+  let count1 = Math.floor(totalDrops * rate1);
+  let count2 = Math.floor(totalDrops * rate2);
+  let count3 = Math.floor(totalDrops * rate3);
   
-  // 정수 변환
-  let count1 = Math.floor(raw1);
-  let count2 = Math.floor(raw2);
-  let count3 = Math.floor(raw3);
-  
-  // 나머지 배분 (소수점이 큰 순서대로)
+  // 나머지 배분
   let remainder = totalDrops - (count1 + count2 + count3);
-  const probOrder = [
-    { key: 'count3', frac: raw3 - count3 },
-    { key: 'count2', frac: raw2 - count2 },
-    { key: 'count1', frac: raw1 - count1 }
+  const fracs = [
+    { key: 'count3', frac: (totalDrops * rate3) % 1 },
+    { key: 'count2', frac: (totalDrops * rate2) % 1 },
+    { key: 'count1', frac: (totalDrops * rate1) % 1 }
   ].sort((a, b) => b.frac - a.frac);
   
   const counts = { count1, count2, count3 };
   for (let i = 0; i < remainder; i++) {
-    counts[probOrder[i % 3].key]++;
+    counts[fracs[i % 3].key]++;
   }
   
-  return counts;
+  return { 
+    count1: counts.count1, 
+    count2: counts.count2, 
+    count3: counts.count3,
+    starBonus: Math.round(starBonus * 100)
+  };
 }
 
-/**
- * 스태미나 계산
- */
 function calculateStamina() {
-  // 정보 탭에서 전문가 설정 가져오기
   syncExpertSettings();
   
   const results = [];
+  let grandTotal = 0;
   
   for (let i = 1; i <= inputCount; i++) {
     const inputElem = document.getElementById(`stamina-input-${i}`);
@@ -156,36 +128,35 @@ function calculateStamina() {
     
     if (!stamina || stamina <= 0) continue;
     
-    // 채집 횟수
     const gatherCount = Math.floor(stamina / STAMINA_CONFIG.perGather);
-    
-    // 기본 드롭 수 (낚싯대 레벨)
-    const dropsPerGather = STAMINA_CONFIG.rodLevel > 0 ? (ROD_STATS[STAMINA_CONFIG.rodLevel] || 1) : 1;
+    const dropsPerGather = ROD_STATS[STAMINA_CONFIG.rodLevel] || 1;
     let totalDrops = gatherCount * dropsPerGather;
     
-    // 폭풍의 물질꾼 (비 오는 날 가정)
-    const isRain = true;
-    if (isRain && STAMINA_CONFIG.expertStorm > 0) {
-      const stormBonus = Math.floor(gatherCount * (EXPERT_STORM[STAMINA_CONFIG.expertStorm] || 0));
-      totalDrops += stormBonus;
-    }
+    // 폭풍의 물질꾼 보너스
+    const stormBonus = EXPERT_STORM[STAMINA_CONFIG.expertStorm] || 0;
+    const stormDrops = Math.floor(gatherCount * stormBonus);
+    totalDrops += stormDrops;
     
     // 등급별 분배
-    const { count1, count2, count3 } = distributeByRarity(totalDrops, STAMINA_CONFIG.expertStar);
+    const { count1, count2, count3, starBonus } = distributeByRarity(totalDrops, STAMINA_CONFIG.expertStar);
     
     // 조개 계산
-    const baseClamRate = STAMINA_CONFIG.rodLevel > 0 ? (ROD_CLAM_RATE[STAMINA_CONFIG.rodLevel] || 0.01) : 0.01;
+    const baseClamRate = ROD_CLAM_RATE[STAMINA_CONFIG.rodLevel] || 0.01;
     const clamBonus = EXPERT_CLAM_REFILL[STAMINA_CONFIG.expertClamRefill] || 0;
     const totalClamRate = baseClamRate + clamBonus;
     const clamCount = Math.floor(gatherCount * totalClamRate);
     
+    grandTotal += totalDrops;
+    
     results.push({
-      fishName: FISH_NAMES[fishType],
-      count1,
-      count2,
-      count3,
-      clamCount,
-      totalDrops
+      fishType,
+      fishName: FISH_DATA[fishType].name,
+      fishImg: FISH_DATA[fishType].img,
+      count1, count2, count3,
+      clamCount, totalDrops,
+      starBonus,
+      clamBonusPercent: Math.round(clamBonus * 100),
+      stormBonusPercent: Math.round(stormBonus * 100)
     });
   }
   
@@ -194,59 +165,83 @@ function calculateStamina() {
     return;
   }
   
-  displayResults(results);
+  displayResults(results, grandTotal);
 }
 
-/**
- * 결과 표시
- */
-function displayResults(results) {
+function displayResults(results, grandTotal) {
   const resultCard = document.getElementById('stamina-result-card');
   const resultBody = document.getElementById('result-body');
   
   resultCard.style.display = 'block';
   
-  let html = '';
-  results.forEach((result) => {
-    html += `
+  // 헤더에 총합 표시
+  const titleElem = resultCard.querySelector('.result-section-title');
+  titleElem.innerHTML = `<span>예상 획득량</span><span>총 ${formatNumber(grandTotal)}개</span>`;
+  
+  // 결과 그리드 생성
+  let gridHtml = '<div class="result-grid">';
+  
+  results.forEach((r) => {
+    gridHtml += `
       <div class="fish-result-section">
-        <h5 class="fish-result-title">${result.fishName}</h5>
-        <div class="fish-result-row">
-          <span class="result-label">1성 (★):</span>
-          <span class="result-value">${formatNumber(result.count1)}개</span>
+        <div class="fish-result-title">
+          <img src="${r.fishImg}" alt="${r.fishName}">
+          <span>${r.fishName}</span>
         </div>
         <div class="fish-result-row">
-          <span class="result-label">2성 (★★):</span>
-          <span class="result-value">${formatNumber(result.count2)}개</span>
+          <span class="result-label">★</span>
+          <span class="result-value">${formatNumber(r.count1)}</span>
         </div>
         <div class="fish-result-row">
-          <span class="result-label">3성 (★★★):</span>
-          <span class="result-value highlight">${formatNumber(result.count3)}개</span>
+          <span class="result-label">★★</span>
+          <span class="result-value">${formatNumber(r.count2)}</span>
         </div>
         <div class="fish-result-row">
-          <span class="result-label">조개:</span>
-          <span class="result-value">${formatNumber(result.clamCount)}개</span>
+          <span class="result-label">★★★</span>
+          <span class="result-value primary">${formatNumber(r.count3)}${r.starBonus > 0 ? `<span class="result-detail">+${r.starBonus}%</span>` : ''}</span>
         </div>
         <div class="fish-result-row">
-          <span class="result-label">총 드롭:</span>
-          <span class="result-value highlight">${formatNumber(result.totalDrops)}개</span>
+          <span class="result-label">조개</span>
+          <span class="result-value">${formatNumber(r.clamCount)}${r.clamBonusPercent > 0 ? `<span class="result-detail">+${r.clamBonusPercent}%</span>` : ''}</span>
+        </div>
+        <div class="fish-result-row total">
+          <span class="result-label">합계</span>
+          <span class="result-value primary">${formatNumber(r.totalDrops)}</span>
         </div>
       </div>
     `;
   });
   
-  resultBody.innerHTML = html;
+  gridHtml += '</div>';
+  
+  // 보너스 요약
+  const r = results[0];
+  const baseClamRate = Math.round((ROD_CLAM_RATE[STAMINA_CONFIG.rodLevel] || 0.01) * 100);
+  const totalClamRate = baseClamRate + r.clamBonusPercent;
+  
+  let bonusHtml = '';
+  if (r.starBonus > 0 || r.clamBonusPercent > 0 || r.stormBonusPercent > 0) {
+    bonusHtml = `
+      <div class="bonus-summary">
+        <div class="bonus-summary-title">적용 보너스</div>
+        ${r.starBonus > 0 ? `3성 확률 10% → <strong>${10 + r.starBonus}%</strong> (별별별 +${r.starBonus}%)` : ''}
+        ${r.starBonus > 0 && r.clamBonusPercent > 0 ? ' · ' : ''}
+        ${r.clamBonusPercent > 0 ? `조개 확률 ${baseClamRate}% → <strong>${totalClamRate}%</strong> (리필 +${r.clamBonusPercent}%)` : ''}
+        ${(r.starBonus > 0 || r.clamBonusPercent > 0) && r.stormBonusPercent > 0 ? ' · ' : ''}
+        ${r.stormBonusPercent > 0 ? `폭풍 추가 <strong>+${r.stormBonusPercent}%</strong> (비 오는 날)` : ''}
+      </div>
+    `;
+  }
+  
+  resultBody.innerHTML = gridHtml + bonusHtml;
   
   setTimeout(() => {
     resultCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   }, 100);
 }
 
-/**
- * 정보 탭에서 전문가 설정 동기화
- */
 function syncExpertSettings() {
-  const rodInput = document.getElementById('info-expert-rod');
+  const rodInput = document.getElementById('rod-level');
   const stormInput = document.getElementById('expert-storm');
   const starInput = document.getElementById('expert-star');
   const clamInput = document.getElementById('expert-clam-refill');
@@ -259,42 +254,28 @@ function syncExpertSettings() {
   updateExpertDisplay();
 }
 
-/**
- * 전문가 정보 표시 업데이트
- */
 function updateExpertDisplay() {
-  const rodLevel = STAMINA_CONFIG.rodLevel;
-  const stormLevel = STAMINA_CONFIG.expertStorm;
-  const starLevel = STAMINA_CONFIG.expertStar;
-  const clamLevel = STAMINA_CONFIG.expertClamRefill;
-  
+  const { rodLevel, expertStorm, expertStar, expertClamRefill } = STAMINA_CONFIG;
   const expertInfoElem = document.getElementById('ocean-expert-info');
   if (expertInfoElem) {
-    expertInfoElem.textContent = `낚싯대 ${rodLevel}강, 폭풍의 물질꾼 LV${stormLevel}, 별별별! LV${starLevel}, 조개 무한리필 LV${clamLevel}`;
+    expertInfoElem.textContent = `낚싯대 ${rodLevel}강 · 폭풍 LV${expertStorm} · 별별별 LV${expertStar} · 조개리필 LV${expertClamRefill}`;
   }
 }
 
-/**
- * 초기화
- */
 document.addEventListener('DOMContentLoaded', () => {
   const staminaInput = document.getElementById('stamina-input-1');
   if (staminaInput) {
     staminaInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        calculateStamina();
-      }
+      if (e.key === 'Enter') calculateStamina();
     });
   }
   
-  // 정보 탭에서 전문가 설정이 변경될 때마다 동기화
-  const expertInputs = ['info-expert-rod', 'expert-storm', 'expert-star', 'expert-clam-refill'];
+  const expertInputs = ['rod-level', 'expert-storm', 'expert-star', 'expert-clam-refill'];
   expertInputs.forEach(id => {
     const input = document.getElementById(id);
     if (input) {
       input.addEventListener('input', () => {
         syncExpertSettings();
-        // 결과가 표시된 상태라면 자동 재계산
         const resultCard = document.getElementById('stamina-result-card');
         if (resultCard && resultCard.style.display === 'block') {
           calculateStamina();
@@ -303,6 +284,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
   
-  // 초기 동기화
   syncExpertSettings();
 });
