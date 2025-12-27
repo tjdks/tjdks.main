@@ -2,14 +2,16 @@
    공통 정보 탭 스타일 (재배/해양 공용)
 ========================= */
 
-/* 콘텐츠 영역 너비 고정 */
+/* 콘텐츠 영역 너비 고정 - 모든 탭에 적용 */
 .content-area {
-  max-width: 100%;
-  width: 100%;
+  max-width: 1160px !important;
+  width: 1160px !important;
+  margin: 0 auto;
   box-sizing: border-box;
+  min-height: 700px;
 }
 
-/* 콘텐츠 영역 패딩 통일 */
+/* 정보 탭 전용 패딩 */
 #tab-info .content-area {
   padding: var(--spacing-xl);
 }
@@ -28,6 +30,7 @@
   max-width: 100%;
   width: 100%;
   box-sizing: border-box;
+  min-width: 0;
 }
 
 /* 왼쪽 영역 */

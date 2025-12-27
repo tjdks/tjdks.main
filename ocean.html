@@ -11,14 +11,14 @@
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
   
-  <!-- 공통 스타일 -->
+  <!-- 해양 전용 스타일 (common보다 먼저) -->
+  <link rel="stylesheet" href="css/ocean-custom.css" />
+  <link rel="stylesheet" href="css/ocean.css" />
+  
+  <!-- 공통 스타일 (나중에 로드되어 우선순위 높음) -->
   <link rel="stylesheet" href="css/common-info.css" />
   <link rel="stylesheet" href="css/common-recipes.css" />
   <link rel="stylesheet" href="css/common-stamina.css" />
-  
-  <!-- 해양 전용 스타일 -->
-  <link rel="stylesheet" href="css/ocean-custom.css" />
-  <link rel="stylesheet" href="css/ocean.css" />
 </head>
 
 <body>
@@ -344,9 +344,11 @@
 
       <!-- 골드 수익 최적화 탭 -->
       <div id="tab-gold" class="tab-content" style="display:none;">
-
-        <!-- 성급 선택 -->
-        <div class="star-toggle">
+        
+        <div class="gold-optimizer-container">
+          
+          <!-- 성급 선택 -->
+          <div class="star-toggle">
           <input type="radio" name="star-level" id="star1" value="1" checked onchange="switchStarLevel(this.value)">
           <label for="star1">1성</label>
 
@@ -430,9 +432,18 @@
             </div>
 
             <div class="result-products">
-              <div>영생의 아쿠티스 <span id="result-acutis-1">0</span></div>
-              <div>크라켄의 광란체 <span id="result-frenzy-1">0</span></div>
-              <div>리바이던의 깃털 <span id="result-feather-1">0</span></div>
+              <div>
+                <div class="product-name">영생의 아쿠티스</div>
+                <div class="product-count" id="result-acutis-1">0</div>
+              </div>
+              <div>
+                <div class="product-name">크라켄의 광란체</div>
+                <div class="product-count" id="result-frenzy-1">0</div>
+              </div>
+              <div>
+                <div class="product-name">리바이던의 깃털</div>
+                <div class="product-count" id="result-feather-1">0</div>
+              </div>
             </div>
 
             <div class="result-section">
@@ -507,9 +518,18 @@
             </div>
 
             <div class="result-products">
-              <div>해구의 파동 코어 <span id="result-acutis-2">0</span></div>
-              <div>침묵의 심해 비약 <span id="result-frenzy-2">0</span></div>
-              <div>청해룡의 날개 <span id="result-feather-2">0</span></div>
+              <div>
+                <div class="product-name">해구의 파동 코어</div>
+                <div class="product-count" id="result-acutis-2">0</div>
+              </div>
+              <div>
+                <div class="product-name">침묵의 심해 비약</div>
+                <div class="product-count" id="result-frenzy-2">0</div>
+              </div>
+              <div>
+                <div class="product-name">청해룡의 날개</div>
+                <div class="product-count" id="result-feather-2">0</div>
+              </div>
             </div>
 
             <div class="result-section">
@@ -589,9 +609,18 @@
             </div>
 
             <div class="result-products">
-              <div>아쿠아 펄스 파편 <span id="result-aqua-3">0</span></div>
-              <div>나우틸러스의 손 <span id="result-nautilus-3">0</span></div>
-              <div>무저의 척추 <span id="result-spine-3">0</span></div>
+              <div>
+                <div class="product-name">아쿠아 펄스 파편</div>
+                <div class="product-count" id="result-aqua-3">0</div>
+              </div>
+              <div>
+                <div class="product-name">나우틸러스의 손</div>
+                <div class="product-count" id="result-nautilus-3">0</div>
+              </div>
+              <div>
+                <div class="product-name">무저의 척추</div>
+                <div class="product-count" id="result-spine-3">0</div>
+              </div>
             </div>
 
             <div class="result-section">
@@ -620,7 +649,9 @@
             </div>
           </div>
         </div>
-      </div>
+        
+        </div><!-- gold-optimizer-container 끝 -->
+      </div><!-- tab-gold 끝 -->
 
       <!-- 공예품 탭 -->
       <div id="tab-craft" class="tab-content" style="display:none;">

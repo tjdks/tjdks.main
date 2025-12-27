@@ -1,26 +1,43 @@
 /* =========================
-   해양 페이지 공통 스타일
+   해양 페이지 전용 스타일
+   - 골드 수익 최적화 탭
 ========================= */
 
-/* ===== 콘텐츠 영역 패딩 강제 적용 ===== */
-.content-area {
-  padding: 24px !important; /* var(--spacing-xl) = 24px */
+/* ===== 골드 최적화 컨테이너 ===== */
+.gold-optimizer-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 0 40px;
 }
 
-/* ===== 페이지 기본 ===== */
-.page {
-  max-width: 1100px;
+/* ===== 계산기 블록 ===== */
+.star-level {
+  background-color: white;
+  border-radius: var(--border-radius-lg);
+  padding: 24px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 24px;
 }
 
-/* ===== 성급 토글 (골드 최적화 탭용) ===== */
+.star-level h3 {
+  font-size: 1rem;
+  margin-bottom: 14px;
+  color: #333;
+  font-weight: 600;
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 8px;
+}
+
+/* ===== 성급 선택 토글 ===== */
 .star-toggle {
   display: flex;
   align-items: center;
   justify-content: flex-start;
   gap: 10px;
-  position: relative;
-  padding: 10px 0;
-  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  background-color: var(--color-bg-secondary, #f8f9fa);
+  border-radius: var(--border-radius-md);
   flex-wrap: wrap;
 }
 
@@ -29,19 +46,18 @@
 }
 
 .star-toggle label {
-  padding: 8px 18px;
+  padding: 8px 20px;
   border-radius: var(--border-radius-full);
   border: 1px solid var(--color-border-light);
   cursor: pointer;
-  font-size: var(--font-size-base);
-  background: #fafafa;
-  transition: all var(--transition-base);
-  text-align: center;
+  font-size: 14px;
+  background: white;
+  transition: background-color 0.2s, border-color 0.2s;
 }
 
 .star-toggle input[type="radio"]:checked + label {
   background: var(--color-primary);
-  color: var(--color-bg-white);
+  color: white;
   border-color: var(--color-primary);
 }
 
@@ -49,232 +65,183 @@
   background: var(--color-bg-hover);
 }
 
-/* ===== 성급별 컨테이너 ===== */
-.star-level {
-  display: none;
-}
-
-#star-1 {
-  display: block;
-}
-
-.star-level h3 {
-  font-size: 1.1rem;
-  margin-bottom: 16px;
-  color: #333;
-  font-weight: 600;
-}
-
-/* ===== 계산 버튼 (골드 최적화용) ===== */
-.star-level > button {
-  display: inline-block;
-  width: auto;
-  min-width: 120px;
-  padding: 10px 20px;
-  background: linear-gradient(135deg, var(--color-primary, #4a90e2) 0%, #357abd 100%);
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 2px 4px rgba(74, 144, 226, 0.2);
-  margin-top: 16px;
-}
-
-.star-level > button:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 4px 8px rgba(74, 144, 226, 0.3);
-  background: linear-gradient(135deg, #357abd 0%, #2a5f99 100%);
-}
-
-.star-level > button:active {
-  transform: translateY(0);
-}
-
-/* ===== 스위치 컨테이너 (골드 최적화 탭용) ===== */
+/* ===== 스위치 컨테이너 ===== */
 .switch-container {
   margin-left: auto;
   display: flex;
-  gap: 20px;
+  gap: 16px;
   align-items: center;
-  flex-wrap: wrap;
 }
 
 .switch-wrapper {
   display: flex;
   align-items: center;
-  gap: var(--spacing-sm);
+  gap: 6px;
   padding: 4px 8px;
   border-radius: var(--border-radius-md);
-  transition: background-color var(--transition-base);
-}
-
-.switch-wrapper:hover {
-  background-color: rgba(208, 228, 255, 0.3);
 }
 
 .switch-label {
-  font-size: var(--font-size-sm);
+  font-size: 12px;
   color: var(--color-text-secondary);
-  font-weight: var(--font-weight-medium);
+  font-weight: 500;
   white-space: nowrap;
-  transition: color var(--transition-base);
   cursor: pointer;
 }
 
-.switch-wrapper:hover .switch-label {
-  color: var(--color-primary);
-}
-
-/* 스위처 스타일 */
-.switcher-set,
-.switcher-advanced {
+/* 스위처 */
+.switcher {
   position: relative;
-  width: 50px;
-  height: 26px;
+  width: 44px;
+  height: 24px;
   display: inline-block;
 }
 
-.switcher-set input,
-.switcher-advanced input {
+.switcher input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-.switcher-set label,
-.switcher-advanced label {
+.switcher label {
   position: absolute;
   cursor: pointer;
-  background-color: var(--color-border-light);
-  border-radius: var(--border-radius-full);
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
-  transition: background-color var(--transition-slow), box-shadow var(--transition-base);
+  background-color: #ccc;
+  border-radius: 24px;
+  transition: background-color 0.3s;
 }
 
-.switcher-set label:hover,
-.switcher-advanced label:hover {
-  background-color: #b8b8b8;
-  box-shadow: var(--shadow-md);
-}
-
-.switcher-set label::before,
-.switcher-advanced label::before {
+.switcher label::before {
   position: absolute;
   content: "";
-  height: 20px;
-  width: 20px;
+  height: 18px;
+  width: 18px;
   left: 2px;
   bottom: 2px;
-  background-color: var(--color-bg-white);
+  background-color: white;
   border-radius: 50%;
-  transition: transform var(--transition-slow), box-shadow var(--transition-base);
+  transition: transform 0.3s;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-.switcher-set label:hover::before,
-.switcher-advanced label:hover::before {
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
-}
-
-.switcher-set input:checked + label,
-.switcher-advanced input:checked + label {
+.switcher input:checked + label {
   background-color: var(--color-primary);
 }
 
-.switcher-set input:checked + label:hover,
-.switcher-advanced input:checked + label:hover {
-  background-color: var(--color-primary-hover);
-  box-shadow: 0 2px 8px rgba(30, 111, 217, 0.3);
+.switcher input:checked + label::before {
+  transform: translateX(20px);
 }
 
-.switcher-set input:checked + label::before,
-.switcher-advanced input:checked + label::before {
-  transform: translateX(24px);
+/* ===== 입력 그리드 ===== */
+.input-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-bottom: 14px;
 }
 
-/* ===== 고급 입력 섹션 (골드 최적화 탭용) ===== */
+.input-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: var(--color-text-secondary);
+  font-weight: 500;
+  text-align: left;
+}
+
+.input-grid input {
+  padding: 8px 6px;
+  border-radius: 6px;
+  border: 1px solid var(--color-border-light);
+  text-align: center;
+  font-size: 13px;
+  background-color: white;
+}
+
+.input-grid input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
+}
+
+/* ===== 고급 입력칸 ===== */
 .advanced-inputs {
   display: none;
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 2px dashed var(--color-border-light);
+  margin-top: 16px;
+  padding: 16px 0;
+  border-top: 1px dashed #d0d0d0;
+  background-color: transparent;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
   animation: fadeIn 0.3s ease;
 }
 
 .advanced-inputs.active {
   display: block;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  max-height: 1000px;
+  opacity: 1;
+  padding: 16px 0;
 }
 
 .advanced-section {
   margin-bottom: 20px;
 }
 
+.advanced-section:last-child {
+  margin-bottom: 0;
+}
+
 .advanced-section h4 {
   color: var(--color-primary);
-  margin-bottom: var(--spacing-md);
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-semibold);
-  display: flex;
-  align-items: center;
-  gap: 6px;
+  margin-bottom: 12px;
+  font-size: 13px;
+  font-weight: 600;
 }
 
-/* ===== 입력 그리드 (골드 최적화 탭용) ===== */
-.input-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-  gap: 14px;
-  margin-bottom: var(--spacing-lg);
+/* ===== 계산 버튼 ===== */
+.star-level > button {
+  display: block;
+  width: auto;
+  max-width: 150px;
+  margin: 16px 0 0 0;
+  padding: 9px 18px;
+  background: linear-gradient(135deg, #4a90e2 0%, #357abd 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(74, 144, 226, 0.2);
 }
 
-.input-grid label {
-  display: flex;
-  flex-direction: column;
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
+.star-level > button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(74, 144, 226, 0.3);
 }
 
-.input-grid input {
-  margin-top: 6px;
-  padding: 8px;
-  border-radius: var(--border-radius-md);
-  border: 1px solid var(--color-border-light);
-  text-align: center;
-  transition: border-color var(--transition-base), box-shadow var(--transition-base);
-}
-
-.input-grid input:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-}
-
-/* ===== 결과 카드 (골드 최적화 탭용) ===== */
+/* ===== 결과 카드 ===== */
 .result-card {
-  margin: var(--spacing-xl) auto;
-  padding: 20px;
-  background: var(--color-bg-white);
+  display: none;
+  background: white;
   border-radius: var(--border-radius-2xl);
+  padding: 20px;
   box-shadow: var(--shadow-xl);
+  margin: var(--spacing-xl) auto;
   max-width: var(--max-width-narrow);
 }
 
+.result-card.active {
+  display: block;
+}
+
+/* 결과 헤더 */
 .result-header {
   display: flex;
   justify-content: space-between;
@@ -287,17 +254,30 @@
 }
 
 .result-header h3 {
-  margin: 0;
   font-size: var(--font-size-md);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin: 0;
+  border-bottom: none !important;  /* 추가 */
+  padding-bottom: 0 !important;    /* 추가 */
 }
 
 .result-gold {
   font-size: 1.17rem;
   font-weight: var(--font-weight-bold);
   color: var(--color-danger);
+  display: flex;
+  align-items: baseline;
+  gap: 3px;
 }
 
-/* ===== 제작 결과 카드 ===== */
+.result-gold small {
+  font-size: 15px;
+  font-weight: var(--font-weight-semibold);
+  color: #888;
+}
+
+/* ===== 최종 결과물 (상단 3개 카드) ===== */
 .result-products {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -305,21 +285,34 @@
   margin-bottom: 18px;
 }
 
-.result-products div {
+.result-products > div {
   background: var(--color-bg-card);
   border-radius: 11px;
   padding: 13px 9px;
   text-align: center;
-  font-size: 0.77rem;
+  min-height: 72px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 72px;
   line-height: 1.4;
 }
 
-.result-products span {
+.result-products > div .product-image {
+  display: none !important;
+}
+
+.result-products > div .product-name {
+  font-size: 0.77rem;
+  color: var(--color-text);
+  font-weight: var(--font-weight-medium);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.result-products > div .product-count {
   display: block;
   margin-top: 7px;
   font-size: 1.17rem;
@@ -333,15 +326,25 @@
   text-align: left;
 }
 
+.result-section:last-child {
+  margin-bottom: 0;
+}
+
 .result-section h4 {
-  margin-bottom: 11px;
   font-size: 0.86rem;
-  color: var(--color-text);
   font-weight: var(--font-weight-semibold);
+  color: var(--color-text);
+  margin-bottom: 11px;
   text-align: left;
 }
 
-/* ===== 재료 카드 그리드 (골드 최적화 탭용) ===== */
+.result-section > div {
+  font-size: 13px;
+  line-height: 1.8;
+  color: #666;
+}
+
+/* ===== 재료 카드 그리드 ===== */
 .result-materials-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
@@ -384,7 +387,7 @@
 }
 
 .material-card .name {
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   color: #666;
   margin-bottom: 4px;
   white-space: nowrap;
@@ -397,84 +400,9 @@
 .material-card .value {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-semibold);
-  color: #666;
 }
 
-/* ===== 스태미나 계산 스타일 ===== */
-.stamina-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  max-width: 500px;
-  margin: 0 auto;
-}
-
-.stamina-input-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 16px;
-}
-
-.stamina-label {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--color-text-primary, #333);
-}
-
-.stamina-input,
-.stamina-select {
-  padding: 10px 12px;
-  border: 1px solid var(--color-border, #e0e0e0);
-  border-radius: 6px;
-  font-size: 14px;
-  transition: all 0.2s;
-}
-
-.stamina-input:focus,
-.stamina-select:focus {
-  outline: none;
-  border-color: var(--color-primary, #4a90e2);
-  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
-}
-
-.stamina-select {
-  cursor: pointer;
-  background-color: white;
-}
-
-.btn-calculate {
-  width: 100%;
-  padding: 12px 24px;
-  background: linear-gradient(135deg, var(--color-primary, #4a90e2) 0%, #357abd 100%);
-  color: white;
-  border: none;
-  border-radius: 8px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-  box-shadow: 0 4px 6px rgba(74, 144, 226, 0.2);
-}
-
-.btn-calculate:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 12px rgba(74, 144, 226, 0.3);
-  background: linear-gradient(135deg, #357abd 0%, #2a5f99 100%);
-}
-
-.btn-calculate:active {
-  transform: translateY(0);
-}
-
-#ocean-stamina-result-card {
-  animation: fadeInOcean 0.3s ease-in;
-}
-
-@keyframes fadeInOcean {
+@keyframes fadeIn {
   from {
     opacity: 0;
     transform: translateY(-10px);
@@ -485,181 +413,114 @@
   }
 }
 
-.result-divider {
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent,
-    var(--color-border, #e0e0e0),
-    transparent
-  );
-  margin: 16px 0;
-}
 
-.result-section-title {
-  font-size: 15px;
-  font-weight: 600;
-  color: var(--color-text-primary, #333);
-  margin-bottom: 12px;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-/* ===== 간결한 결과 박스 스타일 ===== */
-.result-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-top: 12px;
-}
-
-.result-box {
-  background-color: var(--color-bg-secondary, #f8f9fa);
-  border-radius: 8px;
-  padding: 12px;
-  text-align: center;
-  transition: all 0.2s;
-}
-
-.result-box:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-md);
-}
-
-.result-box-label {
-  font-size: 12px;
-  color: var(--color-text-secondary, #666);
-  margin-bottom: 6px;
-}
-
-.result-box-value {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--color-primary, #4a90e2);
-}
-
-/* ===== 전문가 정보 그리드 ===== */
-.expert-info-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.expert-info-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 12px;
-  background-color: var(--color-bg-secondary, #f8f9fa);
-  border-radius: 6px;
-  font-size: 13px;
-}
-
-.expert-info-icon {
-  font-size: 16px;
-}
-
-.expert-info-text {
-  color: var(--color-text-secondary, #666);
-  font-weight: 500;
-}
 
 /* ===== 반응형 ===== */
 @media (max-width: 768px) {
-  .result-products {
-    grid-template-columns: 1fr;
+  .gold-optimizer-container {
+    padding: 0 20px;
   }
 
-  .result-header {
+  .star-level {
+    padding: 16px;
+  }
+
+  .star-toggle {
     flex-direction: column;
-    align-items: flex-start;
-    gap: 6px;
   }
 
-  .result-materials-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: 8px;
-  }
-
-  .material-card {
-    padding: 10px 6px;
-    min-height: 80px;
-  }
-
-  .material-card .icon {
-    width: 28px;
-    height: 28px;
-  }
-
-  .material-card .icon img {
-    width: 24px;
-    height: 24px;
-  }
-
-  .material-card .name {
-    font-size: 0.7rem;
-  }
-
-  .material-card .value {
-    font-size: var(--font-size-md);
+  .star-toggle label {
+    width: 100%;
   }
 
   .switch-container {
     margin-left: 0;
+    margin-top: 10px;
     width: 100%;
-    justify-content: flex-start;
   }
 
-  .stamina-input-group {
+  .input-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .result-products {
     grid-template-columns: 1fr;
   }
 
-  .result-grid {
-    grid-template-columns: repeat(2, 1fr);
-    gap: 10px;
+  .result-materials-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
-  
-  .expert-info-grid {
-    grid-template-columns: 1fr;
+
+  .star-level > button {
+    max-width: 100%;
   }
 }
 
 @media (max-width: 480px) {
+  .gold-optimizer-container {
+    padding: 0 12px;
+  }
+
+  .input-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .result-materials-grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: 6px;
+  }
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 768px) {
+  .gold-optimizer-container {
+    padding: 0 20px;
   }
 
-  .material-card {
-    padding: 8px 4px;
-    min-height: 70px;
+  .star-level {
+    padding: 16px;
   }
 
-  .material-card .icon {
-    width: 24px;
-    height: 24px;
+  .star-toggle {
+    flex-direction: column;
   }
 
-  .material-card .icon img {
-    width: 20px;
-    height: 20px;
+  .star-toggle label {
+    width: 100%;
   }
 
-  .material-card .name {
-    font-size: 0.65rem;
+  .switch-container {
+    margin-left: 0;
+    margin-top: 10px;
+    width: 100%;
   }
 
-  .material-card .value {
-    font-size: 0.95rem;
+  .input-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 
-  .result-grid {
+  .result-products {
+    grid-template-columns: 1fr;
+  }
+
+  .result-materials-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .star-level > button {
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .gold-optimizer-container {
+    padding: 0 12px;
+  }
+
+  .input-grid {
     grid-template-columns: repeat(2, 1fr);
   }
-  
-  .result-box-value {
-    font-size: 18px;
+
+  .result-materials-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }

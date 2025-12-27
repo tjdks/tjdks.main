@@ -100,6 +100,8 @@
   transition: box-shadow var(--transition-base);
   width: 100%;
   box-sizing: border-box;
+  overflow: hidden;
+  min-width: 0;
 }
 
 .card:hover {

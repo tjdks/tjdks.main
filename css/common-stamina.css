@@ -2,6 +2,14 @@
    공통 스태미나 계산 스타일 (재배/해양 공용)
 ========================= */
 
+/* 콘텐츠 영역 너비 고정 */
+#tab-stamina .content-area {
+  max-width: 1160px !important;
+  width: 1160px !important;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
 /* 스태미나 컨테이너 */
 .stamina-container {
   max-width: 800px;
