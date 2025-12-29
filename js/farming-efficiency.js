@@ -6,21 +6,21 @@
 // 🔧 기본 시세 설정 (3일마다 여기만 수정!)
 // ================================
 const DEFAULT_PRICES = {
-  "토마토 스파게티": 250,
-  "어니언 링": 1184,
-  "갈릭 케이크": 745,
-  "삼겹살 토마토 찌개": 1295,
-  "삼색 아이스크림": 2489,
-  "마늘 양갈비 핫도그": 1021,
-  "달콤 시리얼": 1417,
-  "로스트 치킨 파이": 2042,
-  "스윗 치킨 햄버거": 2350,
-  "토마토 파인애플 피자": 904,
-  "양파 수프": 2578,
-  "허브 삼겹살 찜": 1788,
-  "토마토 라자냐": 2912,
-  "딥 크림 빠네": 2709,
-  "트리플 소갈비 꼬치": 2223
+  "토마토 스파게티": 526,
+  "어니언 링": 842,
+  "갈릭 케이크": 526,
+  "삼겹살 토마토 찌개": 1248,
+  "삼색 아이스크림": 1642,
+  "마늘 양갈비 핫도그": 1190,
+  "달콤 시리얼": 1276,
+  "로스트 치킨 파이": 1464,
+  "스윗 치킨 햄버거": 2347,
+  "토마토 파인애플 피자": 1904,
+  "양파 수프": 2167,
+  "허브 삼겹살 찜": 1624,
+  "토마토 라자냐": 2715,
+  "딥 크림 빠네": 2494,
+  "트리플 소갈비 꼬치": 2799
 };
 // ================================
 
@@ -122,20 +122,24 @@ let efficiencyState = {
   king: 0,
   money: 0,
   results: [],
-  selectedRecipe: ''
+  selectedRecipe: '',
+  initialized: false  // 초기화 여부 플래그
 };
 
 // 초기화
 function initEfficiencyTab() {
-  EFFICIENCY_RECIPES.forEach(r => {
-    // DEFAULT_PRICES에 설정된 값 사용, 없으면 중간값
-    efficiencyState.prices[r.name] = DEFAULT_PRICES[r.name] || Math.floor((r.minPrice + r.maxPrice) / 2);
-  });
+  // 최초 1회만 가격 초기화
+  if (!efficiencyState.initialized) {
+    EFFICIENCY_RECIPES.forEach(r => {
+      efficiencyState.prices[r.name] = DEFAULT_PRICES[r.name] || Math.floor((r.minPrice + r.maxPrice) / 2);
+    });
+    efficiencyState.initialized = true;
+    bindEfficiencyEvents();
+  }
   
   syncEfficiencyExpertSettings();
   renderPriceEditGrid();
   calculateEfficiency();
-  bindEfficiencyEvents();
 }
 
 // 전문가 세팅 동기화
@@ -225,28 +229,31 @@ function renderPriceEditGrid() {
           <span class="recipe-name">${r.name}</span>
         </div>
         <input type="number" value="${efficiencyState.prices[r.name]}" 
-               data-recipe="${r.name}" oninput="updateEfficiencyPrice(this)">
+               data-recipe="${r.name}" class="price-input">
         <div class="price-percent ${pClass}">${percent}%</div>
       </div>
     `;
   }).join('');
-}
 
-function updateEfficiencyPrice(input) {
-  const recipeName = input.dataset.recipe;
-  const newPrice = parseInt(input.value) || 0;
-  efficiencyState.prices[recipeName] = newPrice;
-  
-  const recipe = EFFICIENCY_RECIPES.find(r => r.name === recipeName);
-  if (recipe) {
-    const percent = Math.floor((newPrice / recipe.maxPrice) * 100);
-    const pClass = percent >= 80 ? 'high' : percent >= 50 ? 'mid' : 'low';
-    const percentEl = input.parentElement.querySelector('.price-percent');
-    percentEl.textContent = percent + '%';
-    percentEl.className = 'price-percent ' + pClass;
-  }
-  
-  calculateEfficiency();
+  // 가격 입력 이벤트 바인딩
+  grid.querySelectorAll('.price-input').forEach(input => {
+    input.addEventListener('input', (e) => {
+      const recipeName = e.target.dataset.recipe;
+      const newPrice = parseInt(e.target.value) || 0;
+      efficiencyState.prices[recipeName] = newPrice;
+      
+      const recipe = EFFICIENCY_RECIPES.find(r => r.name === recipeName);
+      if (recipe) {
+        const percent = Math.floor((newPrice / recipe.maxPrice) * 100);
+        const pClass = percent >= 80 ? 'high' : percent >= 50 ? 'mid' : 'low';
+        const percentEl = e.target.parentElement.querySelector('.price-percent');
+        percentEl.textContent = percent + '%';
+        percentEl.className = 'price-percent ' + pClass;
+      }
+      
+      calculateEfficiency();
+    });
+  });
 }
 
 function renderExpertSubtitle() {
@@ -464,6 +471,7 @@ function renderRankingTable() {
       <tr class="recipe-detail-row" data-detail="${item.name}" style="display:none;">
         <td colspan="7">
           <div class="recipe-detail-content">
+            <span class="recipe-detail-label">📖 조합법</span>
             <span class="recipe-detail-ingredients">${item.ingredients}</span>
           </div>
         </td>
