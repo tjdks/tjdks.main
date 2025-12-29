@@ -1,0 +1,355 @@
+/* =========================
+   재배 탭 스타일
+========================= */
+
+/* 전문가 세팅 표시 */
+.farm-expert-status {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin: -8px 0 16px 0;
+}
+
+.farm-expert-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  background: #f0f0f0;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+  margin: 0 2px;
+}
+
+.farm-expert-tag:hover {
+  background: #e8e8e8;
+}
+
+.farm-expert-tag.harvest { color: #22c55e; }
+.farm-expert-tag.king { color: #f59e0b; }
+.farm-expert-tag.seed { color: #3b82f6; }
+
+.farm-expert-tag .tooltip {
+  display: none;
+  position: absolute;
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 8px 12px;
+  background: #1e293b;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 400;
+  border-radius: 6px;
+  white-space: nowrap;
+  z-index: 100;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.farm-expert-tag .tooltip::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #1e293b;
+}
+
+.farm-expert-tag:hover .tooltip {
+  display: block;
+}
+
+/* 입력 영역: 가로 2개 */
+.farm-input-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.farm-input-card {
+  background: var(--color-bg-white);
+  border-radius: 10px;
+  padding: 16px;
+  border: 1px solid var(--color-border);
+}
+
+.farm-input-card h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 12px 0;
+}
+
+.farm-input-card .card-desc {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  margin: -8px 0 12px 0;
+}
+
+/* 입력 행 */
+.farm-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.farm-input-row:last-of-type {
+  margin-bottom: 0;
+}
+
+.farm-input-row .crop-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.farm-input-row .crop-name {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  width: 45px;
+}
+
+.farm-input-row input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  outline: none;
+  text-align: center;
+}
+
+.farm-input-row input:focus {
+  border-color: var(--color-primary);
+}
+
+.farm-input-row .unit {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  width: 16px;
+}
+
+/* 초기화 버튼 */
+.farm-reset-btn {
+  width: 100%;
+  padding: 9px;
+  margin-top: 12px;
+  background: #f8f9fa;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.farm-reset-btn:hover {
+  background: #f1f5f9;
+  color: var(--color-text-secondary);
+}
+
+/* 결과 영역 */
+.farm-result-area {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* 결과 가로 배치 */
+.farm-result-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+/* 빈 상태 */
+.farm-empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 40px 20px;
+  background: #fafbfc;
+  border-radius: 10px;
+  border: 1px dashed var(--color-border);
+}
+
+.farm-empty-state .empty-icon {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.farm-empty-state .empty-text {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+/* 결과 카드 */
+.farm-result-card {
+  background: var(--color-bg-white);
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid var(--color-border);
+  border-top: 3px solid var(--crop-color, var(--color-primary));
+}
+
+.farm-result-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.farm-result-header .crop-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.farm-crop-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.farm-seed-count {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  margin-left: auto;
+  background: #f5f5f5;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.farm-result-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  margin-bottom: 6px;
+}
+
+.farm-result-row:last-child {
+  margin-bottom: 0;
+}
+
+.farm-result-row.total {
+  padding-top: 10px;
+  margin-top: 8px;
+  border-top: 1px dashed #e5e5e5;
+}
+
+.farm-result-label {
+  color: var(--color-text-muted);
+}
+
+.farm-result-value {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.farm-result-value.bonus-seed {
+  color: #f59e0b;
+}
+
+.farm-result-value.primary {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--crop-color, var(--color-primary));
+}
+
+.farm-bonus {
+  font-size: 10px;
+  font-weight: 500;
+  color: #22c55e;
+  display: block;
+  text-align: right;
+}
+
+.farm-detail {
+  font-size: 9px;
+  font-weight: 400;
+  color: var(--color-text-muted);
+  display: block;
+  text-align: right;
+}
+
+/* 요약 바 */
+.farm-summary {
+  display: none;
+  justify-content: space-around;
+  align-items: center;
+  background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+  border-radius: 10px;
+  padding: 14px;
+  border: 1px solid var(--color-border);
+}
+
+.farm-summary-item {
+  text-align: center;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.farm-summary-item .summary-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.farm-summary-item .summary-content {
+  text-align: left;
+}
+
+.farm-summary-item .summary-label {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  margin-bottom: 2px;
+}
+
+.farm-summary-item .summary-value {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.farm-summary-item .summary-value.tomato { color: #ef4444; }
+.farm-summary-item .summary-value.onion { color: #a855f7; }
+.farm-summary-item .summary-value.garlic { color: #22c55e; }
+
+.farm-summary-divider {
+  width: 1px;
+  height: 32px;
+  background: var(--color-border);
+}
+
+/* 반응형 */
+@media (max-width: 600px) {
+  .farm-input-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .farm-result-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .farm-summary-divider {
+    display: none;
+  }
+
+  .farm-summary {
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .farm-summary-item {
+    min-width: 100px;
+  }
+}
