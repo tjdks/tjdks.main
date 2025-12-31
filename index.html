@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/updates.css" />
 </head>
 <body>
 
@@ -29,58 +30,61 @@
     </div>
   </header>
 
-  <!-- ===== 2차 탭 (하위 탭) ===== -->
-  <div class="sub-header">
-    <div class="sub-header-inner">
-      <a href="#" class="active" data-target="tab-info">내 정보</a>
-    </div>
-  </div>
-
   <!-- ===== 메인 콘텐츠 ===== -->
   <main class="page">
     <section class="content-area">
 
-      <div id="tab-info" class="tab-content">
-        <h2 class="content-title">사용법 </h2>
-        
-        <div class="card" style="margin-bottom: 20px;">
-          <div class="card-header">
-            <h3 class="card-title"></h3>
-          </div>
-          <div class="card-body">
-            <ul style="list-style: none; padding: 0;">
-              <li style="padding: 8px 0; border-bottom: 1px solid var(--color-border);">
-                정보 탭에 본인 스펙 입력 후, 계산기 활용
-              </li>
-              <li style="padding: 8px 0; border-bottom: 1px solid var(--color-border);">
-                
-              </li>
-              <li style="padding: 8px 0; border-bottom: 1px solid var(--color-border);">
-                
-              </li>
-            </ul>
+      <!-- 사용법 카드 -->
+      <div class="card" style="margin-bottom: 20px;">
+        <div class="card-header">
+          <h3 class="card-title">📖 사용법</h3>
+        </div>
+        <div class="card-body">
+          <p style="color: var(--color-text-secondary); margin: 0;">
+            정보 탭에 본인 스펙 입력 후, 계산기 활용
+          </p>
+        </div>
+      </div>
+
+      <!-- 최신 업데이트 배너 -->
+      <div class="update-banner">
+        <div class="update-banner-badge">최신 업데이트</div>
+        <div class="update-banner-title">해양 계산기 조합법, 가격 수정 </div>
+        <div class="update-banner-desc">공예품 가격, 조합법, 가격 수정되었음</div>
+        <div class="update-banner-date">2025.12.31</div>
+      </div>
+
+      <!-- 업데이트 내역 -->
+      <div class="card">
+        <div class="card-header">
+          <h3 class="card-title">업데이트 내역</h3>
+        </div>
+        <div class="card-body">
+          <div class="update-list">
+            
+            <div class="update-item">
+              <div class="update-content">
+                <div class="update-title">해양 계산기 조합법 추가</div>
+                <div class="update-meta">2025.12.31 업데이트·</div>
+              </div>
+            </div>
+
+            <div class="update-item">
+              <div class="update-content">
+                <div class="update-title">재배 디자인 수정</div>
+                <div class="update-meta">2025.01.12 · 개선</div>
+              </div>
+            </div>
+
+            <div class="update-item">
+              <div class="update-content">
+                <div class="update-title"></div>
+                <div class="update-meta"></div>
+              </div>
+            </div>
+
           </div>
         </div>
-
-        <div class="card">
-          <div class="card-header">
-            <h3 class="card-title">예정</h3>
-          </div>
-          <div class="card-body">
-            <ul style="list-style: none; padding: 0;">
-              <li style="padding: 8px 0; border-bottom: 1px solid var(--color-border);">
-                재배 디자인 수정
-              </li>
-              <li style="padding: 8px 0; border-bottom: 1px solid var(--color-border);">
-                스태미나 전문가 개편
-              </li>
-              <li style="padding: 8px 0;">
-                홈에 내용 추가
-              </li>
-            </ul>
-          </div>
-        </div>
-
       </div>
 
     </section>

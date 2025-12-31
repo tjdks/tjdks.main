@@ -1,0 +1,146 @@
+/* =========================
+   업데이트 정보 컴포넌트
+========================= */
+
+/* ===== 최신 업데이트 배너 ===== */
+.update-banner {
+  background: linear-gradient(135deg, var(--color-primary), #4f86f7);
+  border-radius: var(--border-radius-xl);
+  padding: var(--spacing-xl);
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+  color: white;
+}
+
+.update-banner::before {
+  content: '🎉';
+  position: absolute;
+  right: 20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 3.5rem;
+  opacity: 0.2;
+}
+
+.update-banner-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 5px 12px;
+  border-radius: var(--border-radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-md);
+}
+
+.update-banner-title {
+  font-size: clamp(1rem, 4vw, 1.2rem);
+  font-weight: var(--font-weight-bold);
+  margin-bottom: var(--spacing-sm);
+}
+
+.update-banner-desc {
+  font-size: var(--font-size-sm);
+  opacity: 0.9;
+  margin-bottom: var(--spacing-sm);
+}
+
+.update-banner-date {
+  font-size: var(--font-size-xs);
+  opacity: 0.7;
+}
+
+/* ===== 업데이트 리스트 ===== */
+.update-list {
+  display: flex;
+  flex-direction: column;
+}
+
+.update-item {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-md);
+  padding: var(--spacing-md) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.update-item:first-child {
+  padding-top: 0;
+}
+
+.update-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+/* ===== 업데이트 아이콘 ===== */
+.update-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.update-icon-new {
+  background: rgba(253, 121, 168, 0.15);
+}
+
+.update-icon-update {
+  background: rgba(37, 99, 235, 0.1);
+}
+
+.update-icon-fix {
+  background: rgba(49, 165, 82, 0.1);
+}
+
+.update-icon-coming {
+  background: rgba(237, 188, 64, 0.15);
+}
+
+/* ===== 업데이트 콘텐츠 ===== */
+.update-content {
+  flex: 1;
+  min-width: 0;
+}
+
+.update-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text);
+  margin-bottom: 4px;
+}
+
+.update-meta {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* ===== 반응형 ===== */
+@media (max-width: 480px) {
+  .update-banner {
+    padding: var(--spacing-lg);
+  }
+
+  .update-banner::before {
+    font-size: 2.5rem;
+    right: 12px;
+  }
+
+  .update-banner-title {
+    font-size: 1rem;
+  }
+
+  .update-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+
+  .update-item {
+    gap: var(--spacing-sm);
+  }
+}
