@@ -2,6 +2,24 @@
    기본 리셋 및 타이포그래피
 ========================= */
 
+/* =========================
+   비공식 안내 배너
+========================= */
+.unofficial-notice {
+  background-color: #fff3cd;
+  border-bottom: 2px solid #ffc107;
+  padding: 12px 20px;
+  text-align: center;
+}
+
+.unofficial-notice p {
+  margin: 0;
+  color: #856404;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+
 /* ===== 기본 리셋 ===== */
 *,
 *::before,
