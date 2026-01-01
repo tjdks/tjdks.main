@@ -1,5 +1,7 @@
 // 정보 탭 - 전문가 세팅 관련 함수
 
+const FARMING_STORAGE_KEY = 'farmingExpertSettings';
+
 /**
  * 전문가 정보 토글
  */
@@ -13,6 +15,63 @@ function toggleExpertInfo(type) {
     infoElement.style.display = 'block';
   } else {
     infoElement.style.display = 'none';
+  }
+}
+
+/**
+ * 설정값을 localStorage에 저장
+ */
+function saveFarmingSettings() {
+  const settings = {
+    hoeLevel: document.getElementById('hoe-level')?.value || '',
+    gift: document.getElementById('expert-gift')?.value || '',
+    harvest: document.getElementById('expert-harvest')?.value || '',
+    pot: document.getElementById('expert-pot')?.value || '',
+    money: document.getElementById('expert-money')?.value || '',
+    king: document.getElementById('expert-king')?.value || '',
+    seedBonus: document.getElementById('expert-seed-bonus')?.value || '',
+    fire: document.getElementById('expert-fire')?.value || ''
+  };
+  
+  localStorage.setItem(FARMING_STORAGE_KEY, JSON.stringify(settings));
+  console.log('재배 설정 저장됨:', settings);
+}
+
+/**
+ * localStorage에서 설정값 불러오기
+ */
+function loadFarmingSettings() {
+  const saved = localStorage.getItem(FARMING_STORAGE_KEY);
+  
+  if (!saved) {
+    console.log('저장된 재배 설정 없음');
+    return;
+  }
+  
+  try {
+    const settings = JSON.parse(saved);
+    
+    const fieldMap = {
+      hoeLevel: 'hoe-level',
+      gift: 'expert-gift',
+      harvest: 'expert-harvest',
+      pot: 'expert-pot',
+      money: 'expert-money',
+      king: 'expert-king',
+      seedBonus: 'expert-seed-bonus',
+      fire: 'expert-fire'
+    };
+    
+    Object.entries(fieldMap).forEach(([key, inputId]) => {
+      if (settings[key] !== undefined) {
+        const input = document.getElementById(inputId);
+        if (input) input.value = settings[key];
+      }
+    });
+    
+    console.log('재배 설정 불러옴:', settings);
+  } catch (e) {
+    console.error('재배 설정 불러오기 실패:', e);
   }
 }
 
@@ -48,7 +107,7 @@ function getFarmingSettings() {
 }
 
 /**
- * 설정 변경 감지 및 다른 탭에 반영
+ * 설정 변경 감지 및 다른 탭에 반영 + 저장
  */
 function setupSettingsSync() {
   const inputs = [
@@ -63,6 +122,9 @@ function setupSettingsSync() {
   ];
   
   const updateSettings = () => {
+    // localStorage에 저장
+    saveFarmingSettings();
+    
     const settings = getFarmingSettings();
     
     // farming-stamina.js의 설정 업데이트
@@ -91,5 +153,9 @@ function setupSettingsSync() {
  * 페이지 로드 시 초기화
  */
 document.addEventListener('DOMContentLoaded', () => {
+  // 먼저 저장된 설정 불러오기
+  loadFarmingSettings();
+  
+  // 설정 동기화 및 저장 이벤트 설정
   setupSettingsSync();
 });
