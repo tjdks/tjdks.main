@@ -206,13 +206,14 @@ function buildResult(best, totalCore, totalEss) {
         granite: craftCount.decay * 1
     };
 
-    // 어패류 필요량 (제작 횟수 × 2)
+    // 물고기 필요량 (핵 제작에 필요)
+    // 물결 수호(WG): 새우, 파동 오염(WP): 도미, 질서 파괴(OD): 청어, 활력 붕괴(VD): 금붕어, 침식 방어(ED): 농어
     const fishNeed = {
-        guard: craftCount.guard * 2,
-        wave: craftCount.wave * 2,
-        chaos: craftCount.chaos * 2,
-        life: craftCount.life * 2,
-        decay: craftCount.decay * 2
+        shrimp: coreToMake.WG,
+        domi: coreToMake.WP,
+        herring: coreToMake.OD,
+        goldfish: coreToMake.VD,
+        bass: coreToMake.ED
     };
 
     // 전체 필요량 (세트 모드용)
@@ -248,12 +249,13 @@ function buildResult(best, totalCore, totalEss) {
         granite: craftCountTotal.decay * 1
     };
 
+    // 물고기 전체 필요량 (세트 모드용)
     const fishNeedTotal = {
-        guard: craftCountTotal.guard * 2,
-        wave: craftCountTotal.wave * 2,
-        chaos: craftCountTotal.chaos * 2,
-        life: craftCountTotal.life * 2,
-        decay: craftCountTotal.decay * 2
+        shrimp: coreNeed.WG,
+        domi: coreNeed.WP,
+        herring: coreNeed.OD,
+        goldfish: coreNeed.VD,
+        bass: coreNeed.ED
     };
 
     return { 
@@ -311,13 +313,13 @@ function updateResult(result) {
         { name: '화강암', value: blockData.granite }
     ]);
 
-    // 어패류
+    // 물고기
     document.getElementById("result-fish-1").innerHTML = createMaterialTextHTML([
-        { name: '굴 ★', value: fishData.guard },
-        { name: '소라 ★', value: fishData.wave },
-        { name: '문어 ★', value: fishData.chaos },
-        { name: '미역 ★', value: fishData.life },
-        { name: '성게 ★', value: fishData.decay }
+        { name: '새우', value: fishData.shrimp },
+        { name: '도미', value: fishData.domi },
+        { name: '청어', value: fishData.herring },
+        { name: '금붕어', value: fishData.goldfish },
+        { name: '농어', value: fishData.bass }
     ]);
 
     document.getElementById('result-card-1').style.display = 'block';

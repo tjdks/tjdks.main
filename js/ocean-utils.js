@@ -101,20 +101,49 @@ export function formatValue(num) {
 }
 
 /**
- * 재료 카드 HTML 생성
+ * 핵/결정/의약 조합법 정보
+ */
+const RECIPE_TOOLTIPS = {
+    // 1성 핵
+    'core_wg': '수호 정수 + 파동 정수',
+    'core_wp': '파동 정수 + 혼란 정수',
+    'core_od': '혼란 정수 + 생명 정수',
+    'core_vd': '생명 정수 + 부식 정수',
+    'core_ed': '부식 정수 + 수호 정수',
+    
+    // 2성 결정
+    'crystal_vital': '생명 에센스 + 수호 에센스',
+    'crystal_erosion': '파동 에센스 + 부식 에센스',
+    'crystal_defense': '수호 에센스 + 혼란 에센스',
+    'crystal_regen': '파동 에센스 + 생명 에센스',
+    'crystal_poison': '혼란 에센스 + 부식 에센스',
+    
+    // 3성 의약
+    'potion_immortal': '생명 엘릭서 + 수호 엘릭서',
+    'potion_barrier': '파동 엘릭서 + 수호 엘릭서',
+    'potion_corrupt': '혼란 엘릭서 + 부식 엘릭서',
+    'potion_frenzy': '생명 엘릭서 + 혼란 엘릭서',
+    'potion_venom': '부식 엘릭서 + 파동 엘릭서'
+};
+
+/**
+ * 재료 카드 HTML 생성 (툴팁 지원)
  * @param {Array} materials - [{icon, name, value}] 형식 배열
  * @returns {string} HTML 문자열
  */
 export function createMaterialCardsHTML(materials) {
     return `
         <div class="result-materials-grid">
-            ${materials.map(m => `
-                <div class="material-card">
+            ${materials.map(m => {
+                const tooltip = RECIPE_TOOLTIPS[m.icon] || '';
+                const titleAttr = tooltip ? `title="${tooltip}"` : '';
+                return `
+                <div class="material-card" ${titleAttr}>
                     <div class="icon"><img src="img/${m.icon}.png" alt="${m.name}"></div>
                     <div class="name">${m.name}</div>
                     <div class="value">${formatValue(m.value)}</div>
                 </div>
-            `).join('')}
+            `}).join('')}
         </div>
     `;
 }
