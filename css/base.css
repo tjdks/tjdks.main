@@ -1,3 +1,8 @@
+html {
+  overflow-y: scroll;
+  scrollbar-gutter: stable;
+}
+
 /* =========================
    기본 리셋 및 타이포그래피
 ========================= */
