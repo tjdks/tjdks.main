@@ -38,6 +38,9 @@ html {
 
 .logo img {
   height: 40px;
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
 }
 
 
