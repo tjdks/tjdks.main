@@ -1,6 +1,10 @@
 html {
   overflow-y: scroll;
   scrollbar-gutter: stable;
+  -webkit-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
 }
 
 /* =========================
@@ -32,13 +36,6 @@ html {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-}
-
-html {
-  -webkit-text-size-adjust: 100%;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-size: 16px;
 }
 
 .logo img {
