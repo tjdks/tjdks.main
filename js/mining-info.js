@@ -2,6 +2,8 @@
    채광 정보 탭 - 전문가 세팅 (mining-info.js)
 ========================= */
 
+const MINING_STORAGE_KEY = 'miningExpertSettings';
+
 // 전문가 스킬 데이터
 const miningExpertData = {
   cobi: {
@@ -104,8 +106,115 @@ function toggleExpertInfo(id) {
   }
 }
 
+/**
+ * 설정값을 localStorage에 저장
+ */
+function saveMiningSettings() {
+  const settings = {
+    pickaxeLevel: document.getElementById('pickaxe-level')?.value || '',
+    cobi: document.getElementById('expert-cobi-level')?.value || '',
+    ingot: document.getElementById('expert-ingot-level')?.value || '',
+    gemStart: document.getElementById('expert-gem-start-level')?.value || '',
+    gemShine: document.getElementById('expert-gem-shine-level')?.value || '',
+    lucky: document.getElementById('expert-lucky-level')?.value || '',
+    firePick: document.getElementById('expert-fire-pick-level')?.value || ''
+  };
+  
+  localStorage.setItem(MINING_STORAGE_KEY, JSON.stringify(settings));
+  console.log('채광 설정 저장됨:', settings);
+}
+
+/**
+ * localStorage에서 설정값 불러오기
+ */
+function loadMiningSettings() {
+  const saved = localStorage.getItem(MINING_STORAGE_KEY);
+  
+  if (!saved) {
+    console.log('저장된 채광 설정 없음');
+    return;
+  }
+  
+  try {
+    const settings = JSON.parse(saved);
+    
+    const fieldMap = {
+      pickaxeLevel: 'pickaxe-level',
+      cobi: 'expert-cobi-level',
+      ingot: 'expert-ingot-level',
+      gemStart: 'expert-gem-start-level',
+      gemShine: 'expert-gem-shine-level',
+      lucky: 'expert-lucky-level',
+      firePick: 'expert-fire-pick-level'
+    };
+    
+    Object.entries(fieldMap).forEach(([key, inputId]) => {
+      if (settings[key] !== undefined && settings[key] !== '') {
+        const input = document.getElementById(inputId);
+        if (input) input.value = settings[key];
+      }
+    });
+    
+    console.log('채광 설정 불러옴:', settings);
+  } catch (e) {
+    console.error('채광 설정 불러오기 실패:', e);
+  }
+}
+
+/**
+ * 모든 전문가 설정값 가져오기
+ */
+function getMiningExpertSettings() {
+  return {
+    pickaxeLevel: parseInt(document.getElementById('pickaxe-level')?.value || 0),
+    cobi: parseInt(document.getElementById('expert-cobi-level')?.value || 0),
+    ingot: parseInt(document.getElementById('expert-ingot-level')?.value || 0),
+    gemStart: parseInt(document.getElementById('expert-gem-start-level')?.value || 0),
+    gemShine: parseInt(document.getElementById('expert-gem-shine-level')?.value || 0),
+    lucky: parseInt(document.getElementById('expert-lucky-level')?.value || 0),
+    firePick: parseInt(document.getElementById('expert-fire-pick-level')?.value || 0)
+  };
+}
+
+/**
+ * 설정 변경 감지 및 저장
+ */
+function setupMiningSettingsSync() {
+  const inputs = [
+    'pickaxe-level',
+    'expert-cobi-level',
+    'expert-ingot-level',
+    'expert-gem-start-level',
+    'expert-gem-shine-level',
+    'expert-lucky-level',
+    'expert-fire-pick-level'
+  ];
+  
+  const updateSettings = () => {
+    // localStorage에 저장
+    saveMiningSettings();
+    
+    // 전체 설정 콘솔 출력
+    const allSettings = getMiningExpertSettings();
+    console.log('채광 전문가 세팅 업데이트:', allSettings);
+  };
+  
+  inputs.forEach(inputId => {
+    const input = document.getElementById(inputId);
+    if (input) {
+      input.addEventListener('input', updateSettings);
+      input.addEventListener('change', updateSettings);
+    }
+  });
+}
+
 // 초기화
 document.addEventListener('DOMContentLoaded', function() {
-  // 모든 설명 영역 초기화 (빈 상태로 유지, 클릭 시 로드)
+  // 먼저 저장된 설정 불러오기
+  loadMiningSettings();
+  
+  // 설정 동기화 및 저장 이벤트 설정
+  setupMiningSettingsSync();
+  
   console.log('Mining info initialized');
 });

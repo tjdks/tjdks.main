@@ -2,29 +2,61 @@
    채광 손익 계산 (mining-efficiency.js)
 ========================= */
 
-// 기본 시세 데이터
+// ================================
+// 🔧 기본 시세 설정 (여기만 수정하면 됩니다!)
+// ================================
 const miningPriceData = {
   // 바닐라 광물 블록
   coalBlock: 261,
   copperBlock: 97,
   ironBlock: 663,
   goldBlock: 800,
-  diamondBlock: 2963,
-  redstoneBlock: 77,
-  lapisBlock: 235,
+  diamondBlock: 2997,
+  redstoneBlock: 85,
+  lapisBlock: 219,
   amethystBlock: 87,
-  // 띵타이쿤 재료
+  
+  // 아일랜드 재료
   cobbleBundle: 719,
   deepslateBundle: 382,
-  corumIngot: 3500,
+  corumIngot: 5517,
   liftonIngot: 3750,
   serentIngot: 4000,
+  
   // 가공품 판매가
   torch: 121,
   abilityStone: 18209,
   lifestoneLow: 9584,
   lifestoneMid: 31293,
   lifestoneHigh: 49668
+};
+// ================================
+
+// input ID와 데이터 키 매핑
+const PRICE_INPUT_MAP = {
+  // 바닐라 광물 블록
+  'price-coal-block': 'coalBlock',
+  'price-copper-block': 'copperBlock',
+  'price-iron-block': 'ironBlock',
+  'price-gold-block': 'goldBlock',
+  'price-diamond-block': 'diamondBlock',
+  'price-redstone-block': 'redstoneBlock',
+  'price-lapis-block': 'lapisBlock',
+  'price-amethyst-block': 'amethystBlock',
+  
+  // 아일랜드 재료
+  'price-cobble-bundle': 'cobbleBundle',
+  'price-deepslate-bundle': 'deepslateBundle',
+  'price-corum-ingot': 'corumIngot',
+  'price-lifton-ingot': 'liftonIngot',
+  'price-serent-ingot': 'serentIngot',
+  
+  // 가공품 판매가
+  'sell-torch': 'torch',
+  'sell-ability-stone': 'abilityStone',
+  'sell-lifestone-low': 'lifestoneLow',
+  'sell-lifestone-mid': 'lifestoneMid',
+  'sell-lifestone-high': 'lifestoneHigh'
 };
 
 // 수수료율
@@ -49,6 +81,18 @@ function formatNumber(num) {
 function getPriceVal(id) {
   const el = document.getElementById(id);
   return el ? (parseFloat(el.value) || 0) : 0;
+}
+
+// ================================
+// HTML input에 기본값 자동 적용
+// ================================
+function applyDefaultPrices() {
+  Object.entries(PRICE_INPUT_MAP).forEach(([inputId, dataKey]) => {
+    const input = document.getElementById(inputId);
+    if (input && miningPriceData[dataKey] !== undefined) {
+      input.value = miningPriceData[dataKey];
+    }
+  });
 }
 
 // 손익 계산
@@ -213,28 +257,7 @@ function renderRankingTable(results) {
 
 // 시세 기본값 복원
 function resetMiningPrices() {
-  // 바닐라 광물 블록
-  document.getElementById('price-coal-block').value = miningPriceData.coalBlock;
-  document.getElementById('price-copper-block').value = miningPriceData.copperBlock;
-  document.getElementById('price-iron-block').value = miningPriceData.ironBlock;
-  document.getElementById('price-gold-block').value = miningPriceData.goldBlock;
-  document.getElementById('price-diamond-block').value = miningPriceData.diamondBlock;
-  document.getElementById('price-redstone-block').value = miningPriceData.redstoneBlock;
-  document.getElementById('price-lapis-block').value = miningPriceData.lapisBlock;
-  document.getElementById('price-amethyst-block').value = miningPriceData.amethystBlock;
-  // 띵타이쿤 재료
-  document.getElementById('price-cobble-bundle').value = miningPriceData.cobbleBundle;
-  document.getElementById('price-deepslate-bundle').value = miningPriceData.deepslateBundle;
-  document.getElementById('price-corum-ingot').value = miningPriceData.corumIngot;
-  document.getElementById('price-lifton-ingot').value = miningPriceData.liftonIngot;
-  document.getElementById('price-serent-ingot').value = miningPriceData.serentIngot;
-  // 가공품 판매가
-  document.getElementById('sell-torch').value = miningPriceData.torch;
-  document.getElementById('sell-ability-stone').value = miningPriceData.abilityStone;
-  document.getElementById('sell-lifestone-low').value = miningPriceData.lifestoneLow;
-  document.getElementById('sell-lifestone-mid').value = miningPriceData.lifestoneMid;
-  document.getElementById('sell-lifestone-high').value = miningPriceData.lifestoneHigh;
-  
+  applyDefaultPrices();
   calculateMiningEfficiency();
 }
 
@@ -242,11 +265,14 @@ function resetMiningPrices() {
 // 페이지 로드 시 초기화
 // ================================
 document.addEventListener('DOMContentLoaded', function() {
-  // 페이지 로드 시 바로 계산 (백그라운드에서 준비)
+  // 1. HTML input에 기본값 자동 적용
+  applyDefaultPrices();
+  
+  // 2. 손익 계산 실행
   calculateMiningEfficiency();
   miningEfficiencyState.initialized = true;
   
-  // 탭 클릭 시에도 재계산 (시세 변경 반영)
+  // 3. 탭 클릭 시에도 재계산
   const efficiencyTab = document.querySelector('[data-target="tab-efficiency"]');
   if (efficiencyTab) {
     efficiencyTab.addEventListener('click', calculateMiningEfficiency);
