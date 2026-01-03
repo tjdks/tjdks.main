@@ -1,17 +1,128 @@
-// 정보 탭 - 전문가 세팅 관련 함수
+/* =========================
+   재배 정보 탭 - 전문가 세팅 (farming-info.js)
+========================= */
 
 const FARMING_STORAGE_KEY = 'farmingExpertSettings';
+
+// 전문가 스킬 데이터
+const farmingExpertData = {
+  gift: {
+    name: '자연이 주는 선물',
+    levels: [
+      { lv: 1, desc: '채집 시 1% 확률로 씨앗 +1개' },
+      { lv: 2, desc: '채집 시 2% 확률로 씨앗 +1개' },
+      { lv: 3, desc: '채집 시 3% 확률로 씨앗 +1개' },
+      { lv: 4, desc: '채집 시 4% 확률로 씨앗 +1개' },
+      { lv: 5, desc: '채집 시 5% 확률로 씨앗 +2개' },
+      { lv: 6, desc: '채집 시 6% 확률로 씨앗 +2개' },
+      { lv: 7, desc: '채집 시 7% 확률로 씨앗 +3개' },
+      { lv: 8, desc: '채집 시 8% 확률로 씨앗 +4개' },
+      { lv: 9, desc: '채집 시 9% 확률로 씨앗 +5개' },
+      { lv: 10, desc: '채집 시 10% 확률로 씨앗 +8개' }
+    ]
+  },
+  harvest: {
+    name: '오늘도 풍년이다!',
+    levels: [
+      { lv: 1, desc: '수확 시 1% 확률로 농작물 +1개' },
+      { lv: 2, desc: '수확 시 2% 확률로 농작물 +1개' },
+      { lv: 3, desc: '수확 시 3% 확률로 농작물 +1개' },
+      { lv: 4, desc: '수확 시 4% 확률로 농작물 +1개' },
+      { lv: 5, desc: '수확 시 5% 확률로 농작물 +2개' },
+      { lv: 6, desc: '수확 시 7% 확률로 농작물 +2개' },
+      { lv: 7, desc: '수확 시 10% 확률로 농작물 +3개' }
+    ]
+  },
+  pot: {
+    name: '한 솥 가득',
+    levels: [
+      { lv: 1, desc: '한 번에 3세트 이상 판매 시 1% 보너스' },
+      { lv: 2, desc: '한 번에 3세트 이상 판매 시 2% 보너스' },
+      { lv: 3, desc: '한 번에 3세트 이상 판매 시 3% 보너스' },
+      { lv: 4, desc: '한 번에 3세트 이상 판매 시 4% 보너스' },
+      { lv: 5, desc: '한 번에 3세트 이상 판매 시 7% 보너스' }
+    ]
+  },
+  money: {
+    name: '돈 좀 벌어볼까?',
+    levels: [
+      { lv: 1, desc: '요리 판매가 +1%' },
+      { lv: 2, desc: '요리 판매가 +2%' },
+      { lv: 3, desc: '요리 판매가 +3%' },
+      { lv: 4, desc: '요리 판매가 +4%' },
+      { lv: 5, desc: '요리 판매가 +5%' },
+      { lv: 6, desc: '요리 판매가 +6%' },
+      { lv: 7, desc: '요리 판매가 +10%' },
+      { lv: 8, desc: '요리 판매가 +15%' },
+      { lv: 9, desc: '요리 판매가 +30%' },
+      { lv: 10, desc: '요리 판매가 +50%' }
+    ]
+  },
+  king: {
+    name: '왕 크니까 왕 좋아',
+    levels: [
+      { lv: 1, desc: '수확 시 대왕 작물이 등장할 확률 0.5% 증가' },
+      { lv: 2, desc: '수확 시 대왕 작물이 등장할 확률 1% 증가' },
+      { lv: 3, desc: '수확 시 대왕 작물이 등장할 확률 3% 증가' },
+      { lv: 4, desc: '수확 시 대왕 작물이 등장할 확률 5% 증가' }
+    ]
+  },
+  'seed-bonus': {
+    name: '씨앗은 덤이야',
+    levels: [
+      { lv: 1, desc: '수확 시 1% 확률로 씨앗 드롭' },
+      { lv: 2, desc: '수확 시 2% 확률로 씨앗 드롭' },
+      { lv: 3, desc: '수확 시 3% 확률로 씨앗 드롭' },
+      { lv: 4, desc: '수확 시 4% 확률로 씨앗 드롭' },
+      { lv: 5, desc: '수확 시 5% 확률로 씨앗 드롭' },
+      { lv: 6, desc: '수확 시 6% 확률로 씨앗 드롭' },
+      { lv: 7, desc: '수확 시 7% 확률로 씨앗 드롭' },
+      { lv: 8, desc: '수확 시 10% 확률로 씨앗 드롭' },
+      { lv: 9, desc: '수확 시 20% 확률로 씨앗 드롭' },
+      { lv: 10, desc: '수확 시 30% 확률로 씨앗 드롭' }
+    ]
+  },
+  fire: {
+    name: '불붙은 괭이',
+    levels: [
+      { lv: 1, desc: '채집 시 1% 확률로 씨앗이 베이스 1개로 가공되어 드롭' },
+      { lv: 2, desc: '채집 시 2% 확률로 씨앗이 베이스 1개로 가공되어 드롭' },
+      { lv: 3, desc: '채집 시 3% 확률로 씨앗이 베이스 2개로 가공되어 드롭' },
+      { lv: 4, desc: '채집 시 4% 확률로 씨앗이 베이스 2개로 가공되어 드롭' },
+      { lv: 5, desc: '채집 시 5% 확률로 씨앗이 베이스 2개로 가공되어 드롭' },
+      { lv: 6, desc: '채집 시 6% 확률로 씨앗이 베이스 3개로 가공되어 드롭' },
+      { lv: 7, desc: '채집 시 7% 확률로 씨앗이 베이스 3개로 가공되어 드롭' },
+      { lv: 8, desc: '채집 시 8% 확률로 씨앗이 베이스 5개로 가공되어 드롭' },
+      { lv: 9, desc: '채집 시 9% 확률로 씨앗이 베이스 5개로 가공되어 드롭' },
+      { lv: 10, desc: '채집 시 15% 확률로 씨앗이 베이스 7개로 가공되어 드롭' }
+    ]
+  }
+};
+
+// 전문가 설명 HTML 생성
+function generateExpertDescHTML(skillId) {
+  const skill = farmingExpertData[skillId];
+  if (!skill) return '';
+  
+  return skill.levels.map(level => 
+    `<strong>LV ${level.lv}</strong> – ${level.desc}`
+  ).join('<br>');
+}
 
 /**
  * 전문가 정보 토글
  */
 function toggleExpertInfo(type) {
-  const infoId = `expert-${type}-info`;
+  const infoId = `desc-${type}`;
   const infoElement = document.getElementById(infoId);
   
   if (!infoElement) return;
   
   if (infoElement.style.display === 'none' || infoElement.style.display === '') {
+    // 내용이 비어있으면 생성
+    if (!infoElement.innerHTML.trim()) {
+      infoElement.innerHTML = generateExpertDescHTML(type);
+    }
     infoElement.style.display = 'block';
   } else {
     infoElement.style.display = 'none';
@@ -158,4 +269,6 @@ document.addEventListener('DOMContentLoaded', () => {
   
   // 설정 동기화 및 저장 이벤트 설정
   setupSettingsSync();
+  
+  console.log('Farming info initialized');
 });

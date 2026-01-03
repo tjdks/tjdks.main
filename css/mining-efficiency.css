@@ -303,7 +303,7 @@
 }
 
 .summary-stat.profit .stat-value {
-  color: #16a34a;
+  color: rgb(22, 48, 163);
 }
 
 .summary-stat.loss .stat-value {
@@ -383,7 +383,7 @@
 }
 
 .ranking-table .profit-val.positive {
-  color: #16a34a;
+  color: #2563eb;
 }
 
 .ranking-table .profit-val.negative {
@@ -400,8 +400,8 @@
 }
 
 .verdict-badge.profit {
-  background: #dcfce7;
-  color: #166534;
+  background: #dce7fc;
+  color: #161765;
 }
 
 .verdict-badge.loss {

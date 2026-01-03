@@ -1,5 +1,5 @@
 // ================================
-// 재배 탭 스크립트
+// 수확 탭 스크립트
 // ================================
 
 // 이미지 경로
@@ -61,15 +61,25 @@ const FARM_EXPERT_SEED_BONUS = {
 let farmState = {
   seedInputs: { tomato: 0, onion: 0, garlic: 0 },
   existingBase: { tomato: 0, onion: 0, garlic: 0 },
-  expert: { harvest: 0, king: 0, seedBonus: 0 }
+  expert: { harvest: 0, king: 0, seedBonus: 0 },
+  initialized: false,
+  eventsBound: false
 };
 
 // 초기화
 function initFarmTab() {
+  // 이벤트 바인딩 (최초 1회)
+  if (!farmState.eventsBound) {
+    bindFarmEvents();
+    farmState.eventsBound = true;
+  }
+  
+  // 전문가 설정 동기화 & 렌더링
   syncFarmExpertSettings();
   renderFarmExpertStatus();
-  bindFarmEvents();
   calculateFarmResult();
+  
+  farmState.initialized = true;
 }
 
 // 정보탭 전문가 세팅 동기화
@@ -297,12 +307,20 @@ function formatFarmNum(n) {
   return Math.floor(n).toLocaleString();
 }
 
-// 탭 전환 시 초기화
+// ================================
+// 페이지 로드 시 초기화
+// ================================
 document.addEventListener('DOMContentLoaded', () => {
+  // 페이지 로드 시 바로 초기화 (백그라운드에서 준비 완료)
+  initFarmTab();
+  
+  // 탭 클릭 시에도 최신 전문가 설정 반영
   const farmTabLink = document.querySelector('[data-target="tab-farm"]');
   if (farmTabLink) {
     farmTabLink.addEventListener('click', () => {
-      setTimeout(initFarmTab, 50);
+      syncFarmExpertSettings();
+      renderFarmExpertStatus();
+      calculateFarmResult();
     });
   }
 });

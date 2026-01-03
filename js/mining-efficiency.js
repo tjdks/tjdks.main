@@ -30,6 +30,11 @@ const miningPriceData = {
 // 수수료율
 const FEE_RATE = 0.05;
 
+// 초기화 상태
+let miningEfficiencyState = {
+  initialized: false
+};
+
 // 실수령액 계산
 function getNetPrice(price) {
   return price * (1 - FEE_RATE);
@@ -233,14 +238,18 @@ function resetMiningPrices() {
   calculateMiningEfficiency();
 }
 
-// 초기화
+// ================================
+// 페이지 로드 시 초기화
+// ================================
 document.addEventListener('DOMContentLoaded', function() {
-  // 손익 탭이 활성화될 때 계산 실행
+  // 페이지 로드 시 바로 계산 (백그라운드에서 준비)
+  calculateMiningEfficiency();
+  miningEfficiencyState.initialized = true;
+  
+  // 탭 클릭 시에도 재계산 (시세 변경 반영)
   const efficiencyTab = document.querySelector('[data-target="tab-efficiency"]');
   if (efficiencyTab) {
-    efficiencyTab.addEventListener('click', function() {
-      setTimeout(calculateMiningEfficiency, 100);
-    });
+    efficiencyTab.addEventListener('click', calculateMiningEfficiency);
   }
   
   console.log('Mining efficiency initialized');

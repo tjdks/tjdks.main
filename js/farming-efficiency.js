@@ -123,20 +123,29 @@ let efficiencyState = {
   money: 0,
   results: [],
   selectedRecipe: '',
-  initialized: false  // 초기화 여부 플래그
+  initialized: false,
+  eventsbound: false
 };
 
-// 초기화
+// ================================
+// 초기화 - 페이지 로드 시 바로 실행
+// ================================
 function initEfficiencyTab() {
-  // 최초 1회만 가격 초기화
+  // 가격 초기화 (최초 1회)
   if (!efficiencyState.initialized) {
     EFFICIENCY_RECIPES.forEach(r => {
       efficiencyState.prices[r.name] = DEFAULT_PRICES[r.name] || Math.floor((r.minPrice + r.maxPrice) / 2);
     });
     efficiencyState.initialized = true;
-    bindEfficiencyEvents();
   }
   
+  // 이벤트 바인딩 (최초 1회)
+  if (!efficiencyState.eventsbound) {
+    bindEfficiencyEvents();
+    efficiencyState.eventsbound = true;
+  }
+  
+  // 전문가 설정 동기화 & 계산 (탭 열 때마다)
   syncEfficiencyExpertSettings();
   renderPriceEditGrid();
   calculateEfficiency();
@@ -165,7 +174,6 @@ function bindEfficiencyEvents() {
   if (resetPriceBtn) {
     resetPriceBtn.addEventListener('click', () => {
       EFFICIENCY_RECIPES.forEach(r => {
-        // DEFAULT_PRICES로 초기화
         efficiencyState.prices[r.name] = DEFAULT_PRICES[r.name] || Math.floor((r.minPrice + r.maxPrice) / 2);
       });
       renderPriceEditGrid();
@@ -198,6 +206,7 @@ function bindEfficiencyEvents() {
     });
   }
 
+  // 전문가 입력 변경 시 실시간 반영
   const expertInputs = ['hoe-level', 'expert-harvest', 'expert-king', 'expert-money'];
   expertInputs.forEach(id => {
     const input = document.getElementById(id);
@@ -417,7 +426,6 @@ function renderFarmingGuide() {
   let seedsHtml = '';
   ['tomato', 'onion', 'garlic'].forEach(crop => {
     if (item.totalSeeds[crop] > 0) {
-      // 씨앗 개수 → 채집 횟수 → 스태미나 계산
       const gatherCount = Math.ceil(item.totalSeeds[crop] / hoeDrop);
       const staminaNeeded = gatherCount * 7;
       
@@ -485,7 +493,6 @@ function toggleRecipeDetail(row) {
   const detailRow = document.querySelector(`tr[data-detail="${recipeName}"]`);
   
   if (detailRow) {
-    // 다른 열린 조합법 닫기
     document.querySelectorAll('.recipe-detail-row').forEach(r => {
       if (r !== detailRow) {
         r.style.display = 'none';
@@ -493,7 +500,6 @@ function toggleRecipeDetail(row) {
       }
     });
     
-    // 현재 조합법 토글
     if (detailRow.style.display === 'none') {
       detailRow.style.display = 'table-row';
       row.classList.add('expanded');
@@ -504,12 +510,19 @@ function toggleRecipeDetail(row) {
   }
 }
 
-// 탭 활성화 시 초기화
+// ================================
+// 페이지 로드 시 초기화
+// ================================
 document.addEventListener('DOMContentLoaded', () => {
+  // 페이지 로드 시 바로 초기화 (백그라운드에서 계산 완료)
+  initEfficiencyTab();
+  
+  // 탭 클릭 시에도 최신 전문가 설정 반영
   const efficiencyTabLink = document.querySelector('[data-target="tab-efficiency"]');
   if (efficiencyTabLink) {
     efficiencyTabLink.addEventListener('click', () => {
-      setTimeout(initEfficiencyTab, 50);
+      syncEfficiencyExpertSettings();
+      calculateEfficiency();
     });
   }
 });
