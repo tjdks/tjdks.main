@@ -1,0 +1,294 @@
+/* =========================
+   채광 변환 계산기 스타일
+   mining-convert.css
+========================= */
+
+/* 입력 영역 */
+.convert-inputs-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.convert-input-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--color-bg-secondary, #f8f9fa);
+  border-radius: 6px;
+  border: 1px solid var(--color-border-light, #f0f0f0);
+}
+
+.convert-input-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.convert-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: var(--color-text-secondary, #666);
+}
+
+.convert-select {
+  width: 140px;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border, #e0e0e0);
+  border-radius: 4px;
+  font-size: 14px;
+  background-color: white;
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+.convert-select:focus {
+  outline: none;
+  border-color: var(--color-primary, #4a90e2);
+}
+
+.convert-input {
+  width: 90px;
+  padding: 8px 10px;
+  border: 1px solid var(--color-border, #e0e0e0);
+  border-radius: 4px;
+  font-size: 14px;
+  text-align: right;
+  transition: border-color 0.15s;
+}
+
+.convert-input:focus {
+  outline: none;
+  border-color: var(--color-primary, #4a90e2);
+}
+
+.convert-unit {
+  font-size: 13px;
+  color: var(--color-text-muted, #999);
+}
+
+/* 삭제 버튼 */
+.convert-btn-remove {
+  width: 28px;
+  height: 28px;
+  border: 1px solid var(--color-border, #e0e0e0);
+  background: white;
+  color: var(--color-text-muted, #999);
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  transition: all 0.15s;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.convert-btn-remove:hover {
+  border-color: var(--color-danger, #dc3545);
+  color: var(--color-danger, #dc3545);
+}
+
+/* 토글 영역 */
+.convert-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 12px;
+  background: var(--color-bg-secondary, #f8f9fa);
+  border-radius: 4px;
+  margin-bottom: 14px;
+  font-size: 12px;
+  color: var(--color-text-muted, #999);
+}
+
+.convert-toggle-switch {
+  position: relative;
+  width: 40px;
+  height: 22px;
+}
+
+.convert-toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.convert-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.3s;
+  border-radius: 22px;
+}
+
+.convert-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 16px;
+  width: 16px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.3s;
+  border-radius: 50%;
+}
+
+.convert-toggle-switch input:checked + .convert-toggle-slider {
+  background-color: var(--color-primary, #4a90e2);
+}
+
+.convert-toggle-switch input:checked + .convert-toggle-slider:before {
+  transform: translateX(18px);
+}
+
+/* 결과 카드 */
+#convert-result-card {
+  margin-top: 16px;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid var(--color-border, #e0e0e0);
+  overflow: hidden;
+}
+
+.convert-result-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  margin: 0;
+  background: var(--color-primary, #4a90e2);
+  color: white;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.convert-result-body {
+  padding: 16px;
+}
+
+/* 결과 그리드 */
+.convert-result-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+/* 각 아이템별 결과 박스 */
+.convert-item-section {
+  padding: 14px;
+  background: var(--color-bg-secondary, #f8f9fa);
+  border-radius: 6px;
+  border: 1px solid var(--color-border-light, #f0f0f0);
+}
+
+.convert-item-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--color-border-light, #f0f0f0);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text-primary, #333);
+}
+
+.convert-item-title .convert-item-count {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--color-text-muted, #999);
+}
+
+.convert-material-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 4px 0;
+  font-size: 13px;
+}
+
+.convert-material-row .convert-label-text {
+  color: var(--color-text-muted, #999);
+}
+
+.convert-material-row .convert-value-text {
+  font-weight: 500;
+  color: var(--color-text-primary, #333);
+  font-variant-numeric: tabular-nums;
+}
+
+/* 하위 재료 */
+.convert-sub-section {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--color-border, #e0e0e0);
+}
+
+.convert-sub-title {
+  font-size: 11px;
+  color: var(--color-text-muted, #999);
+  margin-bottom: 6px;
+}
+
+.convert-sub-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 3px 0;
+  font-size: 12px;
+}
+
+.convert-sub-row .convert-label-text {
+  color: var(--color-text-muted, #999);
+}
+
+.convert-sub-row .convert-value-text {
+  font-weight: 500;
+  color: var(--color-text-secondary, #666);
+}
+
+/* 빈 상태 */
+.convert-empty-state {
+  padding: 30px;
+  text-align: center;
+  color: var(--color-text-muted, #999);
+  font-size: 13px;
+}
+
+/* 반응형 */
+@media (max-width: 480px) {
+  .convert-input-row {
+    flex-wrap: wrap;
+    padding: 10px 12px;
+  }
+  
+  .convert-input-group {
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  
+  .convert-select {
+    width: 120px;
+  }
+  
+  .convert-input {
+    width: 80px;
+  }
+  
+  .convert-result-body {
+    padding: 12px;
+  }
+  
+  .convert-result-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -20,7 +20,7 @@
   
   <!-- 채광 전용 스타일 -->
   <link rel="stylesheet" href="css/mining-custom.css" />
-  <link rel="stylesheet" href="css/mining-efficiency.css" />
+  <link rel="stylesheet" href="css/mining-convert.css" />
   
 </head>
 <body>
@@ -53,7 +53,7 @@
     <div class="sub-header-inner">
       <a href="#" class="active" data-target="tab-info">정보</a>
       <a href="#" data-target="tab-stamina">스태미나</a>
-      <a href="#" data-target="tab-efficiency">손익</a>
+      <a href="#" data-target="tab-convert">변환</a>
       <a href="#" data-target="tab-craft">제작</a>
     </div>
   </div>
@@ -262,148 +262,62 @@
         </div>
       </div>
 
-      <!-- 손익 탭 -->
-      <div id="tab-efficiency" class="tab-content" style="display:none;">
-        <h2 class="content-title">손익 계산</h2>
-
-        <!-- 시세 입력 패널 -->
-        <div class="price-edit-panel">
-          <div class="price-edit-header">
-            <h3>시세 입력</h3>
-            <button class="btn-reset-price" onclick="resetMiningPrices()">기본값 복원</button>
-          </div>
-
-          <div class="price-section-title">바닐라 광물 블록</div>
-          <div class="price-edit-grid">
-            <div class="price-edit-item">
-              <span class="item-label">석탄</span>
-              <input type="number" id="price-coal-block" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">구리</span>
-              <input type="number" id="price-copper-block" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">철</span>
-              <input type="number" id="price-iron-block" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">금</span>
-              <input type="number" id="price-gold-block" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">다이아</span>
-              <input type="number" id="price-diamond-block" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">레드스톤</span>
-              <input type="number" id="price-redstone-block" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">청금석</span>
-              <input type="number" id="price-lapis-block" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">자수정</span>
-              <input type="number" id="price-amethyst-block" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-          </div>
-
-          <div class="price-section-title">아일랜드</div>
-          <div class="price-edit-grid">
-            <div class="price-edit-item">
-              <span class="item-label">조약돌 뭉치</span>
-              <input type="number" id="price-cobble-bundle" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">심층암 뭉치</span>
-              <input type="number" id="price-deepslate-bundle" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">코룸 주괴</span>
-              <input type="number" id="price-corum-ingot" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">리프톤 주괴</span>
-              <input type="number" id="price-lifton-ingot" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">세렌트 주괴</span>
-              <input type="number" id="price-serent-ingot" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
+      <!-- 변환 탭 -->
+      <div id="tab-convert" class="tab-content" style="display:none;">
+        <h2 class="content-title">변환</h2>
+        
+        <div class="stamina-container">
+          <div class="card">
+            <div class="card-body">
+              
+              <!-- 입력 영역 -->
+              <div id="convert-inputs-container" class="convert-inputs-container">
+                <div class="convert-input-row" data-row-id="1">
+                  <div class="convert-input-group">
+                    <label class="convert-label">
+                      제작
+                      <select class="convert-select convert-item-select" onchange="calculateConvert()">
+                        <option value="">선택</option>
+                        <option value="ability">어빌리티스톤</option>
+                        <option value="life-low">하급 라이프스톤</option>
+                        <option value="life-mid">중급 라이프스톤</option>
+                        <option value="life-high">상급 라이프스톤</option>
+                      </select>
+                    </label>
+                    
+                    <label class="convert-label">
+                      수량
+                      <input type="number" class="convert-input convert-quantity-input" value="1" min="1" oninput="calculateConvert()">
+                      <span class="convert-unit">개</span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 세트 표시 토글 -->
+              <div class="convert-toggle-row">
+                <span>세트 표시</span>
+                <label class="convert-toggle-switch">
+                  <input type="checkbox" id="convert-set-toggle" onchange="calculateConvert()">
+                  <span class="convert-toggle-slider"></span>
+                </label>
+              </div>
+              
+              <!-- 버튼 -->
+              <div class="btn-actions">
+                <button class="btn-add" onclick="addConvertRow()">+ 추가</button>
+              </div>
+              
+              <!-- 결과 영역 -->
+              <div id="convert-result-card">
+                <h4 class="convert-result-title">필요 재료</h4>
+                <div id="convert-result-body" class="convert-result-body">
+                  <div class="convert-empty-state">제작할 아이템을 선택하세요</div>
+                </div>
+              </div>
+              
             </div>
           </div>
-
-          <div class="price-section-title">가공품</div>
-          <div class="price-edit-grid">
-            <div class="price-edit-item">
-              <span class="item-label">강화 횃불</span>
-              <input type="number" id="sell-torch" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">어빌리티스톤</span>
-              <input type="number" id="sell-ability-stone" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">하급 라이프스톤</span>
-              <input type="number" id="sell-lifestone-low" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">중급 라이프스톤</span>
-              <input type="number" id="sell-lifestone-mid" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-            <div class="price-edit-item">
-              <span class="item-label">상급 라이프스톤</span>
-              <input type="number" id="sell-lifestone-high" onchange="calculateMiningEfficiency()">
-              <span class="unit">G</span>
-            </div>
-          </div>
-        </div>
-
-        <!-- TOP 3 카드 -->
-        <div class="top3-grid" id="mining-top3-grid">
-          <!-- JS로 생성 -->
-        </div>
-
-        <!-- 전체 순위 -->
-        <div class="ranking-table-container">
-          <h3>📊 전체 손익 순위</h3>
-          
-          <div class="summary-stats" id="mining-summary-stats">
-            <!-- JS로 생성 -->
-          </div>
-
-          <table class="ranking-table">
-            <thead>
-              <tr>
-                <th style="width:40px;">순위</th>
-                <th>품목</th>
-                <th class="text-right">재료 원가</th>
-                <th class="text-right">실수령</th>
-                <th class="text-right">손익</th>
-                <th class="text-right">결과</th>
-              </tr>
-            </thead>
-            <tbody id="mining-ranking-tbody">
-              <!-- JS로 생성 -->
-            </tbody>
-          </table>
         </div>
       </div>
 
@@ -434,7 +348,7 @@
   <script src="js/mining-info.js"></script>
   <script src="js/mining-recipes.js"></script>
   <script src="js/mining-stamina.js"></script>
-  <script src="js/mining-efficiency.js"></script>
+  <script src="js/mining-convert.js"></script>
 
 </body>
 </html>
