@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/theme.css" />
   
   <!-- 공통 스타일 -->
   <link rel="stylesheet" href="css/common-stamina.css" />
@@ -37,10 +38,10 @@
   <!-- ===== 상단 헤더 ===== -->
   <header class="top-header">
     <div class="header-inner">
-      <div class="logo">
+      <div class="logo" onclick="toggleTheme()">
         <img src="img/1x0x7_.png" alt="로고">
       </div>
-      <nav class="main-nav">
+        <nav class="main-nav">
         <a href="index.html">홈</a>
         <a href="mining.html">채광</a>
         <a href="farming.html" class="active">재배</a>
@@ -530,6 +531,7 @@
   <script src="js/farming-efficiency.js"></script>
   <!-- 수확 스크립트 -->
   <script src="js/farming-farm.js"></script>
+  <script src="js/theme.js"></script>
 
 </body>
 </html>

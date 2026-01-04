@@ -1,0 +1,10 @@
+
+
+/* ===== 로고 클릭 ===== */
+.logo {
+  cursor: pointer;
+}
+
+.logo img {
+  transition: transform 0.2s ease;
+}

@@ -26,6 +26,7 @@
   <link rel="stylesheet" href="css/layout.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/updates.css" />
+  <link rel="stylesheet" href="css/theme.css" />
 
 </head>
 <body>
@@ -35,23 +36,23 @@
     <p>본 문서는 띵타이쿤 온라인의 공식 문서가 아닙니다. 본 문서의 내용은 일부 실제 내용과 다를 수 있습니다.</p>
   </div>
 
-  <!-- ===== 상단 헤더 ===== -->
-  <header class="top-header">
-    <div class="header-inner">
+<!-- ===== 상단 헤더 ===== -->
+<header class="top-header">
+  <div class="header-inner">
 
-      <div class="logo">
-        <img src="img/1x0x7_.png" alt="로고">
-      </div>
-
-      <nav class="main-nav">
-        <a href="index.html" class="active">홈</a>
-        <a href="mining.html">채광</a>
-        <a href="farming.html">재배</a>
-        <a href="ocean.html">해양</a>
-      </nav>
-
+    <div class="logo" onclick="toggleTheme()">
+      <img src="img/1x0x7_.png" alt="로고">
     </div>
-  </header>
+
+    <nav class="main-nav">
+      <a href="index.html" class="active">홈</a>
+      <a href="mining.html">채광</a>
+      <a href="farming.html">재배</a>
+      <a href="ocean.html">해양</a>
+    </nav>
+
+  </div>
+</header>
 
   <!-- ===== 메인 콘텐츠 ===== -->
   <main class="page">
@@ -127,5 +128,6 @@
   </footer>
 
   <script src="js/script.js"></script>
+  <script src="js/theme.js"></script>
 </body>
 </html>

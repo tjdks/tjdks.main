@@ -78,7 +78,6 @@ function renderRecipeTable(recipesToShow = recipes) {
     tbody.innerHTML = `
       <tr>
         <td colspan="4" class="empty-state">
-          <div class="empty-state-icon">🔍</div>
           <div class="empty-state-text">검색 결과가 없습니다.</div>
         </td>
       </tr>
