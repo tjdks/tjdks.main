@@ -228,7 +228,7 @@ function displayResults(results, grandTotal) {
         ${r.starBonus > 0 && r.clamBonusPercent > 0 ? ' · ' : ''}
         ${r.clamBonusPercent > 0 ? `조개 확률 ${baseClamRate}% → <strong>${totalClamRate}%</strong> (리필 +${r.clamBonusPercent}%)` : ''}
         ${(r.starBonus > 0 || r.clamBonusPercent > 0) && r.deepSeaBonusPercent > 0 ? ' · ' : ''}
-        ${r.deepSeaBonusPercent > 0 ? `심해 채집꾼 <strong>+${r.deepSeaBonusPercent}%</strong>` : ''}
+        ${r.deepSeaBonusPercent > 0 ? `추가 드롭 <strong>+${r.deepSeaBonusPercent}%</strong>` : ''}
       </div>
     `;
   }

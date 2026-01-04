@@ -274,13 +274,13 @@ function displayMiningResults(results, grandTotal) {
   const bonusParts = [];
   
   if (r.luckyRate > 0) {
-    bonusParts.push(`광물 추가 0% → <strong>${r.luckyRate}%</strong> 확률 ${r.luckyCount}개 (럭키 히트 +${r.luckyRate}%)`);
+    bonusParts.push(`광물 추가 0% → <strong>${r.luckyRate}%</strong> (럭키 히트 +${r.luckyRate}%)`);
   }
   if (r.fireRate > 0) {
-    bonusParts.push(`주괴 추가 0% → <strong>${r.fireRate}%</strong> 확률 ${r.fireCount}개 (불붙은 곡괭이 +${r.fireRate}%)`);
+    bonusParts.push(`주괴 추가 0% → <strong>${r.fireRate}%</strong> (불붙은 곡괭이 +${r.fireRate}%)`);
   }
   if (r.gemRate > 0) {
-    bonusParts.push(`보석 추가 0% → <strong>${r.gemRate}%</strong> 확률 ${r.gemCount}개 (반짝임의 시작 +${r.gemRate}%)`);
+    bonusParts.push(`보석 추가 0% → <strong>${r.gemRate}%</strong> (반짝임의 시작 +${r.gemRate}%)`);
   }
   if (r.cobiExpertRate > 0) {
     bonusParts.push(`코비 확률 ${r.cobiBaseRate}% → <strong>${r.cobiBaseRate + r.cobiExpertRate}%</strong> (코비타임 +${r.cobiExpertRate}%)`);

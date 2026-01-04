@@ -202,9 +202,9 @@ function displayResults(results, grandTotal) {
     bonusHtml = `
       <div class="bonus-summary">
         <div class="bonus-summary-title">적용 보너스</div>
-        ${r.giftRate > 0 ? `씨앗 추가 0% → <strong>${r.giftRate}%</strong> 확률 ${r.giftCount}개 (자연의 선물 +${r.giftRate}%)` : ''}
+        ${r.giftRate > 0 ? `씨앗 추가 0% → <strong>${r.giftRate}%</strong>  (자연의 선물 +${r.giftRate}%)` : ''}
         ${r.giftRate > 0 && r.fireRate > 0 ? ' · ' : ''}
-        ${r.fireRate > 0 ? `베이스 추가 0% → <strong>${r.fireRate}%</strong> 확률 ${r.fireCount}개 (불붙은 괭이 +${r.fireRate}%)` : ''}
+        ${r.fireRate > 0 ? `베이스 추가 0% → <strong>${r.fireRate}%</strong>  (불붙은 괭이 +${r.fireRate}%)` : ''}
       </div>
     `;
   }
