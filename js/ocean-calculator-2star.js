@@ -187,15 +187,16 @@ function buildResult(best, totalCrystal, totalEss, totalShellfish, availableEss,
     const totalCrystalToMake = crystalToMake.vital + crystalToMake.erosion + crystalToMake.defense + crystalToMake.regen + crystalToMake.poison;
     const totalEssCraftCount = essCraftCount.guard + essCraftCount.wave + essCraftCount.chaos + essCraftCount.life + essCraftCount.decay;
 
-    // 재료 필요량 (제작 횟수 기준)
     const materialNeed = {
         seaweed: totalEssCraftCount * 2,
-        kelp: totalCrystalToMake * 3,
-        netherrack: essCraftCount.guard * 8,
-        magmaBlock: essCraftCount.wave * 4,
-        soulSoil: essCraftCount.chaos * 4,
-        crimsonStem: essCraftCount.life * 2,
-        warpedStem: essCraftCount.decay * 2,
+        kelp: totalCrystalToMake * 2,
+
+        oakLeaves: essCraftCount.guard * 4,
+        spruceLeaves: essCraftCount.wave * 4,
+        birchLeaves: essCraftCount.chaos * 4,
+        acaciaLeaves: essCraftCount.life * 4,
+        cherryLeaves: essCraftCount.decay * 4,
+
         lapisBlock: crystalToMake.vital,
         redstoneBlock: crystalToMake.erosion,
         ironIngot: crystalToMake.defense,
@@ -225,12 +226,14 @@ function buildResult(best, totalCrystal, totalEss, totalShellfish, availableEss,
 
     const materialNeedTotal = {
         seaweed: totalEssCraftCountTotal * 2,
-        kelp: totalCrystalNeed * 3,
-        netherrack: essCraftCountTotal.guard * 8,
-        magmaBlock: essCraftCountTotal.wave * 4,
-        soulSoil: essCraftCountTotal.chaos * 4,
-        crimsonStem: essCraftCountTotal.life * 2,
-        warpedStem: essCraftCountTotal.decay * 2,
+        kelp: totalCrystalNeed * 2,
+
+        oakLeaves: essCraftCountTotal.guard * 4,
+        spruceLeaves: essCraftCountTotal.wave * 4,
+        birchLeaves: essCraftCountTotal.chaos * 4,
+        acaciaLeaves: essCraftCountTotal.life * 4,
+        cherryLeaves: essCraftCountTotal.decay * 4,
+
         lapisBlock: crystalNeed.vital,
         redstoneBlock: crystalNeed.erosion,
         ironIngot: crystalNeed.defense,
@@ -291,11 +294,11 @@ function updateResult(result) {
 
     // 네더 블록 (에센스 제작용)
     document.getElementById("result-coral-2").innerHTML = createMaterialTextHTML([
-        { name: '네더랙', value: materialData.netherrack || 0 },
-        { name: '마그마 블록', value: materialData.magmaBlock || 0 },
-        { name: '영혼 흙', value: materialData.soulSoil || 0 },
-        { name: '진홍빛 자루', value: materialData.crimsonStem || 0 },
-        { name: '뒤틀린 자루', value: materialData.warpedStem || 0 }
+        { name: '참나무 잎', value: materialData.oakLeaves || 0 },
+        { name: '가문비나무 잎', value: materialData.spruceLeaves || 0 },
+        { name: '자작나무 잎', value: materialData.birchLeaves || 0 },
+        { name: '아카시아 잎', value: materialData.acaciaLeaves || 0 },
+        { name: '벚나무 잎', value: materialData.cherryLeaves || 0 }
     ]);
 
     // 광물 (결정 제작용)
