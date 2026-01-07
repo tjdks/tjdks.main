@@ -7,9 +7,9 @@ export const SET_COUNT = 64;
 
 // 골드 가격 (2025년 업데이트)
 export const GOLD_PRICES = {
-    '1star': { A: 3780, K: 3835, L: 3951 },
-    '2star': { CORE: 8154, POTION: 8236, WING: 8351 },
-    '3star': { AQUA: 13909, NAUTILUS: 14071, SPINE: 14160 }
+    '1star': { A: 5669, K: 5752, L: 5927 },
+    '2star': { CORE: 12231, POTION: 12354, WING: 12527 },
+    '3star': { AQUA: 20863, NAUTILUS: 21107, SPINE: 21239 }
 };
 
 // 프리미엄 가격 비율
@@ -30,7 +30,7 @@ export const CORE_TO_ESSENCE_1STAR = {
 // 1성 - 정수에서 블록으로 변환
 export const ESSENCE_TO_BLOCK_1STAR = {
     guard: { clay: 1 },
-    wave: { sand: 3 },
+    wave: { sand: 2 },
     chaos: { dirt: 4 },
     life: { gravel: 2 },
     decay: { granite: 1 }
@@ -45,40 +45,40 @@ export const CORE_TO_FISH_1STAR = {
     ED: { bass: 1 }
 };
 
-// 2성 - 에센스에서 블록으로 변환 (조합법 수정 반영)
+// 2성 - 에센스 제작 재료 (조합법 변경 반영)
 export const ESSENCE_TO_BLOCK_2STAR = {
-    guard: { seaweed: 2, netherrack: 8 },
-    wave: { seaweed: 2, magmaBlock: 4 },
-    chaos: { seaweed: 2, soulSoil: 4 },
-    life: { seaweed: 2, crimsonStem: 2 },
-    decay: { seaweed: 2, warpedStem: 2 }
+    guard: { seaweed: 2, oakLeaves: 4 },
+    wave: { seaweed: 2, spruceLeaves: 4 },
+    chaos: { seaweed: 2, birchLeaves: 4 },
+    life: { seaweed: 2, acaciaLeaves: 4 },
+    decay: { seaweed: 2, cherryLeaves: 4 }
 };
 
-// 2성 - 결정에서 재료로 변환 (조합법 수정 반영)
+// 2성 - 결정 제작 재료 (조합법 변경 반영)
 export const CRYSTAL_TO_MATERIAL_2STAR = {
-    vital: { kelp: 3, lapisBlock: 1 },
-    erosion: { kelp: 3, redstoneBlock: 1 },
-    defense: { kelp: 3, ironIngot: 1 },
-    regen: { kelp: 3, goldIngot: 1 },
-    poison: { kelp: 3, diamond: 1 }
+    vital:   { kelp: 2, lapisBlock: 1 },
+    erosion: { kelp: 2, redstoneBlock: 1 },
+    defense: { kelp: 2, ironIngot: 1 },
+    regen:   { kelp: 2, goldIngot: 1 },
+    poison:  { kelp: 2, diamond: 1 }
 };
 
 // 3성 - 엘릭서에서 재료로 변환 (조합법 수정 반영)
 export const ELIXIR_TO_MATERIAL_3STAR = {
-    guard: { seaSquirt: 1, glassBottle: 3, endStone: 1 },
-    wave: { seaSquirt: 1, glassBottle: 3, endStoneBrick: 1 },
-    chaos: { seaSquirt: 1, glassBottle: 3, chorusFruit: 4 },
-    life: { seaSquirt: 1, glassBottle: 3, poppedChorusFruit: 4 },
-    decay: { seaSquirt: 1, glassBottle: 3, purpurBlock: 1 }
+    guard:  { seaSquirt: 1, glassBottle: 3, netherrack: 4 },
+    wave:   { seaSquirt: 1, glassBottle: 3, magmaBlock: 2 },
+    chaos:  { seaSquirt: 1, glassBottle: 3, soulSoil: 2 },
+    life:   { seaSquirt: 1, glassBottle: 3, crimsonStem: 2 },
+    decay:  { seaSquirt: 1, glassBottle: 3, warpedStem: 2 }
 };
 
 // 3성 - 의약에서 재료로 변환 (조합법 수정 반영)
 export const POTION_TO_MATERIAL_3STAR = {
-    immortal: { driedKelp: 5, glowBerry: 2, deadTubeCoral: 1 },
-    barrier: { driedKelp: 5, glowBerry: 2, deadBrainCoral: 1 },
-    corrupt: { driedKelp: 5, glowBerry: 2, deadBubbleCoral: 1 },
-    frenzy: { driedKelp: 5, glowBerry: 2, deadFireCoral: 1 },
-    venom: { driedKelp: 5, glowBerry: 2, deadHornCoral: 1 }
+    immortal: { driedKelp: 4, glowBerry: 2, deadTubeCoral: 1 },
+    barrier:  { driedKelp: 4, glowBerry: 2, deadBrainCoral: 1 },
+    corrupt:  { driedKelp: 4, glowBerry: 2, deadBubbleCoral: 1 },
+    frenzy:   { driedKelp: 4, glowBerry: 2, deadFireCoral: 1 },
+    venom:    { driedKelp: 4, glowBerry: 2, deadHornCoral: 1 }
 };
 
 // 3성 - 의약에서 엘릭서로 변환
@@ -92,25 +92,25 @@ export const POTION_TO_ELIXIR_3STAR = {
 
 // 낚싯대 강화 데이터
 export const ROD_DATA = {
-    1: { drop: 1, clamRate: 0 },
-    2: { drop: 1, clamRate: 0.01 },
-    3: { drop: 2, clamRate: 0.01 },
-    4: { drop: 2, clamRate: 0.01 },
-    5: { drop: 2, clamRate: 0.02 },
-    6: { drop: 3, clamRate: 0.02 },
-    7: { drop: 3, clamRate: 0.02 },
-    8: { drop: 3, clamRate: 0.03 },
-    9: { drop: 4, clamRate: 0.03 },
-    10: { drop: 4, clamRate: 0.03 },
-    11: { drop: 4, clamRate: 0.05 },
-    12: { drop: 5, clamRate: 0.05 },
-    13: { drop: 5, clamRate: 0.05 },
-    14: { drop: 5, clamRate: 0.05 },
-    15: { drop: 6, clamRate: 0.10 }
+    1: { drop: 2, clamRate: 0.01 },
+    2: { drop: 2, clamRate: 0.01 },
+    3: { drop: 3, clamRate: 0.02 },
+    4: { drop: 3, clamRate: 0.02 },
+    5: { drop: 3, clamRate: 0.02 },
+    6: { drop: 4, clamRate: 0.03 },
+    7: { drop: 4, clamRate: 0.03 },
+    8: { drop: 4, clamRate: 0.03 },
+    9: { drop: 5, clamRate: 0.05 },
+    10: { drop: 5, clamRate: 0.05 },
+    11: { drop: 5, clamRate: 0.07 },
+    12: { drop: 6, clamRate: 0.07 },
+    13: { drop: 6, clamRate: 0.09 },
+    14: { drop: 7, clamRate: 0.09 },
+    15: { drop: 10, clamRate: 0.15 }
 };
 
 // 전문가 스킬 데이터
 export const EXPERT_SKILLS = {
-    storm: [0, 0.01, 0.03, 0.05, 0.07, 0.10],
-    clamRefill: [0, 0.01, 0.015, 0.02, 0.025, 0.03, 0.035, 0.04, 0.045, 0.05, 0.07]
+    storm: [0, 0.05, 0.07, 0.10, 0.15, 0.20],
+    clamRefill: [0, 0.01, 0.02, 0.03, 0.04, 0.05, 0.06, 0.07, 0.08, 0.09, 0.10]
 };
