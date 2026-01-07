@@ -288,6 +288,7 @@ function updateResult(result) {
 
     // 재료 (해초, 켈프)
     document.getElementById("result-material-2").innerHTML = createMaterialTextHTML([
+        { name: '해초', value: materialData.seaweed || 0 },
         { name: '켈프', value: materialData.kelp || 0 }
     ]);
 
