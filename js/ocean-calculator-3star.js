@@ -161,10 +161,17 @@ function buildResult(best, totalPotion, totalElix, isAdvanced) {
 
     // 재료 필요량 (엘릭서 1개당 어패류 1개, 불우렁쉥이 1개, 유리병 3개)
     const materialNeed = {
-        seaSquirt: totalElixToMake,                    // 불우렁쉥이
-        glassBottle: totalElixToMake * 3,              // 유리병
-        driedKelp: totalPotionToMake * 5,              // 말린 켈프 (영약당 5개)
-        glowBerry: totalPotionToMake * 2               // 발광 열매
+        seaSquirt: totalElixToMake,
+        glassBottle: totalElixToMake * 3,
+
+        netherrack: elixToMake.guard * 4,
+        magmaBlock: elixToMake.wave * 2,
+        soulSoil: elixToMake.chaos * 2,
+        crimsonStem: elixToMake.life * 2,
+        warpedStem: elixToMake.decay * 2,
+
+        driedKelp: totalPotionToMake * 4,
+        glowBerry: totalPotionToMake * 2
     };
 
     // 어패류 필요량 (엘릭서 1개당 1개)
@@ -174,15 +181,6 @@ function buildResult(best, totalPotion, totalElix, isAdvanced) {
         chaos: elixToMake.chaos,
         life: elixToMake.life,
         decay: elixToMake.decay
-    };
-
-    // 엔드 블록 (엘릭서 제작용) - 엘릭서 1개당 1개
-    const endBlockNeed = {
-        endStone: elixToMake.guard,                    // 엔드 돌 (수호)
-        endStoneBrick: elixToMake.wave,                // 엔드 석재 벽돌 (파동)
-        chorusFruit: elixToMake.chaos * 4,             // 후렴과 (혼란)
-        poppedChorusFruit: elixToMake.life * 4,        // 튀긴 후렴과 (생명)
-        purpurBlock: elixToMake.decay                  // 퍼퍼 블록 (부식)
     };
 
     // 죽은 산호 블록 (영약 제작용) - 영약 1개당 1개
@@ -209,7 +207,14 @@ function buildResult(best, totalPotion, totalElix, isAdvanced) {
     const materialNeedTotal = {
         seaSquirt: totalElixNeed,
         glassBottle: totalElixNeed * 3,
-        driedKelp: totalPotionNeed * 5,
+
+        netherrack: elixNeedTotal.guard * 4,
+        magmaBlock: elixNeedTotal.wave * 2,
+        soulSoil: elixNeedTotal.chaos * 2,
+        crimsonStem: elixNeedTotal.life * 2,
+        warpedStem: elixNeedTotal.decay * 2,
+
+        driedKelp: totalPotionNeed * 4,
         glowBerry: totalPotionNeed * 2
     };
 
@@ -219,14 +224,6 @@ function buildResult(best, totalPotion, totalElix, isAdvanced) {
         chaos: elixNeedTotal.chaos,
         life: elixNeedTotal.life,
         decay: elixNeedTotal.decay
-    };
-
-    const endBlockNeedTotal = {
-        endStone: elixNeedTotal.guard,
-        endStoneBrick: elixNeedTotal.wave,
-        chorusFruit: elixNeedTotal.chaos * 4,
-        poppedChorusFruit: elixNeedTotal.life * 4,
-        purpurBlock: elixNeedTotal.decay
     };
 
     const deadCoralNeedTotal = {
@@ -243,7 +240,6 @@ function buildResult(best, totalPotion, totalElix, isAdvanced) {
         elixNeedTotal, elixToMake,
         materialNeed, materialNeedTotal,
         fishNeed, fishNeedTotal,
-        endBlockNeed, endBlockNeedTotal,
         deadCoralNeed, deadCoralNeedTotal,
         isAdvancedMode: isAdvanced
     };
@@ -267,7 +263,6 @@ function updateResult(result) {
     const potionData = advanced ? result.potionToMake : result.potionNeed;
     const materialData = advanced ? result.materialNeed : result.materialNeedTotal;
     const fishData = advanced ? result.fishNeed : result.fishNeedTotal;
-    const endBlockData = advanced ? result.endBlockNeed : result.endBlockNeedTotal;
     const deadCoralData = advanced ? result.deadCoralNeed : result.deadCoralNeedTotal;
 
     // 엘릭서
@@ -288,13 +283,23 @@ function updateResult(result) {
         { icon: 'potion-venom', name: '맹독 파동', value: potionData.venom || 0 }
     ]);
 
-    // 재료 (불우렁쉥이, 유리병, 말린 켈프, 발광 열매)
-    document.getElementById("result-material-3").innerHTML = createMaterialTextHTML([
-        { name: '불우렁쉥이', value: materialData.seaSquirt },
-        { name: '유리병', value: materialData.glassBottle },
-        { name: '말린 켈프', value: materialData.driedKelp },
-        { name: '발광 열매', value: materialData.glowBerry }
-    ]);
+    document.getElementById("result-material-3").innerHTML =
+        createMaterialTextHTML([
+            { name: '불우렁쉥이', value: materialData.seaSquirt },
+            { name: '유리병', value: materialData.glassBottle },
+            { name: '말린 켈프', value: materialData.driedKelp },
+            { name: '발광 열매', value: materialData.glowBerry }
+        ]);
+
+
+    document.getElementById("result-block-3").innerHTML =
+        createMaterialTextHTML([
+            { name: '네더랙', value: materialData.netherrack },
+            { name: '마그마 블록', value: materialData.magmaBlock },
+            { name: '영혼 흙', value: materialData.soulSoil },
+            { name: '진홍빛 자루', value: materialData.crimsonStem },
+            { name: '뒤틀린 자루', value: materialData.warpedStem }
+        ]);
 
     // 어패류 (3성)
     const fishSection = document.getElementById("result-fish-3");
@@ -308,14 +313,6 @@ function updateResult(result) {
         ]);
     }
 
-    // 엔드 블록 (엘릭서 제작용)
-    document.getElementById("result-block-3").innerHTML = createMaterialTextHTML([
-        { name: '엔드 돌', value: endBlockData.endStone },
-        { name: '엔드 석재 벽돌', value: endBlockData.endStoneBrick },
-        { name: '후렴과', value: endBlockData.chorusFruit },
-        { name: '튀긴 후렴과', value: endBlockData.poppedChorusFruit },
-        { name: '퍼퍼 블록', value: endBlockData.purpurBlock }
-    ]);
 
     // 죽은 산호 블록 (영약 제작용)
     document.getElementById("result-flower-3").innerHTML = createMaterialTextHTML([
